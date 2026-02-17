@@ -1,0 +1,224 @@
+
+import React, { useState, useMemo, useEffect } from 'react';
+import { useDatabase } from '../contexts/DatabaseContext';
+import ReptileCard, { CardVariant } from '../components/ReptileCard';
+import FilterSidebar from '../components/FilterSidebar';
+import { FilterIcon, GridIcon, ListIcon, ChevronDownIcon, SearchIcon } from '../components/icons';
+import { Page } from '../App';
+
+export type Filters = {
+    categories: string[];
+    price: number;
+    species: string[];
+    status: string;
+};
+
+type SortOption = 'newest' | 'price-asc' | 'price-desc' | 'rating';
+
+interface SuppliesPageProps {
+    setPage: (page: Page | string) => void;
+}
+
+const SuppliesPage: React.FC<SuppliesPageProps> = ({ setPage }) => {
+    const { supplies } = useDatabase();
+    const [filters, setFilters] = useState<Filters>({
+        categories: [],
+        price: 10000,
+        species: [],
+        status: 'الكل',
+    });
+    const [sortBy, setSortBy] = useState<SortOption>('newest');
+    const [isFilterOpen, setIsFilterOpen] = useState(false);
+    const [viewMode, setViewMode] = useState<CardVariant>('grid');
+
+    const filteredSupplies = useMemo(() => {
+        let result = [...supplies].filter(supply => {
+            if (filters.categories.length > 0 && !filters.categories.includes(supply.category)) {
+                return false;
+            }
+            if (supply.price > filters.price) {
+                return false;
+            }
+            if (filters.status !== 'الكل' && supply.status !== filters.status) {
+                return false;
+            }
+            return true;
+        });
+
+        // Sorting
+        switch (sortBy) {
+            case 'price-asc': result.sort((a, b) => a.price - b.price); break;
+            case 'price-desc': result.sort((a, b) => b.price - a.price); break;
+            case 'rating': result.sort((a, b) => b.rating - a.rating); break;
+            default: result.sort((a, b) => b.id - a.id); break;
+        }
+
+        return result;
+    }, [filters, supplies, sortBy]);
+
+    const isFiltered = filters.categories.length > 0 || filters.price < 10000 || filters.status !== 'الكل';
+    const activeFiltersCount = (filters.categories.length > 0 ? 1 : 0) + (filters.price < 10000 ? 1 : 0) + (filters.status !== 'الكل' ? 1 : 0);
+
+    const clearFilters = () => setFilters({ categories: [], price: 10000, species: [], status: 'الكل' });
+
+    // Handle body scroll lock when mobile filter is open
+    useEffect(() => {
+        if (isFilterOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'auto';
+        }
+    }, [isFilterOpen]);
+
+    return (
+        <div className="max-w-[1440px] mx-auto px-4 pb-24 md:pb-20">
+            {/* Header / Intro */}
+            <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8 text-right">
+                <div className="animate-slide-up">
+                    <div className="inline-block bg-amber-500/10 text-amber-500 px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-widest mb-4 border border-amber-500/20">
+                        المستلزمات والإكسسوارات
+                    </div>
+                    <h1 className="text-5xl md:text-8xl font-black tracking-tighter leading-none text-white">متجر المستلزمات</h1>
+                    <p className="text-lg md:text-xl text-gray-400 mt-6 max-w-lg font-bold leading-relaxed">كل ما تحتاجه لرعاية زواحفك من معدات وأدوات وإكسسوارات عالية الجودة.</p>
+                </div>
+                
+                <div className="flex flex-wrap items-center gap-4 w-full md:w-auto justify-end animate-fade-in delay-200">
+                    {/* View Switcher */}
+                    <div className="flex items-center gap-2 glass-light p-1.5 rounded-2xl border border-white/10 hidden sm:flex">
+                        <button 
+                            onClick={() => setViewMode('grid')}
+                            className={`p-3 rounded-xl transition-all ${viewMode === 'grid' ? 'bg-amber-500 text-gray-900 shadow-xl scale-105' : 'text-gray-400 hover:text-white hover:bg-white/5'}`}
+                            title="عرض الشبكة"
+                        >
+                            <GridIcon className="w-5 h-5" />
+                        </button>
+                        <button 
+                            onClick={() => setViewMode('list')}
+                            className={`p-3 rounded-xl transition-all ${viewMode === 'list' ? 'bg-amber-500 text-gray-900 shadow-xl scale-105' : 'text-gray-400 hover:text-white hover:bg-white/5'}`}
+                            title="عرض القائمة"
+                        >
+                            <ListIcon className="w-5 h-5" />
+                        </button>
+                    </div>
+
+                    {/* Filter Button */}
+                    <button 
+                        onClick={() => setIsFilterOpen(!isFilterOpen)}
+                        className="flex items-center gap-3 glass-light border border-white/10 px-6 py-3 rounded-2xl text-white hover:border-amber-500/50 hover:bg-amber-500/5 transition-all shadow-lg hover:shadow-amber-500/20 group relative"
+                    >
+                        <FilterIcon className="w-5 h-5 text-amber-500 group-hover:scale-110 transition-transform" />
+                        <span className="font-bold hidden sm:inline">الفلاتر</span>
+                        {activeFiltersCount > 0 && (
+                            <span className="absolute -top-2 -right-2 bg-amber-500 text-gray-900 text-xs font-black w-6 h-6 rounded-full flex items-center justify-center animate-pulse shadow-xl">{activeFiltersCount}</span>
+                        )}
+                    </button>
+
+                    {/* Sort Dropdown */}
+                    <div className="relative group">
+                        <select 
+                            value={sortBy}
+                            onChange={(e) => setSortBy(e.target.value as SortOption)}
+                            className="glass-light border border-white/10 px-5 py-3 rounded-2xl text-white font-bold appearance-none cursor-pointer hover:border-amber-500/50 hover:bg-amber-500/5 transition-all shadow-lg text-sm pr-12 bg-none"
+                            style={{ backgroundImage: 'none' }}
+                        >
+                            <option value="newest" className="bg-gray-900 text-white">الأحدث</option>
+                            <option value="price-asc" className="bg-gray-900 text-white">الأرخص أولاً</option>
+                            <option value="price-desc" className="bg-gray-900 text-white">الأغلى أولاً</option>
+                            <option value="rating" className="bg-gray-900 text-white">الأعلى تقييماً</option>
+                        </select>
+                        <ChevronDownIcon className="w-4 h-4 text-amber-500 absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none" />
+                    </div>
+                </div>
+            </div>
+
+            {/* Active Filters */}
+            {isFiltered && (
+                <div className="mb-8 flex items-center gap-4 flex-wrap animate-fade-in">
+                    <span className="text-gray-400 font-bold text-sm">الفلاتر النشطة:</span>
+                    {filters.categories.map(cat => (
+                        <span key={cat} className="bg-amber-500/20 text-amber-500 px-4 py-2 rounded-xl text-sm font-bold border border-amber-500/30">
+                            {cat}
+                        </span>
+                    ))}
+                    {filters.price < 10000 && (
+                        <span className="bg-amber-500/20 text-amber-500 px-4 py-2 rounded-xl text-sm font-bold border border-amber-500/30">
+                            أقل من {filters.price.toLocaleString('ar-SY')} ل.س
+                        </span>
+                    )}
+                    {filters.status !== 'الكل' && (
+                        <span className="bg-amber-500/20 text-amber-500 px-4 py-2 rounded-xl text-sm font-bold border border-amber-500/30">
+                            {filters.status}
+                        </span>
+                    )}
+                    <button 
+                        onClick={clearFilters}
+                        className="text-red-400 hover:text-red-300 font-bold text-sm underline transition-colors"
+                    >
+                        إزالة الكل
+                    </button>
+                </div>
+            )}
+
+            {/* Products Grid/List */}
+            <div className="relative">
+                {filteredSupplies.length > 0 ? (
+                    <div className={viewMode === 'grid' 
+                        ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 animate-fade-in" 
+                        : "flex flex-col gap-6 animate-fade-in"
+                    }>
+                        {filteredSupplies.map((supply, idx) => (
+                            <ReptileCard 
+                                key={supply.id} 
+                                reptile={supply} 
+                                setPage={setPage}
+                                variant={viewMode}
+                                animationDelay={idx * 50}
+                            />
+                        ))}
+                    </div>
+                ) : (
+                    <div className="text-center py-20 animate-fade-in">
+                        <div className="text-6xl mb-6">🔍</div>
+                        <h3 className="text-3xl font-black text-white mb-4">لم نعثر على نتائج</h3>
+                        <p className="text-gray-400 font-bold mb-8">جرّب تغيير الفلاتر أو إزالتها</p>
+                        <button 
+                            onClick={clearFilters}
+                            className="bg-amber-500 text-gray-900 px-8 py-4 rounded-2xl font-black hover:bg-amber-400 transition-all shadow-xl hover:shadow-2xl hover:scale-105"
+                        >
+                            إزالة جميع الفلاتر
+                        </button>
+                    </div>
+                )}
+            </div>
+
+            {/* Mobile Filter Sidebar */}
+            {isFilterOpen && (
+                <div className="fixed inset-0 z-[100] lg:hidden">
+                    <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={() => setIsFilterOpen(false)} />
+                    <div className="absolute left-0 top-0 bottom-0 w-full max-w-md bg-gray-900 shadow-2xl animate-slide-in-left overflow-y-auto">
+                        <FilterSidebar 
+                            filters={filters} 
+                            setFilters={setFilters} 
+                            onClose={() => setIsFilterOpen(false)}
+                            isSupplies={true}
+                        />
+                    </div>
+                </div>
+            )}
+
+            {/* Desktop Filter Sidebar */}
+            <div className={`hidden lg:block fixed left-8 top-32 bottom-32 w-80 transition-all duration-500 ${isFilterOpen ? 'translate-x-0 opacity-100' : '-translate-x-[400px] opacity-0 pointer-events-none'} z-40`}>
+                <div className="h-full overflow-y-auto scrollbar-hide glass-dark border border-white/10 rounded-3xl shadow-2xl">
+                    <FilterSidebar 
+                        filters={filters} 
+                        setFilters={setFilters} 
+                        onClose={() => setIsFilterOpen(false)}
+                        isSupplies={true}
+                    />
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default SuppliesPage;
