@@ -39,9 +39,12 @@ cd server && npm run start
 
 ## نشر على Vercel + Render
 
-راجع الدليل الجاهز:
+### النشر اليدوي
+راجع الدليل الجاهز: `DEPLOY_VERCEL_RENDER.md` أو `QUICK_DEPLOY.md`
 
-`DEPLOY_VERCEL_RENDER.md`
+### النشر التلقائي (CI/CD)
+لإعداد النشر التلقائي باستخدام GitHub Actions:
+راجع الدليل: `GITHUB_ACTIONS_SETUP.md`
 
 ## نقاط أمان مفعلة
 

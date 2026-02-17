@@ -44,3 +44,6 @@ tmpclaude-*
 server-dev.log
 web-dev.log
 _nul
+vite
+schema_temp.sql
+typescript-errors.txt
