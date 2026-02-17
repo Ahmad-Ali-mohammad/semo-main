@@ -23,7 +23,7 @@
 
 ### Backend
 - **Node.js** with **Express 4.21**
-- **MySQL 3.11** (mysql2 driver)
+- **MySQL** database with **mysql2 3.11** driver
 - **ES Modules** only (type: "module" in package.json)
 
 ### Security & Middleware
