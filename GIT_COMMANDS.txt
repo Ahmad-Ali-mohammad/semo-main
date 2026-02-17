@@ -1,0 +1,20 @@
+# نفذ هذه الأوامر واحدة تلو الأخرى في PowerShell:
+
+# 1. إضافة جميع الملفات
+git add .
+
+# 2. إنشاء commit
+git commit -m "Ready for deployment - Added deployment files"
+
+# 3. رفع على GitHub
+git push -u origin main
+
+# ملاحظة: إذا طلب منك اسم المستخدم وكلمة المرور، استخدم:
+# - Username: Ahmad-Ali-mohammad
+# - Password: Personal Access Token (ليس كلمة المرور العادية)
+# 
+# للحصول على Token:
+# 1. اذهب إلى: https://github.com/settings/tokens
+# 2. Generate new token (classic)
+# 3. اختر scopes: repo
+# 4. احفظ الـ token
