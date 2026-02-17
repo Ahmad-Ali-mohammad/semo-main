@@ -8,10 +8,15 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+
 jobs:
   build-frontend:
     name: Build Frontend
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     
     steps:
       - name: Checkout code
@@ -39,6 +44,8 @@ jobs:
   build-backend:
     name: Build Backend
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     
     steps:
       - name: Checkout code
@@ -63,6 +70,8 @@ jobs:
     name: Deploy to Vercel
     needs: build-frontend
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     
     steps:
@@ -81,6 +90,8 @@ jobs:
     name: Notify Render to Deploy
     needs: build-backend
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     
     steps:
