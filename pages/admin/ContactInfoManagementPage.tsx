@@ -24,7 +24,7 @@ const ContactInfoManagementPage: React.FC = () => {
 
     const handleSave = () => {
         if (!editedInfo.phone || !editedInfo.email) {
-            alert('ÙŠØ±Ø¬Ù‰ Ù…Ù„Ø¡ Ø§Ù„Ø­Ù‚ÙˆÙ„ Ø§Ù„Ù…Ø·Ù„ÙˆØ¨Ø© (Ø§Ù„Ù‡Ø§ØªÙ ÙˆØ§Ù„Ø¨Ø±ÙŠØ¯ Ø§Ù„Ø¥Ù„ÙƒØªØ±ÙˆÙ†ÙŠ)');
+            alert('يرجى ملء الحقول المطلوبة (الهاتف والبريد الإلكتروني)');
             return;
         }
 
@@ -49,8 +49,8 @@ const ContactInfoManagementPage: React.FC = () => {
             <div className="animate-fade-in relative space-y-8 text-right">
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                     <div>
-                        <h1 className="text-4xl font-black mb-2">Ù…Ø¹Ù„ÙˆÙ…Ø§Øª Ø§Ù„ØªÙˆØ§ØµÙ„</h1>
-                        <p className="text-gray-400">Ø¥Ø¯Ø§Ø±Ø© Ù…Ø¹Ù„ÙˆÙ…Ø§Øª Ø§Ù„Ø§ØªØµØ§Ù„ ÙˆÙˆØ³Ø§Ø¦Ù„ Ø§Ù„ØªÙˆØ§ØµÙ„ Ø§Ù„Ø§Ø¬ØªÙ…Ø§Ø¹ÙŠ</p>
+                        <h1 className="text-4xl font-black mb-2">معلومات التواصل</h1>
+                        <p className="text-gray-400">إدارة معلومات الاتصال ووسائل التواصل الاجتماعي</p>
                     </div>
                     <div className="flex gap-3">
                         <HelpButton onClick={() => setIsHelpOpen(true)} />
@@ -59,43 +59,43 @@ const ContactInfoManagementPage: React.FC = () => {
                             className="flex items-center gap-3 bg-amber-500 text-gray-900 font-black py-3.5 px-8 rounded-2xl hover:bg-amber-400 transition-all shadow-xl shadow-amber-500/20 active:scale-95"
                         >
                             <EditIcon className="w-5 h-5" />
-                            <span>ØªØ¹Ø¯ÙŠÙ„ Ø§Ù„Ù…Ø¹Ù„ÙˆÙ…Ø§Øª</span>
+                            <span>تعديل المعلومات</span>
                         </button>
                     </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="glass-dark border border-white/10 rounded-[2rem] p-8">
-                        <h3 className="text-xl font-black mb-6 text-amber-400">Ù…Ø¹Ù„ÙˆÙ…Ø§Øª Ø§Ù„Ø§ØªØµØ§Ù„</h3>
+                        <h3 className="text-xl font-black mb-6 text-amber-400">معلومات الاتصال</h3>
                         <div className="space-y-4">
                             <div>
-                                <p className="text-gray-500 text-sm mb-1">Ø±Ù‚Ù… Ø§Ù„Ù‡Ø§ØªÙ</p>
+                                <p className="text-gray-500 text-sm mb-1">رقم الهاتف</p>
                                 <p className="text-white font-bold text-lg font-poppins" dir="ltr">{contactInfo.phone}</p>
                             </div>
                             <div>
-                                <p className="text-gray-500 text-sm mb-1">Ø§Ù„Ø¨Ø±ÙŠØ¯ Ø§Ù„Ø¥Ù„ÙƒØªØ±ÙˆÙ†ÙŠ</p>
+                                <p className="text-gray-500 text-sm mb-1">البريد الإلكتروني</p>
                                 <p className="text-white font-bold text-lg">{contactInfo.email}</p>
                             </div>
                             <div>
-                                <p className="text-gray-500 text-sm mb-1">Ø³Ø§Ø¹Ø§Øª Ø§Ù„Ø¹Ù…Ù„</p>
+                                <p className="text-gray-500 text-sm mb-1">ساعات العمل</p>
                                 <p className="text-white font-bold">{contactInfo.workingHours}</p>
                             </div>
                         </div>
                     </div>
 
                     <div className="glass-dark border border-white/10 rounded-[2rem] p-8">
-                        <h3 className="text-xl font-black mb-6 text-amber-400">Ø§Ù„Ù…ÙˆÙ‚Ø¹</h3>
+                        <h3 className="text-xl font-black mb-6 text-amber-400">الموقع</h3>
                         <div className="space-y-4">
                             <div>
-                                <p className="text-gray-500 text-sm mb-1">Ø§Ù„Ø¹Ù†ÙˆØ§Ù†</p>
+                                <p className="text-gray-500 text-sm mb-1">العنوان</p>
                                 <p className="text-white font-bold">{contactInfo.address}</p>
                             </div>
                             <div>
-                                <p className="text-gray-500 text-sm mb-1">Ø§Ù„Ù…Ø¯ÙŠÙ†Ø©</p>
+                                <p className="text-gray-500 text-sm mb-1">المدينة</p>
                                 <p className="text-white font-bold">{contactInfo.city}</p>
                             </div>
                             <div>
-                                <p className="text-gray-500 text-sm mb-1">Ø§Ù„Ø¯ÙˆÙ„Ø©</p>
+                                <p className="text-gray-500 text-sm mb-1">الدولة</p>
                                 <p className="text-white font-bold">{contactInfo.country}</p>
                             </div>
                         </div>
@@ -103,11 +103,11 @@ const ContactInfoManagementPage: React.FC = () => {
                 </div>
 
                 <div className="glass-dark border border-white/10 rounded-[2rem] p-8">
-                    <h3 className="text-xl font-black mb-6 text-amber-400">ÙˆØ³Ø§Ø¦Ù„ Ø§Ù„ØªÙˆØ§ØµÙ„ Ø§Ù„Ø§Ø¬ØªÙ…Ø§Ø¹ÙŠ</h3>
+                    <h3 className="text-xl font-black mb-6 text-amber-400">وسائل التواصل الاجتماعي</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         {contactInfo.socialMedia?.facebook && (
                             <div>
-                                <p className="text-gray-500 text-sm mb-1">ÙÙŠØ³Ø¨ÙˆÙƒ</p>
+                                <p className="text-gray-500 text-sm mb-1">فيسبوك</p>
                                 <a href={contactInfo.socialMedia.facebook} target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline break-all">
                                     {contactInfo.socialMedia.facebook}
                                 </a>
@@ -115,7 +115,7 @@ const ContactInfoManagementPage: React.FC = () => {
                         )}
                         {contactInfo.socialMedia?.instagram && (
                             <div>
-                                <p className="text-gray-500 text-sm mb-1">Ø¥Ù†Ø³ØªØºØ±Ø§Ù…</p>
+                                <p className="text-gray-500 text-sm mb-1">إنستغرام</p>
                                 <a href={contactInfo.socialMedia.instagram} target="_blank" rel="noopener noreferrer" className="text-pink-400 hover:underline break-all">
                                     {contactInfo.socialMedia.instagram}
                                 </a>
@@ -123,13 +123,13 @@ const ContactInfoManagementPage: React.FC = () => {
                         )}
                         {contactInfo.socialMedia?.whatsapp && (
                             <div>
-                                <p className="text-gray-500 text-sm mb-1">ÙˆØ§ØªØ³Ø§Ø¨</p>
+                                <p className="text-gray-500 text-sm mb-1">واتساب</p>
                                 <p className="text-green-400 font-poppins" dir="ltr">{contactInfo.socialMedia.whatsapp}</p>
                             </div>
                         )}
                         {contactInfo.socialMedia?.telegram && (
                             <div>
-                                <p className="text-gray-500 text-sm mb-1">ØªÙŠÙ„ÙŠØ¬Ø±Ø§Ù…</p>
+                                <p className="text-gray-500 text-sm mb-1">تيليجرام</p>
                                 <a href={contactInfo.socialMedia.telegram} target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:underline break-all">
                                     {contactInfo.socialMedia.telegram}
                                 </a>
@@ -153,8 +153,8 @@ const ContactInfoManagementPage: React.FC = () => {
         <div className="animate-fade-in relative space-y-8 text-right">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                 <div>
-                    <h1 className="text-4xl font-black mb-2">ØªØ¹Ø¯ÙŠÙ„ Ù…Ø¹Ù„ÙˆÙ…Ø§Øª Ø§Ù„ØªÙˆØ§ØµÙ„</h1>
-                    <p className="text-gray-400">Ù‚Ù… Ø¨ØªØ­Ø¯ÙŠØ« Ù…Ø¹Ù„ÙˆÙ…Ø§Øª Ø§Ù„Ø§ØªØµØ§Ù„ ÙˆØ­ÙØ¸ Ø§Ù„ØªØºÙŠÙŠØ±Ø§Øª</p>
+                    <h1 className="text-4xl font-black mb-2">تعديل معلومات التواصل</h1>
+                    <p className="text-gray-400">قم بتحديث معلومات الاتصال وحفظ التغييرات</p>
                 </div>
                 <HelpButton onClick={() => setIsHelpOpen(true)} />
             </div>
@@ -163,7 +163,7 @@ const ContactInfoManagementPage: React.FC = () => {
                 <div className="fixed top-8 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-6 py-4 rounded-xl shadow-2xl animate-fade-in z-50">
                     <div className="flex items-center gap-3">
                         <CheckCircleIcon className="w-6 h-6" />
-                        <p className="font-bold">ØªÙ… Ø­ÙØ¸ Ø§Ù„Ù…Ø¹Ù„ÙˆÙ…Ø§Øª Ø¨Ù†Ø¬Ø§Ø­!</p>
+                        <p className="font-bold">تم حفظ المعلومات بنجاح!</p>
                     </div>
                 </div>
             )}
@@ -171,11 +171,11 @@ const ContactInfoManagementPage: React.FC = () => {
             <div className="space-y-6">
                 {/* Contact Info */}
                 <div className="glass-dark border border-white/10 rounded-[2rem] p-8">
-                    <h3 className="text-xl font-black mb-6 text-amber-400">Ù…Ø¹Ù„ÙˆÙ…Ø§Øª Ø§Ù„Ø§ØªØµØ§Ù„</h3>
+                    <h3 className="text-xl font-black mb-6 text-amber-400">معلومات الاتصال</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                             <label className="text-xs font-black text-gray-400 uppercase mb-2 block">
-                                Ø±Ù‚Ù… Ø§Ù„Ù‡Ø§ØªÙ <span className="text-red-500">*</span>
+                                رقم الهاتف <span className="text-red-500">*</span>
                             </label>
                             <input
                                 type="tel"
@@ -189,7 +189,7 @@ const ContactInfoManagementPage: React.FC = () => {
                         </div>
                         <div>
                             <label className="text-xs font-black text-gray-400 uppercase mb-2 block">
-                                Ø§Ù„Ø¨Ø±ÙŠØ¯ Ø§Ù„Ø¥Ù„ÙƒØªØ±ÙˆÙ†ÙŠ <span className="text-red-500">*</span>
+                                البريد الإلكتروني <span className="text-red-500">*</span>
                             </label>
                             <input
                                 type="email"
@@ -202,14 +202,14 @@ const ContactInfoManagementPage: React.FC = () => {
                         </div>
                         <div className="md:col-span-2">
                             <label className="text-xs font-black text-gray-400 uppercase mb-2 block">
-                                Ø³Ø§Ø¹Ø§Øª Ø§Ù„Ø¹Ù…Ù„
+                                ساعات العمل
                             </label>
                             <input
                                 type="text"
                                 className="w-full bg-[#1a1c23] border border-white/10 rounded-2xl py-4 px-6 text-white font-bold"
                                 value={editedInfo.workingHours}
                                 onChange={e => setEditedInfo({ ...editedInfo, workingHours: e.target.value })}
-                                placeholder="Ø§Ù„Ø³Ø¨Øª - Ø§Ù„Ø®Ù…ÙŠØ³: 9:00 ØµØ¨Ø§Ø­Ø§Ù‹ - 8:00 Ù…Ø³Ø§Ø¡Ù‹"
+                                placeholder="السبت - الخميس: 9:00 صباحاً - 8:00 مساءً"
                             />
                         </div>
                     </div>
@@ -217,42 +217,42 @@ const ContactInfoManagementPage: React.FC = () => {
 
                 {/* Location */}
                 <div className="glass-dark border border-white/10 rounded-[2rem] p-8">
-                    <h3 className="text-xl font-black mb-6 text-amber-400">Ø§Ù„Ù…ÙˆÙ‚Ø¹</h3>
+                    <h3 className="text-xl font-black mb-6 text-amber-400">الموقع</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="md:col-span-2">
                             <label className="text-xs font-black text-gray-400 uppercase mb-2 block">
-                                Ø§Ù„Ø¹Ù†ÙˆØ§Ù†
+                                العنوان
                             </label>
                             <input
                                 type="text"
                                 className="w-full bg-[#1a1c23] border border-white/10 rounded-2xl py-4 px-6 text-white font-bold"
                                 value={editedInfo.address}
                                 onChange={e => setEditedInfo({ ...editedInfo, address: e.target.value })}
-                                placeholder="Ø¯Ù…Ø´Ù‚ØŒ Ø³ÙˆØ±ÙŠØ§"
+                                placeholder="دمشق، سوريا"
                             />
                         </div>
                         <div>
                             <label className="text-xs font-black text-gray-400 uppercase mb-2 block">
-                                Ø§Ù„Ù…Ø¯ÙŠÙ†Ø©
+                                المدينة
                             </label>
                             <input
                                 type="text"
                                 className="w-full bg-[#1a1c23] border border-white/10 rounded-2xl py-4 px-6 text-white font-bold"
                                 value={editedInfo.city}
                                 onChange={e => setEditedInfo({ ...editedInfo, city: e.target.value })}
-                                placeholder="Ø¯Ù…Ø´Ù‚"
+                                placeholder="دمشق"
                             />
                         </div>
                         <div>
                             <label className="text-xs font-black text-gray-400 uppercase mb-2 block">
-                                Ø§Ù„Ø¯ÙˆÙ„Ø©
+                                الدولة
                             </label>
                             <input
                                 type="text"
                                 className="w-full bg-[#1a1c23] border border-white/10 rounded-2xl py-4 px-6 text-white font-bold"
                                 value={editedInfo.country}
                                 onChange={e => setEditedInfo({ ...editedInfo, country: e.target.value })}
-                                placeholder="Ø³ÙˆØ±ÙŠØ§"
+                                placeholder="سوريا"
                             />
                         </div>
                     </div>
@@ -260,11 +260,11 @@ const ContactInfoManagementPage: React.FC = () => {
 
                 {/* Social Media */}
                 <div className="glass-dark border border-white/10 rounded-[2rem] p-8">
-                    <h3 className="text-xl font-black mb-6 text-amber-400">ÙˆØ³Ø§Ø¦Ù„ Ø§Ù„ØªÙˆØ§ØµÙ„ Ø§Ù„Ø§Ø¬ØªÙ…Ø§Ø¹ÙŠ</h3>
+                    <h3 className="text-xl font-black mb-6 text-amber-400">وسائل التواصل الاجتماعي</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                             <label className="text-xs font-black text-gray-400 uppercase mb-2 block">
-                                ÙÙŠØ³Ø¨ÙˆÙƒ (URL)
+                                فيسبوك (URL)
                             </label>
                             <input
                                 type="url"
@@ -279,7 +279,7 @@ const ContactInfoManagementPage: React.FC = () => {
                         </div>
                         <div>
                             <label className="text-xs font-black text-gray-400 uppercase mb-2 block">
-                                Ø¥Ù†Ø³ØªØºØ±Ø§Ù… (URL)
+                                إنستغرام (URL)
                             </label>
                             <input
                                 type="url"
@@ -294,7 +294,7 @@ const ContactInfoManagementPage: React.FC = () => {
                         </div>
                         <div>
                             <label className="text-xs font-black text-gray-400 uppercase mb-2 block">
-                                ÙˆØ§ØªØ³Ø§Ø¨ (Ø±Ù‚Ù… Ø§Ù„Ù‡Ø§ØªÙ Ù…Ø¹ Ø±Ù…Ø² Ø§Ù„Ø¯ÙˆÙ„Ø©)
+                                واتساب (رقم الهاتف مع رمز الدولة)
                             </label>
                             <input
                                 type="tel"
@@ -310,7 +310,7 @@ const ContactInfoManagementPage: React.FC = () => {
                         </div>
                         <div>
                             <label className="text-xs font-black text-gray-400 uppercase mb-2 block">
-                                ØªÙŠÙ„ÙŠØ¬Ø±Ø§Ù… (URL)
+                                تيليجرام (URL)
                             </label>
                             <input
                                 type="url"
@@ -334,14 +334,14 @@ const ContactInfoManagementPage: React.FC = () => {
                     disabled={isSaving}
                     className="flex-1 bg-amber-500 text-gray-900 font-black py-5 rounded-[1.5rem] hover:bg-amber-400 shadow-2xl text-lg disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                    {isSaving ? 'Ø¬Ø§Ø±ÙŠ Ø§Ù„Ø­ÙØ¸...' : 'Ø­ÙØ¸ Ø§Ù„ØªØºÙŠÙŠØ±Ø§Øª'}
+                    {isSaving ? 'جاري الحفظ...' : 'حفظ التغييرات'}
                 </button>
                 <button
                     onClick={handleCancel}
                     disabled={isSaving}
                     className="px-10 bg-white/5 text-gray-400 font-black rounded-[1.5rem] border border-white/5 hover:bg-white/10 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                    Ø¥Ù„ØºØ§Ø¡
+                    إلغاء
                 </button>
             </div>
 

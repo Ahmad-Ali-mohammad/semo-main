@@ -12,8 +12,8 @@ const defaultPolicies: PolicyDocument[] = [
     {
         id: 'privacy',
         type: 'privacy',
-        title: 'Ø³ÙŠØ§Ø³Ø© Ø§Ù„Ø®ØµÙˆØµÙŠØ©',
-        content: 'Ù†Ø­Ù† ÙÙŠ Reptile House Ù†Ø­ØªØ±Ù… Ø®ØµÙˆØµÙŠØªÙƒ ÙˆÙ†Ù„ØªØ²Ù… Ø¨Ø­Ù…Ø§ÙŠØ© Ù…Ø¹Ù„ÙˆÙ…Ø§ØªÙƒ Ø§Ù„Ø´Ø®ØµÙŠØ©...',
+        title: 'سياسة الخصوصية',
+        content: 'نحن في Reptile House نحترم خصوصيتك ونلتزم بحماية معلوماتك الشخصية...',
         lastUpdated: new Date().toISOString().split('T')[0],
         isActive: true,
         icon: 'ðŸ”’'
@@ -21,8 +21,8 @@ const defaultPolicies: PolicyDocument[] = [
     {
         id: 'returns',
         type: 'returns',
-        title: 'Ø³ÙŠØ§Ø³Ø© Ø§Ù„Ø§Ø³ØªØ±Ø¬Ø§Ø¹ ÙˆØ§Ù„Ø§Ø³ØªØ¨Ø¯Ø§Ù„',
-        content: 'ÙŠÙ…ÙƒÙ†Ùƒ Ø¥Ø±Ø¬Ø§Ø¹ Ø£Ùˆ Ø§Ø³ØªØ¨Ø¯Ø§Ù„ Ø§Ù„Ù…Ù†ØªØ¬Ø§Øª Ø®Ù„Ø§Ù„ 7 Ø£ÙŠØ§Ù… Ù…Ù† ØªØ§Ø±ÙŠØ® Ø§Ù„Ø´Ø±Ø§Ø¡...',
+        title: 'سياسة الاسترجاع والاستبدال',
+        content: 'يمكنك إرجاع أو استبدال المنتجات خلال 7 أيام من تاريخ الشراء...',
         lastUpdated: new Date().toISOString().split('T')[0],
         isActive: true,
         icon: 'ðŸ”„'
@@ -30,8 +30,8 @@ const defaultPolicies: PolicyDocument[] = [
     {
         id: 'warranty',
         type: 'warranty',
-        title: 'Ø³ÙŠØ§Ø³Ø© Ø§Ù„Ø¶Ù…Ø§Ù†',
-        content: 'Ù†Ø¶Ù…Ù† ØµØ­Ø© Ø¬Ù…ÙŠØ¹ Ø§Ù„Ø²ÙˆØ§Ø­Ù Ù„Ù…Ø¯Ø© 30 ÙŠÙˆÙ…Ø§Ù‹ Ù…Ù† ØªØ§Ø±ÙŠØ® Ø§Ù„Ø´Ø±Ø§Ø¡...',
+        title: 'سياسة الضمان',
+        content: 'نضمن صحة جميع الزواحف لمدة 30 يوماً من تاريخ الشراء...',
         lastUpdated: new Date().toISOString().split('T')[0],
         isActive: true,
         icon: 'âœ…'
@@ -39,8 +39,8 @@ const defaultPolicies: PolicyDocument[] = [
     {
         id: 'terms',
         type: 'terms',
-        title: 'Ø´Ø±ÙˆØ· Ø§Ù„Ø§Ø³ØªØ®Ø¯Ø§Ù…',
-        content: 'Ø¨Ø§Ø³ØªØ®Ø¯Ø§Ù…Ùƒ Ù„Ù‡Ø°Ø§ Ø§Ù„Ù…ÙˆÙ‚Ø¹ØŒ ÙØ¥Ù†Ùƒ ØªÙˆØ§ÙÙ‚ Ø¹Ù„Ù‰ Ø§Ù„Ø´Ø±ÙˆØ· ÙˆØ§Ù„Ø£Ø­ÙƒØ§Ù… Ø§Ù„ØªØ§Ù„ÙŠØ©...',
+        title: 'شروط الاستخدام',
+        content: 'باستخدامك لهذا الموقع، فإنك توافق على الشروط والأحكام التالية...',
         lastUpdated: new Date().toISOString().split('T')[0],
         isActive: true,
         icon: 'ðŸ“‹'
@@ -48,8 +48,8 @@ const defaultPolicies: PolicyDocument[] = [
     {
         id: 'shipping',
         type: 'shipping',
-        title: 'Ø³ÙŠØ§Ø³Ø© Ø§Ù„Ø´Ø­Ù† ÙˆØ§Ù„ØªÙˆØµÙŠÙ„',
-        content: 'Ù†ÙˆÙØ± Ø®Ø¯Ù…Ø© Ø§Ù„ØªÙˆØµÙŠÙ„ Ù„Ø¬Ù…ÙŠØ¹ Ø§Ù„Ù…Ø­Ø§ÙØ¸Ø§Øª Ø§Ù„Ø³ÙˆØ±ÙŠØ© Ø®Ù„Ø§Ù„ 2-5 Ø£ÙŠØ§Ù… Ø¹Ù…Ù„...',
+        title: 'سياسة الشحن والتوصيل',
+        content: 'نوفر خدمة التوصيل لجميع المحافظات السورية خلال 2-5 أيام عمل...',
         lastUpdated: new Date().toISOString().split('T')[0],
         isActive: true,
         icon: 'ðŸšš'
@@ -57,12 +57,12 @@ const defaultPolicies: PolicyDocument[] = [
 ];
 
 const policyTypeLabels = {
-    privacy: 'Ø³ÙŠØ§Ø³Ø© Ø§Ù„Ø®ØµÙˆØµÙŠØ©',
-    returns: 'Ø§Ù„Ø§Ø³ØªØ±Ø¬Ø§Ø¹ ÙˆØ§Ù„Ø§Ø³ØªØ¨Ø¯Ø§Ù„',
-    warranty: 'Ø§Ù„Ø¶Ù…Ø§Ù†',
-    terms: 'Ø´Ø±ÙˆØ· Ø§Ù„Ø§Ø³ØªØ®Ø¯Ø§Ù…',
-    shipping: 'Ø§Ù„Ø´Ø­Ù† ÙˆØ§Ù„ØªÙˆØµÙŠÙ„',
-    custom: 'Ø³ÙŠØ§Ø³Ø© Ù…Ø®ØµØµØ©'
+    privacy: 'سياسة الخصوصية',
+    returns: 'الاسترجاع والاستبدال',
+    warranty: 'الضمان',
+    terms: 'شروط الاستخدام',
+    shipping: 'الشحن والتوصيل',
+    custom: 'سياسة مخصصة'
 };
 
 const PoliciesManagementPage: React.FC = () => {
@@ -105,7 +105,7 @@ const PoliciesManagementPage: React.FC = () => {
         e.preventDefault();
         if (editingPolicy) {
             if (!editingPolicy.title || !editingPolicy.content) {
-                alert('ÙŠØ±Ø¬Ù‰ Ù…Ù„Ø¡ Ø¬Ù…ÙŠØ¹ Ø§Ù„Ø­Ù‚ÙˆÙ„ Ø§Ù„Ù…Ø·Ù„ÙˆØ¨Ø©');
+                alert('يرجى ملء جميع الحقول المطلوبة');
                 return;
             }
 
@@ -158,8 +158,8 @@ const PoliciesManagementPage: React.FC = () => {
         <div className="animate-fade-in relative space-y-8 text-right">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                 <div>
-                    <h1 className="text-4xl font-black mb-2">Ø¥Ø¯Ø§Ø±Ø© Ø§Ù„Ø³ÙŠØ§Ø³Ø§Øª ÙˆØ§Ù„Ø¶Ù…Ø§Ù†Ø§Øª</h1>
-                    <p className="text-gray-400">ØªØ­ÙƒÙ… ÙÙŠ Ø³ÙŠØ§Ø³Ø§Øª Ø§Ù„Ù…ÙˆÙ‚Ø¹ ÙˆØ§Ù„Ø¶Ù…Ø§Ù†Ø§Øª</p>
+                    <h1 className="text-4xl font-black mb-2">إدارة السياسات والضمانات</h1>
+                    <p className="text-gray-400">تحكم في سياسات الموقع والضمانات</p>
                 </div>
                 <div className="flex gap-3">
                     <HelpButton onClick={() => setIsHelpOpen(true)} />
@@ -168,7 +168,7 @@ const PoliciesManagementPage: React.FC = () => {
                         className="flex items-center gap-3 bg-amber-500 text-gray-900 font-black py-3.5 px-8 rounded-2xl hover:bg-amber-400 transition-all shadow-xl shadow-amber-500/20 active:scale-95"
                     >
                         <PlusIcon className="w-5 h-5" />
-                        <span>Ø¥Ø¶Ø§ÙØ© Ø³ÙŠØ§Ø³Ø© Ø¬Ø¯ÙŠØ¯Ø©</span>
+                        <span>إضافة سياسة جديدة</span>
                     </button>
                 </div>
             </div>
@@ -178,7 +178,7 @@ const PoliciesManagementPage: React.FC = () => {
                 <div className="glass-medium p-6 rounded-[2rem] border border-white/10">
                     <div className="flex items-center justify-between">
                         <div>
-                            <p className="text-gray-400 text-sm font-bold mb-1">Ø¥Ø¬Ù…Ø§Ù„ÙŠ Ø§Ù„Ø³ÙŠØ§Ø³Ø§Øª</p>
+                            <p className="text-gray-400 text-sm font-bold mb-1">إجمالي السياسات</p>
                             <p className="text-3xl font-black text-amber-400 font-poppins">{policies.length}</p>
                         </div>
                         <div className="p-4 bg-amber-500/10 text-amber-400 rounded-2xl">
@@ -189,7 +189,7 @@ const PoliciesManagementPage: React.FC = () => {
                 <div className="glass-medium p-6 rounded-[2rem] border border-white/10">
                     <div className="flex items-center justify-between">
                         <div>
-                            <p className="text-gray-400 text-sm font-bold mb-1">Ø§Ù„Ø³ÙŠØ§Ø³Ø§Øª Ø§Ù„Ù†Ø´Ø·Ø©</p>
+                            <p className="text-gray-400 text-sm font-bold mb-1">السياسات النشطة</p>
                             <p className="text-3xl font-black text-green-400 font-poppins">{activePolicies.length}</p>
                         </div>
                         <div className="p-4 bg-green-500/10 text-green-400 rounded-2xl">
@@ -200,7 +200,7 @@ const PoliciesManagementPage: React.FC = () => {
                 <div className="glass-medium p-6 rounded-[2rem] border border-white/10">
                     <div className="flex items-center justify-between">
                         <div>
-                            <p className="text-gray-400 text-sm font-bold mb-1">Ø¢Ø®Ø± ØªØ­Ø¯ÙŠØ«</p>
+                            <p className="text-gray-400 text-sm font-bold mb-1">آخر تحديث</p>
                             <p className="text-lg font-black text-blue-400">
                                 {policies.length > 0 ? policies[0].lastUpdated : 'N/A'}
                             </p>
@@ -239,14 +239,14 @@ const PoliciesManagementPage: React.FC = () => {
                                     <button
                                         onClick={() => handleOpenModal(policy)}
                                         className="p-2 bg-white/5 text-gray-400 hover:text-amber-400 hover:bg-amber-400/10 rounded-lg transition-all border border-white/5"
-                                        aria-label={`ØªØ¹Ø¯ÙŠÙ„ ${policy.title}`}
+                                        aria-label={`تعديل ${policy.title}`}
                                     >
                                         <EditIcon className="w-4 h-4" />
                                     </button>
                                     <button
                                         onClick={() => handleDeleteClick(policy.id)}
                                         className="p-2 bg-red-500/5 text-red-400 hover:text-white hover:bg-red-500 rounded-lg transition-all border border-red-500/10"
-                                        aria-label={`Ø­Ø°Ù ${policy.title}`}
+                                        aria-label={`حذف ${policy.title}`}
                                     >
                                         <TrashIcon className="w-4 h-4" />
                                     </button>
@@ -263,7 +263,7 @@ const PoliciesManagementPage: React.FC = () => {
                             {/* Footer */}
                             <div className="flex items-center justify-between pt-4 border-t border-white/10">
                                 <div className="text-xs text-gray-500">
-                                    Ø¢Ø®Ø± ØªØ­Ø¯ÙŠØ«: {policy.lastUpdated}
+                                    آخر تحديث: {policy.lastUpdated}
                                 </div>
                                 <button
                                     onClick={() => togglePolicyStatus(policy.id)}
@@ -273,7 +273,7 @@ const PoliciesManagementPage: React.FC = () => {
                                             : 'bg-gray-500/10 text-gray-400 border border-gray-500/20 hover:bg-gray-500/20'
                                     }`}
                                 >
-                                    {policy.isActive ? 'âœ“ Ù†Ø´Ø·' : 'âœ— Ù…Ø¹Ø·Ù„'}
+                                    {policy.isActive ? '✓ نشط' : '✗ معطل'}
                                 </button>
                             </div>
                         </div>
@@ -284,15 +284,15 @@ const PoliciesManagementPage: React.FC = () => {
             {policies.length === 0 && (
                 <div className="text-center py-20 text-gray-600 font-bold border-2 border-dashed border-white/5 rounded-[2rem] glass-medium">
                     <DocumentIcon className="w-16 h-16 mx-auto mb-4 text-gray-700" />
-                    <p>Ù„Ø§ ØªÙˆØ¬Ø¯ Ø³ÙŠØ§Ø³Ø§Øª. Ø§Ø¨Ø¯Ø£ Ø¨Ø¥Ø¶Ø§ÙØ© Ø³ÙŠØ§Ø³Ø© Ø¬Ø¯ÙŠØ¯Ø©!</p>
+                    <p>لا توجد سياسات. ابدأ بإضافة سياسة جديدة!</p>
                 </div>
             )}
 
             {/* Confirmation Modal */}
             <ConfirmationModal
                 isOpen={confirmDelete.isOpen}
-                title="ØªØ£ÙƒÙŠØ¯ Ø§Ù„Ø­Ø°Ù"
-                message="Ù‡Ù„ Ø£Ù†Øª Ù…ØªØ£ÙƒØ¯ Ù…Ù† Ø­Ø°Ù Ù‡Ø°Ù‡ Ø§Ù„Ø³ÙŠØ§Ø³Ø©ØŸ Ù„Ø§ ÙŠÙ…ÙƒÙ† Ø§Ù„ØªØ±Ø§Ø¬Ø¹ Ø¹Ù† Ù‡Ø°Ù‡ Ø§Ù„Ø¹Ù…Ù„ÙŠØ©."
+                title="تأكيد الحذف"
+                message="هل أنت متأكد من حذف هذه السياسة؟ لا يمكن التراجع عن هذه العملية."
                 onConfirm={handleConfirmDelete}
                 onCancel={() => setConfirmDelete({ isOpen: false, id: null })}
             />
@@ -312,15 +312,15 @@ const PoliciesManagementPage: React.FC = () => {
                     >
                         <h2 className="text-4xl font-black mb-10 text-white tracking-tighter">
                             {editingPolicy?.id && policies.find(p => p.id === editingPolicy.id)
-                                ? 'ØªØ­Ø¯ÙŠØ« Ø§Ù„Ø³ÙŠØ§Ø³Ø©'
-                                : 'Ø¥Ø¶Ø§ÙØ© Ø³ÙŠØ§Ø³Ø© Ø¬Ø¯ÙŠØ¯Ø©'}
+                                ? 'تحديث السياسة'
+                                : 'إضافة سياسة جديدة'}
                         </h2>
 
                         <div className="space-y-6 text-right">
                             {/* Type Selection */}
                             <div>
                                 <label htmlFor="policy-type" className="text-xs font-black text-amber-500 uppercase mb-2 block">
-                                    Ù†ÙˆØ¹ Ø§Ù„Ø³ÙŠØ§Ø³Ø© <span className="text-red-500">*</span>
+                                    نوع السياسة <span className="text-red-500">*</span>
                                 </label>
                                 <input
                                     id="policy-type"
@@ -332,14 +332,14 @@ const PoliciesManagementPage: React.FC = () => {
                                     placeholder="privacy, returns, warranty, terms, shipping, custom"
                                 />
                                 <p className="text-xs text-gray-500 mt-2">
-                                    Ø§Ù„Ø£Ù†ÙˆØ§Ø¹ Ø§Ù„Ù…ØªØ§Ø­Ø©: privacy, returns, warranty, terms, shipping, custom
+                                    الأنواع المتاحة: privacy, returns, warranty, terms, shipping, custom
                                 </p>
                             </div>
 
                             {/* Icon */}
                             <div>
                                 <label htmlFor="policy-icon" className="text-xs font-black text-amber-500 uppercase mb-2 block">
-                                    Ø§Ù„Ø£ÙŠÙ‚ÙˆÙ†Ø© (Emoji)
+                                    الأيقونة (Emoji)
                                 </label>
                                 <input
                                     id="policy-icon"
@@ -354,7 +354,7 @@ const PoliciesManagementPage: React.FC = () => {
                             {/* Title */}
                             <div>
                                 <label htmlFor="policy-title" className="text-xs font-black text-amber-500 uppercase mb-2 block">
-                                    Ø¹Ù†ÙˆØ§Ù† Ø§Ù„Ø³ÙŠØ§Ø³Ø© <span className="text-red-500">*</span>
+                                    عنوان السياسة <span className="text-red-500">*</span>
                                 </label>
                                 <input
                                     id="policy-title"
@@ -362,14 +362,14 @@ const PoliciesManagementPage: React.FC = () => {
                                     className="w-full bg-[#1a1c23] border border-white/10 rounded-2xl py-4 px-6 text-white font-bold"
                                     value={editingPolicy?.title || ''}
                                     onChange={e => setEditingPolicy({ ...editingPolicy, title: e.target.value })}
-                                    placeholder="Ù…Ø«Ù„Ø§Ù‹: Ø³ÙŠØ§Ø³Ø© Ø§Ù„Ø®ØµÙˆØµÙŠØ©"
+                                    placeholder="مثلاً: سياسة الخصوصية"
                                 />
                             </div>
 
                             {/* Content */}
                             <div>
                                 <label htmlFor="policy-content" className="text-xs font-black text-amber-500 uppercase mb-2 block">
-                                    Ù…Ø­ØªÙˆÙ‰ Ø§Ù„Ø³ÙŠØ§Ø³Ø© <span className="text-red-500">*</span>
+                                    محتوى السياسة <span className="text-red-500">*</span>
                                 </label>
                                 <textarea
                                     id="policy-content"
@@ -378,10 +378,10 @@ const PoliciesManagementPage: React.FC = () => {
                                     className="w-full bg-[#1a1c23] border border-white/10 rounded-2xl py-4 px-6 text-white leading-relaxed resize-none"
                                     value={editingPolicy?.content || ''}
                                     onChange={e => setEditingPolicy({ ...editingPolicy, content: e.target.value })}
-                                    placeholder="Ø§ÙƒØªØ¨ Ù…Ø­ØªÙˆÙ‰ Ø§Ù„Ø³ÙŠØ§Ø³Ø© Ø¨Ø§Ù„ØªÙØµÙŠÙ„..."
+                                    placeholder="اكتب محتوى السياسة بالتفصيل..."
                                 />
                                 <p className="text-xs text-gray-500 mt-2">
-                                    Ø¹Ø¯Ø¯ Ø§Ù„Ø£Ø­Ø±Ù: {editingPolicy?.content?.length || 0}
+                                    عدد الأحرف: {editingPolicy?.content?.length || 0}
                                 </p>
                             </div>
 
@@ -394,7 +394,7 @@ const PoliciesManagementPage: React.FC = () => {
                                         onChange={e => setEditingPolicy({ ...editingPolicy, isActive: e.target.checked })}
                                         className="w-5 h-5 rounded border-white/20 bg-transparent text-amber-500 focus:ring-amber-500"
                                     />
-                                    <span className="text-white font-bold">ØªÙØ¹ÙŠÙ„ Ø§Ù„Ø³ÙŠØ§Ø³Ø© Ø¹Ù„Ù‰ Ø§Ù„Ù…ÙˆÙ‚Ø¹</span>
+                                    <span className="text-white font-bold">تفعيل السياسة على الموقع</span>
                                 </label>
                             </div>
                         </div>
@@ -404,14 +404,14 @@ const PoliciesManagementPage: React.FC = () => {
                                 type="submit"
                                 className="flex-1 bg-amber-500 text-gray-900 font-black py-5 rounded-[1.5rem] hover:bg-amber-400 shadow-2xl text-lg"
                             >
-                                Ø­ÙØ¸ Ø§Ù„Ø³ÙŠØ§Ø³Ø©
+                                حفظ السياسة
                             </button>
                             <button
                                 type="button"
                                 onClick={() => setIsModalOpen(false)}
                                 className="px-10 bg-white/5 text-gray-400 font-black rounded-[1.5rem] border border-white/5"
                             >
-                                Ø¥Ù„ØºØ§Ø¡
+                                إلغاء
                             </button>
                         </div>
                     </form>

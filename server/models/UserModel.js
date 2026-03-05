@@ -1,44 +1,20 @@
 import pool from '../config/db.js';
-import crypto from 'crypto';
 import { read, write } from '../store.js';
 import { rowToCamel, rowsToCamel, objToSnake } from '../utils/rowMapper.js';
 
 const USERS_KEY = 'users';
 
-function hashPassword(password, saltHex) {
-  const salt = Buffer.from(saltHex, 'hex');
-  const combined = Buffer.concat([salt, Buffer.from(password, 'utf8')]);
-  return crypto.createHash('sha256').update(combined).digest('hex');
-}
-
 function defaultUsers() {
-  const adminSalt = 'b8df467246fcbecdd4fb7606fbce6e8c';
-  const userSalt = '183281d4c8042e5d65a4f00d7eb0e369';
-  return [
-    {
-      id: 'admin-1',
-      name: 'Admin',
-      email: 'admin@reptilehouse.sy',
-      role: 'admin',
-      avatarUrl: null,
-      passwordSalt: adminSalt,
-      passwordHash: hashPassword('admin123', adminSalt),
-    },
-    {
-      id: 'user-1',
-      name: 'User',
-      email: 'user@reptilehouse.sy',
-      role: 'user',
-      avatarUrl: null,
-      passwordSalt: userSalt,
-      passwordHash: hashPassword('user123', userSalt),
-    },
-  ];
+  return [];
 }
 
 function readUsers() {
   const users = read(USERS_KEY, null);
-  if (Array.isArray(users) && users.length > 0) return users;
+  if (Array.isArray(users) && users.length > 0) {
+    const filtered = users.filter((u) => !['admin@reptilehouse.sy', 'user@reptilehouse.sy'].includes(String(u.email || '').toLowerCase()));
+    if (filtered.length !== users.length) write(USERS_KEY, filtered);
+    return filtered;
+  }
   const seeded = defaultUsers();
   write(USERS_KEY, seeded);
   return seeded;
@@ -73,6 +49,15 @@ export async function findByEmail(email) {
     return rows[0] ? rowToCamel(rows[0]) : null;
   } catch {
     return readUsers().find((u) => u.email?.trim().toLowerCase() === normalizedEmail) || null;
+  }
+}
+
+export async function hasAnyAdmin() {
+  try {
+    const [rows] = await pool.query("SELECT COUNT(*) AS c FROM users WHERE role = 'admin'");
+    return Number(rows?.[0]?.c || 0) > 0;
+  } catch {
+    return readUsers().some((u) => u.role === 'admin');
   }
 }
 

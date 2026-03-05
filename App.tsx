@@ -200,17 +200,17 @@ const AppContent: React.FC = () => {
 };
 
 const App: React.FC = () => (
-  <PreferencesProvider>
-    <DatabaseProvider>
-      <AuthProvider>
+  <AuthProvider>
+    <PreferencesProvider>
+      <DatabaseProvider>
         <WishlistProvider>
           <CartProvider>
             <AppContent />
           </CartProvider>
         </WishlistProvider>
-      </AuthProvider>
-    </DatabaseProvider>
-  </PreferencesProvider>
+      </DatabaseProvider>
+    </PreferencesProvider>
+  </AuthProvider>
 );
 
 export default App;

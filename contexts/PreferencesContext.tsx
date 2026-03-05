@@ -1,6 +1,7 @@
 import React, { createContext, useState, useEffect, ReactNode } from 'react';
 import { UserPreferences } from '../types';
 import { api } from '../services/api';
+import { useAuth } from '../hooks/useAuth';
 
 interface PreferencesContextType {
   prefs: UserPreferences;
@@ -17,25 +18,33 @@ const defaultPrefs: UserPreferences = {
 export const PreferencesContext = createContext<PreferencesContextType | undefined>(undefined);
 
 export const PreferencesProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+  const { user } = useAuth();
   const [prefs, setPrefs] = useState<UserPreferences>(defaultPrefs);
   const [isLoading, setIsLoading] = useState(true);
 
   // Load preferences from API on mount
   useEffect(() => {
     const loadPrefs = async () => {
+      if (!user) {
+        setPrefs(defaultPrefs);
+        applyTheme(defaultPrefs.theme);
+        setIsLoading(false);
+        return;
+      }
       try {
         const savedPrefs = await api.getUserPreferences();
-       setPrefs(savedPrefs);
+        setPrefs(savedPrefs);
         applyTheme(savedPrefs.theme);
       } catch (error) {
-        console.error('Failed to load preferences:', error);
         setPrefs(defaultPrefs);
+        applyTheme(defaultPrefs.theme);
       } finally {
         setIsLoading(false);
       }
     };
+    setIsLoading(true);
     loadPrefs();
-  }, []);
+  }, [user?.id]);
 
   const applyTheme = (theme: 'dark' | 'light') => {
     if (theme === 'light') {
@@ -55,15 +64,15 @@ export const PreferencesProvider: React.FC<{ children: ReactNode }> = ({ childre
     }
 
     // Save to API
+    if (!user) {
+      return;
+    }
+
     try {
       await api.saveUserPreferences({ [key]: value });
-    } catch (error) {
-      console.error('Failed to save preference:', error);
-      // Revert on error
+    } catch {
       setPrefs(prefs);
-      if (key === 'theme') {
-        applyTheme(prefs.theme);
-      }
+      if (key === 'theme') applyTheme(prefs.theme);
     }
   };
 

@@ -8,88 +8,88 @@ const defaultPages: PageContent[] = [
   {
     id: 'page-home',
     slug: 'home',
-    title: 'Ø§Ù„ØµÙØ­Ø© Ø§Ù„Ø±Ø¦ÙŠØ³ÙŠØ©',
-    excerpt: 'Ù…Ø­ØªÙˆÙ‰ Ø§Ù„ÙˆØ§Ø¬Ù‡Ø© Ø§Ù„Ø±Ø¦ÙŠØ³ÙŠØ© ÙˆØ§Ù„Ø¹Ù†Ø§ÙˆÙŠÙ† Ø§Ù„ØªØ³ÙˆÙŠÙ‚ÙŠØ©.',
-    content: 'Ø­Ø±Ø± Ù†ØµÙˆØµ Ø§Ù„ØµÙØ­Ø© Ø§Ù„Ø±Ø¦ÙŠØ³ÙŠØ© Ù…Ù† Ù‡Ù†Ø§.',
-    seoTitle: 'Ø¨ÙŠØª Ø§Ù„Ø²ÙˆØ§Ø­Ù - Ø§Ù„ØµÙØ­Ø© Ø§Ù„Ø±Ø¦ÙŠØ³ÙŠØ©',
-    seoDescription: 'Ø£ÙØ¶Ù„ Ù…ØªØ¬Ø± Ù„Ù„Ø²ÙˆØ§Ø­Ù ÙˆØ§Ù„Ù…Ø³ØªÙ„Ø²Ù…Ø§Øª.',
+    title: 'الصفحة الرئيسية',
+    excerpt: 'محتوى الواجهة الرئيسية والعناوين التسويقية.',
+    content: 'حرر نصوص الصفحة الرئيسية من هنا.',
+    seoTitle: 'بيت الزواحف - الصفحة الرئيسية',
+    seoDescription: 'أفضل متجر للزواحف والمستلزمات.',
     isActive: true,
     updatedAt: new Date().toISOString().slice(0, 10),
   },
   {
     id: 'page-about',
     slug: 'about',
-    title: 'Ù…Ù† Ù†Ø­Ù†',
-    excerpt: 'Ù…Ø­ØªÙˆÙ‰ ØµÙØ­Ø© Ù…Ù† Ù†Ø­Ù† ÙˆØ±Ø³Ø§Ù„Ø© Ø§Ù„Ù…ØªØ¬Ø±.',
-    content: 'Ø­Ø±Ø± Ù‚ØµØ© Ø§Ù„Ù…ØªØ¬Ø± ÙˆØ§Ù„Ø±Ø¤ÙŠØ© ÙˆØ§Ù„Ù‚ÙŠÙ….',
-    seoTitle: 'Ù…Ù† Ù†Ø­Ù† - Ø¨ÙŠØª Ø§Ù„Ø²ÙˆØ§Ø­Ù',
-    seoDescription: 'ØªØ¹Ø±Ù Ø¹Ù„Ù‰ ÙØ±ÙŠÙ‚ Ø¨ÙŠØª Ø§Ù„Ø²ÙˆØ§Ø­Ù.',
+    title: 'من نحن',
+    excerpt: 'محتوى صفحة من نحن ورسالة المتجر.',
+    content: 'حرر قصة المتجر والرؤية والقيم.',
+    seoTitle: 'من نحن - بيت الزواحف',
+    seoDescription: 'تعرف على فريق بيت الزواحف.',
     isActive: true,
     updatedAt: new Date().toISOString().slice(0, 10),
   },
   {
     id: 'page-contact',
     slug: 'contact',
-    title: 'Ø§ØªØµÙ„ Ø¨Ù†Ø§',
-    excerpt: 'Ù…Ø­ØªÙˆÙ‰ ØµÙØ­Ø© Ø§Ù„ØªÙˆØ§ØµÙ„ ÙˆØ§Ù„ØªØ¹Ù„ÙŠÙ…Ø§Øª.',
-    content: 'Ø­Ø±Ø± Ù†ØµÙˆØµ Ø§Ù„ØªÙˆØ§ØµÙ„ ÙˆÙ†Ù…Ø§Ø°Ø¬ Ø§Ù„Ø·Ù„Ø¨.',
-    seoTitle: 'Ø§ØªØµÙ„ Ø¨Ù†Ø§ - Ø¨ÙŠØª Ø§Ù„Ø²ÙˆØ§Ø­Ù',
-    seoDescription: 'ØªÙˆØ§ØµÙ„ Ù…Ø¹Ù†Ø§ Ù„Ø£ÙŠ Ø§Ø³ØªÙØ³Ø§Ø± Ø£Ùˆ Ø·Ù„Ø¨.',
+    title: 'اتصل بنا',
+    excerpt: 'محتوى صفحة التواصل والتعليمات.',
+    content: 'حرر نصوص التواصل ونماذج الطلب.',
+    seoTitle: 'اتصل بنا - بيت الزواحف',
+    seoDescription: 'تواصل معنا لأي استفسار أو طلب.',
     isActive: true,
     updatedAt: new Date().toISOString().slice(0, 10),
   },
   {
     id: 'page-privacy',
     slug: 'privacy',
-    title: 'Ø³ÙŠØ§Ø³Ø© Ø§Ù„Ø®ØµÙˆØµÙŠØ©',
-    excerpt: 'Ø³ÙŠØ§Ø³Ø© Ø®ØµÙˆØµÙŠØ© Ø¨ÙŠØ§Ù†Ø§Øª Ø§Ù„Ù…Ø³ØªØ®Ø¯Ù…ÙŠÙ†.',
+    title: 'سياسة الخصوصية',
+    excerpt: 'سياسة خصوصية بيانات المستخدمين.',
     content: '<h2>سياسة الخصوصية</h2><p>يمكنك تعديل محتوى هذه الصفحة من لوحة إدارة المحتوى.</p>',
-    seoTitle: 'Ø³ÙŠØ§Ø³Ø© Ø§Ù„Ø®ØµÙˆØµÙŠØ© - Ø¨ÙŠØª Ø§Ù„Ø²ÙˆØ§Ø­Ù',
-    seoDescription: 'Ø³ÙŠØ§Ø³Ø© Ø§Ù„Ø®ØµÙˆØµÙŠØ© ÙÙŠ Ù…ØªØ¬Ø± Ø¨ÙŠØª Ø§Ù„Ø²ÙˆØ§Ø­Ù.',
+    seoTitle: 'سياسة الخصوصية - بيت الزواحف',
+    seoDescription: 'سياسة الخصوصية في متجر بيت الزواحف.',
     isActive: true,
     updatedAt: new Date().toISOString().slice(0, 10),
   },
   {
     id: 'page-terms',
     slug: 'terms',
-    title: 'Ø§Ù„Ø´Ø±ÙˆØ· ÙˆØ§Ù„Ø£Ø­ÙƒØ§Ù…',
-    excerpt: 'Ø§Ù„Ø´Ø±ÙˆØ· Ø§Ù„Ø¹Ø§Ù…Ø© Ù„Ø§Ø³ØªØ®Ø¯Ø§Ù… Ø§Ù„Ù…ÙˆÙ‚Ø¹.',
+    title: 'الشروط والأحكام',
+    excerpt: 'الشروط العامة لاستخدام الموقع.',
     content: '<h2>الشروط والأحكام</h2><p>يمكنك تعديل محتوى هذه الصفحة من لوحة إدارة المحتوى.</p>',
-    seoTitle: 'Ø§Ù„Ø´Ø±ÙˆØ· ÙˆØ§Ù„Ø£Ø­ÙƒØ§Ù… - Ø¨ÙŠØª Ø§Ù„Ø²ÙˆØ§Ø­Ù',
-    seoDescription: 'Ø´Ø±ÙˆØ· ÙˆØ£Ø­ÙƒØ§Ù… Ø§Ù„Ø§Ø³ØªØ®Ø¯Ø§Ù….',
+    seoTitle: 'الشروط والأحكام - بيت الزواحف',
+    seoDescription: 'شروط وأحكام الاستخدام.',
     isActive: true,
     updatedAt: new Date().toISOString().slice(0, 10),
   },
   {
     id: 'page-returns',
     slug: 'returns',
-    title: 'Ø³ÙŠØ§Ø³Ø© Ø§Ù„Ø¥Ø±Ø¬Ø§Ø¹',
-    excerpt: 'Ø§Ù„Ø´Ø±ÙˆØ· Ø§Ù„Ù…Ø¹ØªÙ…Ø¯Ø© Ù„Ù„Ø¥Ø±Ø¬Ø§Ø¹ ÙˆØ§Ù„Ø§Ø³ØªØ¨Ø¯Ø§Ù„.',
+    title: 'سياسة الإرجاع',
+    excerpt: 'الشروط المعتمدة للإرجاع والاستبدال.',
     content: '<h2>سياسة الإرجاع</h2><p>يمكنك تعديل محتوى هذه الصفحة من لوحة إدارة المحتوى.</p>',
-    seoTitle: 'Ø³ÙŠØ§Ø³Ø© Ø§Ù„Ø¥Ø±Ø¬Ø§Ø¹ - Ø¨ÙŠØª Ø§Ù„Ø²ÙˆØ§Ø­Ù',
-    seoDescription: 'Ø³ÙŠØ§Ø³Ø© Ø§Ù„Ø¥Ø±Ø¬Ø§Ø¹ ÙˆØ§Ù„Ø§Ø³ØªØ¨Ø¯Ø§Ù„.',
+    seoTitle: 'سياسة الإرجاع - بيت الزواحف',
+    seoDescription: 'سياسة الإرجاع والاستبدال.',
     isActive: true,
     updatedAt: new Date().toISOString().slice(0, 10),
   },
   {
     id: 'page-shipping',
     slug: 'shipping',
-    title: 'Ø³ÙŠØ§Ø³Ø© Ø§Ù„Ø´Ø­Ù†',
-    excerpt: 'Ù…ÙˆØ§Ø¹ÙŠØ¯ Ø§Ù„Ø´Ø­Ù† ÙˆØ®ÙŠØ§Ø±Ø§Øª Ø§Ù„ØªÙˆØµÙŠÙ„.',
+    title: 'سياسة الشحن',
+    excerpt: 'مواعيد الشحن وخيارات التوصيل.',
     content: '<h2>سياسة الشحن</h2><p>يمكنك تعديل محتوى هذه الصفحة من لوحة إدارة المحتوى.</p>',
-    seoTitle: 'Ø³ÙŠØ§Ø³Ø© Ø§Ù„Ø´Ø­Ù† - Ø¨ÙŠØª Ø§Ù„Ø²ÙˆØ§Ø­Ù',
-    seoDescription: 'Ø³ÙŠØ§Ø³Ø© Ø§Ù„Ø´Ø­Ù† ÙˆØ§Ù„ØªÙˆØµÙŠÙ„.',
+    seoTitle: 'سياسة الشحن - بيت الزواحف',
+    seoDescription: 'سياسة الشحن والتوصيل.',
     isActive: true,
     updatedAt: new Date().toISOString().slice(0, 10),
   },
   {
     id: 'page-warranty',
     slug: 'warranty',
-    title: 'Ø§Ù„Ø¶Ù…Ø§Ù† ÙˆØ§Ù„ØµØ­Ø©',
-    excerpt: 'ØªÙØ§ØµÙŠÙ„ Ø§Ù„Ø¶Ù…Ø§Ù† Ø§Ù„ØµØ­ÙŠ Ù„Ù„Ø²ÙˆØ§Ø­Ù.',
+    title: 'الضمان والصحة',
+    excerpt: 'تفاصيل الضمان الصحي للزواحف.',
     content: '<h2>الضمان والصحة</h2><p>يمكنك تعديل محتوى هذه الصفحة من لوحة إدارة المحتوى.</p>',
-    seoTitle: 'Ø§Ù„Ø¶Ù…Ø§Ù† ÙˆØ§Ù„ØµØ­Ø© - Ø¨ÙŠØª Ø§Ù„Ø²ÙˆØ§Ø­Ù',
-    seoDescription: 'Ø³ÙŠØ§Ø³Ø© Ø§Ù„Ø¶Ù…Ø§Ù† Ø§Ù„ØµØ­ÙŠ.',
+    seoTitle: 'الضمان والصحة - بيت الزواحف',
+    seoDescription: 'سياسة الضمان الصحي.',
     isActive: true,
     updatedAt: new Date().toISOString().slice(0, 10),
   },
@@ -115,7 +115,7 @@ const PageContentManagementPage: React.FC = () => {
         setContents(rows);
       }
     } catch (e) {
-      setError('ØªØ¹Ø°Ø± ØªØ­Ù…ÙŠÙ„ Ù…Ø­ØªÙˆÙ‰ Ø§Ù„ØµÙØ­Ø§Øª');
+      setError('تعذر تحميل محتوى الصفحات');
       setContents(defaultPages);
     } finally {
       setIsLoading(false);
@@ -152,7 +152,7 @@ const PageContentManagementPage: React.FC = () => {
     e.preventDefault();
     if (!editingItem) return;
     if (!editingItem.slug.trim() || !editingItem.title.trim() || !editingItem.content.trim()) {
-      setError('Ø§Ù„Ø±Ø¬Ø§Ø¡ ØªØ¹Ø¨Ø¦Ø© Ø§Ù„Ø­Ù‚ÙˆÙ„ Ø§Ù„Ù…Ø·Ù„ÙˆØ¨Ø©');
+      setError('الرجاء تعبئة الحقول المطلوبة');
       return;
     }
 
@@ -173,7 +173,7 @@ const PageContentManagementPage: React.FC = () => {
       setIsModalOpen(false);
       setEditingItem(null);
     } catch {
-      setError('ØªØ¹Ø°Ø± Ø­ÙØ¸ Ù…Ø­ØªÙˆÙ‰ Ø§Ù„ØµÙØ­Ø©');
+      setError('تعذر حفظ محتوى الصفحة');
     } finally {
       setIsSaving(false);
     }
@@ -186,7 +186,7 @@ const PageContentManagementPage: React.FC = () => {
       await api.deletePageContent(id);
       await loadContents();
     } catch {
-      setError('ØªØ¹Ø°Ø± Ø­Ø°Ù Ø§Ù„Ù…Ø­ØªÙˆÙ‰');
+      setError('تعذر حذف المحتوى');
     } finally {
       setConfirmDelete({ isOpen: false, id: null });
     }
@@ -204,7 +204,7 @@ const PageContentManagementPage: React.FC = () => {
           className="flex items-center gap-3 bg-amber-500 text-gray-900 font-black py-3.5 px-8 rounded-2xl hover:bg-amber-400 transition-all shadow-xl shadow-amber-500/20 active:scale-95"
         >
           <PlusIcon className="w-5 h-5" />
-          <span>ØµÙØ­Ø© Ø¬Ø¯ÙŠØ¯Ø©</span>
+          <span>صفحة جديدة</span>
         </button>
       </div>
 
@@ -214,7 +214,7 @@ const PageContentManagementPage: React.FC = () => {
         <div className="glass-medium p-6 rounded-[2rem] border border-white/10">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-gray-400 text-sm font-bold mb-1">Ø¥Ø¬Ù…Ø§Ù„ÙŠ Ø§Ù„ØµÙØ­Ø§Øª</p>
+              <p className="text-gray-400 text-sm font-bold mb-1">إجمالي الصفحات</p>
               <p className="text-3xl font-black text-amber-400 font-poppins">{contents.length}</p>
             </div>
             <div className="p-4 bg-amber-500/10 text-amber-400 rounded-2xl"><DocumentIcon className="w-8 h-8" /></div>
@@ -223,7 +223,7 @@ const PageContentManagementPage: React.FC = () => {
         <div className="glass-medium p-6 rounded-[2rem] border border-white/10">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-gray-400 text-sm font-bold mb-1">Ø§Ù„ØµÙØ­Ø§Øª Ø§Ù„Ù…Ù†Ø´ÙˆØ±Ø©</p>
+              <p className="text-gray-400 text-sm font-bold mb-1">الصفحات المنشورة</p>
               <p className="text-3xl font-black text-green-400 font-poppins">{activeCount}</p>
             </div>
             <div className="p-4 bg-green-500/10 text-green-400 rounded-2xl"><CheckCircleIcon className="w-8 h-8" /></div>
@@ -232,7 +232,7 @@ const PageContentManagementPage: React.FC = () => {
         <div className="glass-medium p-6 rounded-[2rem] border border-white/10">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-gray-400 text-sm font-bold mb-1">Ø¢Ø®Ø± ØªØ­Ø¯ÙŠØ«</p>
+              <p className="text-gray-400 text-sm font-bold mb-1">آخر تحديث</p>
               <p className="text-lg font-black text-blue-400">{contents[0]?.updatedAt || '-'}</p>
             </div>
             <div className="p-4 bg-blue-500/10 text-blue-400 rounded-2xl"><DocumentIcon className="w-8 h-8" /></div>
@@ -241,7 +241,7 @@ const PageContentManagementPage: React.FC = () => {
       </div>
 
       {isLoading ? (
-        <div className="glass-medium rounded-[2rem] border border-white/10 p-10 text-center text-gray-400 font-bold">Ø¬Ø§Ø±ÙŠ ØªØ­Ù…ÙŠÙ„ Ø§Ù„Ù…Ø­ØªÙˆÙ‰...</div>
+        <div className="glass-medium rounded-[2rem] border border-white/10 p-10 text-center text-gray-400 font-bold">جاري تحميل المحتوى...</div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {contents.map((item) => (
@@ -253,19 +253,19 @@ const PageContentManagementPage: React.FC = () => {
                     <p className="text-xs text-amber-400 font-bold">/{item.slug}</p>
                   </div>
                   <div className="flex gap-2">
-                    <button onClick={() => handleOpenEdit(item)} className="p-2 bg-white/5 text-gray-300 hover:text-amber-400 rounded-lg transition-all border border-white/10" aria-label="ØªØ¹Ø¯ÙŠÙ„ Ø§Ù„Ù…Ø­ØªÙˆÙ‰">
+                    <button onClick={() => handleOpenEdit(item)} className="p-2 bg-white/5 text-gray-300 hover:text-amber-400 rounded-lg transition-all border border-white/10" aria-label="تعديل المحتوى">
                       <EditIcon className="w-4 h-4" />
                     </button>
-                    <button onClick={() => setConfirmDelete({ isOpen: true, id: item.id })} className="p-2 bg-red-500/5 text-red-400 hover:bg-red-500 hover:text-white rounded-lg transition-all border border-red-500/30" aria-label="Ø­Ø°Ù Ø§Ù„Ù…Ø­ØªÙˆÙ‰">
+                    <button onClick={() => setConfirmDelete({ isOpen: true, id: item.id })} className="p-2 bg-red-500/5 text-red-400 hover:bg-red-500 hover:text-white rounded-lg transition-all border border-red-500/30" aria-label="حذف المحتوى">
                       <TrashIcon className="w-4 h-4" />
                     </button>
                   </div>
                 </div>
                 <p className="text-sm text-gray-400 line-clamp-3">{item.excerpt || item.content}</p>
                 <div className="flex items-center justify-between pt-3 border-t border-white/10">
-                  <span className="text-xs text-gray-500">Ø¢Ø®Ø± ØªØ­Ø¯ÙŠØ«: {item.updatedAt}</span>
+                  <span className="text-xs text-gray-500">آخر تحديث: {item.updatedAt}</span>
                   <span className={`text-xs px-3 py-1 rounded-lg font-bold ${item.isActive ? 'bg-green-500/10 text-green-400 border border-green-500/20' : 'bg-gray-500/10 text-gray-400 border border-gray-500/20'}`}>
-                    {item.isActive ? 'Ù…Ù†Ø´ÙˆØ±Ø©' : 'Ù…Ø³ÙˆØ¯Ø©'}
+                    {item.isActive ? 'منشورة' : 'مسودة'}
                   </span>
                 </div>
               </div>
@@ -276,13 +276,13 @@ const PageContentManagementPage: React.FC = () => {
 
       {isModalOpen && editingItem && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-          <button type="button" className="absolute inset-0 bg-black/90 backdrop-blur-md cursor-default" onClick={() => setIsModalOpen(false)} aria-label="Ø¥ØºÙ„Ø§Ù‚" />
+          <button type="button" className="absolute inset-0 bg-black/90 backdrop-blur-md cursor-default" onClick={() => setIsModalOpen(false)} aria-label="إغلاق" />
           <form onSubmit={handleSave} className="relative w-full max-w-4xl glass-dark border border-white/10 rounded-[3rem] p-8 md:p-12 shadow-2xl animate-scale-in max-h-[90vh] overflow-y-auto custom-scrollbar bg-[#0f1117] space-y-6">
-            <h2 className="text-3xl font-black">{editingItem.id ? 'ØªØ¹Ø¯ÙŠÙ„ Ø§Ù„Ù…Ø­ØªÙˆÙ‰' : 'Ø¥Ø¶Ø§ÙØ© ØµÙØ­Ø© Ø¬Ø¯ÙŠØ¯Ø©'}</h2>
+            <h2 className="text-3xl font-black">{editingItem.id ? 'تعديل المحتوى' : 'إضافة صفحة جديدة'}</h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label htmlFor="cms-page-title" className="text-xs font-black text-amber-500 uppercase mb-2 block">Ø¹Ù†ÙˆØ§Ù† Ø§Ù„ØµÙØ­Ø© *</label>
+                <label htmlFor="cms-page-title" className="text-xs font-black text-amber-500 uppercase mb-2 block">عنوان الصفحة *</label>
                 <input
                   id="cms-page-title"
                   value={editingItem.title}
@@ -303,7 +303,7 @@ const PageContentManagementPage: React.FC = () => {
                 />
               </div>
               <div className="md:col-span-2">
-                <label htmlFor="cms-page-excerpt" className="text-xs font-black text-amber-500 uppercase mb-2 block">ÙˆØµÙ Ù…Ø®ØªØµØ±</label>
+                <label htmlFor="cms-page-excerpt" className="text-xs font-black text-amber-500 uppercase mb-2 block">وصف مختصر</label>
                 <textarea
                   id="cms-page-excerpt"
                   rows={2}
@@ -313,7 +313,7 @@ const PageContentManagementPage: React.FC = () => {
                 />
               </div>
               <div className="md:col-span-2">
-                <label htmlFor="cms-page-content" className="text-xs font-black text-amber-500 uppercase mb-2 block">Ø§Ù„Ù…Ø­ØªÙˆÙ‰ *</label>
+                <label htmlFor="cms-page-content" className="text-xs font-black text-amber-500 uppercase mb-2 block">المحتوى *</label>
                 <textarea
                   id="cms-page-content"
                   rows={10}
@@ -349,16 +349,16 @@ const PageContentManagementPage: React.FC = () => {
                     onChange={(e) => setEditingItem({ ...editingItem, isActive: e.target.checked })}
                     className="w-5 h-5 rounded border-white/20 bg-transparent text-amber-500 focus:ring-amber-500"
                   />
-                  <span className="text-white font-bold">Ù†Ø´Ø± Ø§Ù„ØµÙØ­Ø© Ø¹Ù„Ù‰ Ø§Ù„Ù…ÙˆÙ‚Ø¹</span>
+                  <span className="text-white font-bold">نشر الصفحة على الموقع</span>
                 </label>
               </div>
             </div>
 
             <div className="flex gap-4 pt-4">
               <button type="submit" disabled={isSaving} className="flex-1 bg-amber-500 text-gray-900 font-black py-4 rounded-2xl hover:bg-amber-400 transition-all disabled:opacity-70 disabled:cursor-not-allowed">
-                {isSaving ? 'Ø¬Ø§Ø±ÙŠ Ø§Ù„Ø­ÙØ¸...' : 'Ø­ÙØ¸ Ø§Ù„Ù…Ø­ØªÙˆÙ‰'}
+                {isSaving ? 'جاري الحفظ...' : 'حفظ المحتوى'}
               </button>
-              <button type="button" onClick={() => setIsModalOpen(false)} className="px-10 bg-white/5 text-gray-400 font-black rounded-2xl border border-white/10">Ø¥Ù„ØºØ§Ø¡</button>
+              <button type="button" onClick={() => setIsModalOpen(false)} className="px-10 bg-white/5 text-gray-400 font-black rounded-2xl border border-white/10">إلغاء</button>
             </div>
           </form>
         </div>
@@ -366,9 +366,9 @@ const PageContentManagementPage: React.FC = () => {
 
       <ConfirmationModal
         isOpen={confirmDelete.isOpen}
-        title="Ø­Ø°Ù Ù…Ø­ØªÙˆÙ‰ Ø§Ù„ØµÙØ­Ø©"
-        message="Ù‡Ù„ Ø£Ù†Øª Ù…ØªØ£ÙƒØ¯ Ù…Ù† Ø­Ø°Ù Ù‡Ø°Ø§ Ø§Ù„Ù…Ø­ØªÙˆÙ‰ØŸ Ù„Ø§ ÙŠÙ…ÙƒÙ† Ø§Ù„ØªØ±Ø§Ø¬Ø¹ Ø¨Ø¹Ø¯ Ø§Ù„Ø­Ø°Ù."
-        confirmLabel="Ø­Ø°Ù Ø§Ù„Ù…Ø­ØªÙˆÙ‰"
+        title="حذف محتوى الصفحة"
+        message="هل أنت متأكد من حذف هذا المحتوى؟ لا يمكن التراجع بعد الحذف."
+        confirmLabel="حذف المحتوى"
         onConfirm={handleDelete}
         onCancel={() => setConfirmDelete({ isOpen: false, id: null })}
       />

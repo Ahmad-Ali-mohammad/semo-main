@@ -161,7 +161,7 @@ CREATE TABLE IF NOT EXISTS seo_settings (
   title_separator VARCHAR(16) NOT NULL DEFAULT '|',
   default_description TEXT,
   default_keywords TEXT,
-  canonical_base_url VARCHAR(1024) NOT NULL DEFAULT 'http://localhost:5173',
+  canonical_base_url VARCHAR(1024) NOT NULL DEFAULT '',
   default_og_image VARCHAR(1024) DEFAULT '',
   twitter_handle VARCHAR(64) DEFAULT '',
   robots_index TINYINT(1) NOT NULL DEFAULT 1,

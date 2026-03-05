@@ -31,12 +31,12 @@ const CompanyInfoManagementPage: React.FC = () => {
         if (!file) return;
 
         if (file.size > 5 * 1024 * 1024) {
-            alert('Ø­Ø¬Ù… Ø§Ù„ØµÙˆØ±Ø© ÙƒØ¨ÙŠØ± Ø¬Ø¯Ø§Ù‹. Ø§Ù„Ø­Ø¯ Ø§Ù„Ø£Ù‚ØµÙ‰ 5MB');
+            alert('حجم الصورة كبير جداً. الحد الأقصى 5MB');
             return;
         }
 
         if (!file.type.startsWith('image/')) {
-            alert('ÙŠØ±Ø¬Ù‰ Ø±ÙØ¹ ØµÙˆØ±Ø© ÙÙ‚Ø·');
+            alert('يرجى رفع صورة فقط');
             return;
         }
 
@@ -51,7 +51,7 @@ const CompanyInfoManagementPage: React.FC = () => {
             setIsImageProcessing(prev => ({ ...prev, [type]: false }));
         };
         reader.onerror = () => {
-            alert('ÙØ´Ù„ ØªØ­Ù…ÙŠÙ„ Ø§Ù„ØµÙˆØ±Ø©. ÙŠØ±Ø¬Ù‰ Ø§Ù„Ù…Ø­Ø§ÙˆÙ„Ø© Ù…Ø±Ø© Ø£Ø®Ø±Ù‰.');
+            alert('فشل تحميل الصورة. يرجى المحاولة مرة أخرى.');
             setIsImageProcessing(prev => ({ ...prev, [type]: false }));
         };
         reader.readAsDataURL(file);
@@ -59,7 +59,7 @@ const CompanyInfoManagementPage: React.FC = () => {
 
     const handleSave = () => {
         if (!editedInfo.name || !editedInfo.nameEnglish || !editedInfo.description) {
-            alert('ÙŠØ±Ø¬Ù‰ Ù…Ù„Ø¡ Ø¬Ù…ÙŠØ¹ Ø§Ù„Ø­Ù‚ÙˆÙ„ Ø§Ù„Ù…Ø·Ù„ÙˆØ¨Ø©');
+            alert('يرجى ملء جميع الحقول المطلوبة');
             return;
         }
 
@@ -84,8 +84,8 @@ const CompanyInfoManagementPage: React.FC = () => {
             <div className="animate-fade-in relative space-y-8 text-right">
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                     <div>
-                        <h1 className="text-4xl font-black mb-2">Ù…Ø¹Ù„ÙˆÙ…Ø§Øª Ø§Ù„Ø´Ø±ÙƒØ©</h1>
-                        <p className="text-gray-400">Ø¥Ø¯Ø§Ø±Ø© Ù…Ø¹Ù„ÙˆÙ…Ø§Øª Ø§Ù„Ø´Ø±ÙƒØ© ÙˆØ§Ù„Ø¹Ù„Ø§Ù…Ø© Ø§Ù„ØªØ¬Ø§Ø±ÙŠØ©</p>
+                        <h1 className="text-4xl font-black mb-2">معلومات الشركة</h1>
+                        <p className="text-gray-400">إدارة معلومات الشركة والعلامة التجارية</p>
                     </div>
                     <div className="flex gap-3">
                         <HelpButton onClick={() => setIsHelpOpen(true)} />
@@ -94,7 +94,7 @@ const CompanyInfoManagementPage: React.FC = () => {
                             className="flex items-center gap-3 bg-amber-500 text-gray-900 font-black py-3.5 px-8 rounded-2xl hover:bg-amber-400 transition-all shadow-xl shadow-amber-500/20 active:scale-95"
                         >
                             <EditIcon className="w-5 h-5" />
-                            <span>ØªØ¹Ø¯ÙŠÙ„ Ø§Ù„Ù…Ø¹Ù„ÙˆÙ…Ø§Øª</span>
+                            <span>تعديل المعلومات</span>
                         </button>
                     </div>
                 </div>
@@ -103,18 +103,18 @@ const CompanyInfoManagementPage: React.FC = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {/* Basic Info */}
                     <div className="glass-dark border border-white/10 rounded-[2rem] p-8">
-                        <h3 className="text-xl font-black mb-6 text-amber-400">Ù…Ø¹Ù„ÙˆÙ…Ø§Øª Ø£Ø³Ø§Ø³ÙŠØ©</h3>
+                        <h3 className="text-xl font-black mb-6 text-amber-400">معلومات أساسية</h3>
                         <div className="space-y-4">
                             <div>
-                                <p className="text-gray-500 text-sm mb-1">Ø§Ù„Ø§Ø³Ù… Ø¨Ø§Ù„Ø¹Ø±Ø¨ÙŠØ©</p>
+                                <p className="text-gray-500 text-sm mb-1">الاسم بالعربية</p>
                                 <p className="text-white font-bold text-lg">{companyInfo.name}</p>
                             </div>
                             <div>
-                                <p className="text-gray-500 text-sm mb-1">Ø§Ù„Ø§Ø³Ù… Ø¨Ø§Ù„Ø¥Ù†Ø¬Ù„ÙŠØ²ÙŠØ©</p>
+                                <p className="text-gray-500 text-sm mb-1">الاسم بالإنجليزية</p>
                                 <p className="text-white font-bold text-lg font-poppins">{companyInfo.nameEnglish}</p>
                             </div>
                             <div>
-                                <p className="text-gray-500 text-sm mb-1">Ø³Ù†Ø© Ø§Ù„ØªØ£Ø³ÙŠØ³</p>
+                                <p className="text-gray-500 text-sm mb-1">سنة التأسيس</p>
                                 <p className="text-white font-bold text-lg font-poppins">{companyInfo.foundedYear}</p>
                             </div>
                         </div>
@@ -122,17 +122,17 @@ const CompanyInfoManagementPage: React.FC = () => {
 
                     {/* Images */}
                     <div className="glass-dark border border-white/10 rounded-[2rem] p-8">
-                        <h3 className="text-xl font-black mb-6 text-amber-400">Ø§Ù„ØµÙˆØ± ÙˆØ§Ù„Ø´Ø¹Ø§Ø±Ø§Øª</h3>
+                        <h3 className="text-xl font-black mb-6 text-amber-400">الصور والشعارات</h3>
                         <div className="space-y-4">
                             {companyInfo.logoUrl && (
                                 <div>
-                                    <p className="text-gray-500 text-sm mb-2">Ø§Ù„Ø´Ø¹Ø§Ø± (Logo)</p>
+                                    <p className="text-gray-500 text-sm mb-2">الشعار (Logo)</p>
                                     <img src={companyInfo.logoUrl} alt="Logo" className="w-32 h-32 object-contain bg-white/5 rounded-xl p-4" />
                                 </div>
                             )}
                             {companyInfo.mascotUrl && (
                                 <div>
-                                    <p className="text-gray-500 text-sm mb-2">Ø§Ù„Ù…Ø§Ø³ÙƒÙˆØª</p>
+                                    <p className="text-gray-500 text-sm mb-2">الماسكوت</p>
                                     <img src={companyInfo.mascotUrl} alt="Mascot" className="w-full h-40 object-cover rounded-xl" />
                                 </div>
                             )}
@@ -143,22 +143,22 @@ const CompanyInfoManagementPage: React.FC = () => {
                 {/* Full Width Cards */}
                 <div className="space-y-6">
                     <div className="glass-dark border border-white/10 rounded-[2rem] p-8">
-                        <h3 className="text-xl font-black mb-4 text-amber-400">ÙˆØµÙ Ø§Ù„Ø´Ø±ÙƒØ©</h3>
+                        <h3 className="text-xl font-black mb-4 text-amber-400">وصف الشركة</h3>
                         <p className="text-gray-300 leading-relaxed">{companyInfo.description}</p>
                     </div>
 
                     <div className="glass-dark border border-white/10 rounded-[2rem] p-8">
-                        <h3 className="text-xl font-black mb-4 text-amber-400">Ø§Ù„Ø±Ø³Ø§Ù„Ø©</h3>
+                        <h3 className="text-xl font-black mb-4 text-amber-400">الرسالة</h3>
                         <p className="text-gray-300 leading-relaxed">{companyInfo.mission}</p>
                     </div>
 
                     <div className="glass-dark border border-white/10 rounded-[2rem] p-8">
-                        <h3 className="text-xl font-black mb-4 text-amber-400">Ø§Ù„Ø±Ø¤ÙŠØ©</h3>
+                        <h3 className="text-xl font-black mb-4 text-amber-400">الرؤية</h3>
                         <p className="text-gray-300 leading-relaxed">{companyInfo.vision}</p>
                     </div>
 
                     <div className="glass-dark border border-white/10 rounded-[2rem] p-8">
-                        <h3 className="text-xl font-black mb-4 text-amber-400">Ù‚ØµØªÙ†Ø§</h3>
+                        <h3 className="text-xl font-black mb-4 text-amber-400">قصتنا</h3>
                         <p className="text-gray-300 leading-relaxed">{companyInfo.story}</p>
                     </div>
                 </div>
@@ -178,8 +178,8 @@ const CompanyInfoManagementPage: React.FC = () => {
         <div className="animate-fade-in relative space-y-8 text-right">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                 <div>
-                    <h1 className="text-4xl font-black mb-2">ØªØ¹Ø¯ÙŠÙ„ Ù…Ø¹Ù„ÙˆÙ…Ø§Øª Ø§Ù„Ø´Ø±ÙƒØ©</h1>
-                    <p className="text-gray-400">Ù‚Ù… Ø¨ØªØ­Ø¯ÙŠØ« Ù…Ø¹Ù„ÙˆÙ…Ø§Øª Ø§Ù„Ø´Ø±ÙƒØ© ÙˆØ­ÙØ¸ Ø§Ù„ØªØºÙŠÙŠØ±Ø§Øª</p>
+                    <h1 className="text-4xl font-black mb-2">تعديل معلومات الشركة</h1>
+                    <p className="text-gray-400">قم بتحديث معلومات الشركة وحفظ التغييرات</p>
                 </div>
                 <HelpButton onClick={() => setIsHelpOpen(true)} />
             </div>
@@ -188,7 +188,7 @@ const CompanyInfoManagementPage: React.FC = () => {
                 <div className="fixed top-8 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-6 py-4 rounded-xl shadow-2xl animate-fade-in z-50">
                     <div className="flex items-center gap-3">
                         <CheckCircleIcon className="w-6 h-6" />
-                        <p className="font-bold">ØªÙ… Ø­ÙØ¸ Ø§Ù„Ù…Ø¹Ù„ÙˆÙ…Ø§Øª Ø¨Ù†Ø¬Ø§Ø­!</p>
+                        <p className="font-bold">تم حفظ المعلومات بنجاح!</p>
                     </div>
                 </div>
             )}
@@ -196,11 +196,11 @@ const CompanyInfoManagementPage: React.FC = () => {
             <div className="space-y-6">
                 {/* Basic Info */}
                 <div className="glass-dark border border-white/10 rounded-[2rem] p-8">
-                    <h3 className="text-xl font-black mb-6 text-amber-400">Ù…Ø¹Ù„ÙˆÙ…Ø§Øª Ø£Ø³Ø§Ø³ÙŠØ©</h3>
+                    <h3 className="text-xl font-black mb-6 text-amber-400">معلومات أساسية</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                             <label htmlFor="company-name-ar" className="text-xs font-black text-gray-400 uppercase mb-2 block">
-                                Ø§Ø³Ù… Ø§Ù„Ø´Ø±ÙƒØ© (Ø¹Ø±Ø¨ÙŠ) <span className="text-red-500">*</span>
+                                اسم الشركة (عربي) <span className="text-red-500">*</span>
                             </label>
                             <input
                                 id="company-name-ar"
@@ -209,12 +209,12 @@ const CompanyInfoManagementPage: React.FC = () => {
                                 className="w-full bg-[#1a1c23] border border-white/10 rounded-2xl py-4 px-6 text-white font-bold"
                                 value={editedInfo.name}
                                 onChange={e => setEditedInfo({ ...editedInfo, name: e.target.value })}
-                                placeholder="Ø¨ÙŠØª Ø§Ù„Ø²ÙˆØ§Ø­Ù"
+                                placeholder="بيت الزواحف"
                             />
                         </div>
                         <div>
                             <label htmlFor="company-name-en" className="text-xs font-black text-gray-400 uppercase mb-2 block">
-                                Ø§Ø³Ù… Ø§Ù„Ø´Ø±ÙƒØ© (Ø¥Ù†Ø¬Ù„ÙŠØ²ÙŠ) <span className="text-red-500">*</span>
+                                اسم الشركة (إنجليزي) <span className="text-red-500">*</span>
                             </label>
                             <input
                                 id="company-name-en"
@@ -228,7 +228,7 @@ const CompanyInfoManagementPage: React.FC = () => {
                         </div>
                         <div className="md:col-span-2">
                             <label htmlFor="company-founded-year" className="text-xs font-black text-gray-400 uppercase mb-2 block">
-                                Ø³Ù†Ø© Ø§Ù„ØªØ£Ø³ÙŠØ³
+                                سنة التأسيس
                             </label>
                             <input
                                 id="company-founded-year"
@@ -244,12 +244,12 @@ const CompanyInfoManagementPage: React.FC = () => {
 
                 {/* Images */}
                 <div className="glass-dark border border-white/10 rounded-[2rem] p-8">
-                    <h3 className="text-xl font-black mb-6 text-amber-400">Ø§Ù„ØµÙˆØ± ÙˆØ§Ù„Ø´Ø¹Ø§Ø±Ø§Øª</h3>
+                    <h3 className="text-xl font-black mb-6 text-amber-400">الصور والشعارات</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {/* Logo */}
                         <div>
                             <label htmlFor="company-logo-upload" className="text-xs font-black text-gray-400 uppercase mb-2 block">
-                                Ø´Ø¹Ø§Ø± Ø§Ù„Ø´Ø±ÙƒØ© (Logo)
+                                شعار الشركة (Logo)
                             </label>
                             <div className="relative">
                                 {editedInfo.logoUrl ? (
@@ -263,7 +263,7 @@ const CompanyInfoManagementPage: React.FC = () => {
                                     </div>
                                 ) : (
                                     <div className="w-full h-48 bg-white/5 rounded-2xl border-2 border-dashed border-white/10 flex items-center justify-center">
-                                        <p className="text-gray-500 text-sm">Ù„Ø§ ØªÙˆØ¬Ø¯ ØµÙˆØ±Ø©</p>
+                                        <p className="text-gray-500 text-sm">لا توجد صورة</p>
                                     </div>
                                 )}
                                 <input
@@ -272,7 +272,7 @@ const CompanyInfoManagementPage: React.FC = () => {
                                     accept="image/*"
                                     onChange={e => handleImageChange('logo', e)}
                                     className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                                    aria-label="Ø±ÙØ¹ Ø´Ø¹Ø§Ø± Ø§Ù„Ø´Ø±ÙƒØ©"
+                                    aria-label="رفع شعار الشركة"
                                 />
                             </div>
                         </div>
@@ -280,7 +280,7 @@ const CompanyInfoManagementPage: React.FC = () => {
                         {/* Mascot */}
                         <div>
                             <label htmlFor="company-mascot-upload" className="text-xs font-black text-gray-400 uppercase mb-2 block">
-                                Ø§Ù„Ù…Ø§Ø³ÙƒÙˆØª
+                                الماسكوت
                             </label>
                             <div className="relative">
                                 {editedInfo.mascotUrl ? (
@@ -294,7 +294,7 @@ const CompanyInfoManagementPage: React.FC = () => {
                                     </div>
                                 ) : (
                                     <div className="w-full h-48 bg-white/5 rounded-2xl border-2 border-dashed border-white/10 flex items-center justify-center">
-                                        <p className="text-gray-500 text-sm">Ù„Ø§ ØªÙˆØ¬Ø¯ ØµÙˆØ±Ø©</p>
+                                        <p className="text-gray-500 text-sm">لا توجد صورة</p>
                                     </div>
                                 )}
                                 <input
@@ -303,7 +303,7 @@ const CompanyInfoManagementPage: React.FC = () => {
                                     accept="image/*"
                                     onChange={e => handleImageChange('mascot', e)}
                                     className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                                    aria-label="Ø±ÙØ¹ ØµÙˆØ±Ø© Ø§Ù„Ù…Ø§Ø³ÙƒÙˆØª"
+                                    aria-label="رفع صورة الماسكوت"
                                 />
                             </div>
                         </div>
@@ -312,11 +312,11 @@ const CompanyInfoManagementPage: React.FC = () => {
 
                 {/* Text Fields */}
                 <div className="glass-dark border border-white/10 rounded-[2rem] p-8">
-                    <h3 className="text-xl font-black mb-6 text-amber-400">Ø§Ù„Ù†ØµÙˆØµ ÙˆØ§Ù„Ù…Ø­ØªÙˆÙ‰</h3>
+                    <h3 className="text-xl font-black mb-6 text-amber-400">النصوص والمحتوى</h3>
                     <div className="space-y-6">
                         <div>
                             <label htmlFor="company-description" className="text-xs font-black text-gray-400 uppercase mb-2 block">
-                                ÙˆØµÙ Ø§Ù„Ø´Ø±ÙƒØ© <span className="text-red-500">*</span>
+                                وصف الشركة <span className="text-red-500">*</span>
                             </label>
                             <textarea
                                 id="company-description"
@@ -325,13 +325,13 @@ const CompanyInfoManagementPage: React.FC = () => {
                                 className="w-full bg-[#1a1c23] border border-white/10 rounded-2xl py-4 px-6 text-white leading-relaxed resize-none"
                                 value={editedInfo.description}
                                 onChange={e => setEditedInfo({ ...editedInfo, description: e.target.value })}
-                                placeholder="Ù†Ø­Ù† Ø£ÙƒØ«Ø± Ù…Ù† Ù…Ø¬Ø±Ø¯ Ù…ØªØ¬Ø±..."
+                                placeholder="نحن أكثر من مجرد متجر..."
                             />
                         </div>
 
                         <div>
                             <label htmlFor="company-mission" className="text-xs font-black text-gray-400 uppercase mb-2 block">
-                                Ø±Ø³Ø§Ù„ØªÙ†Ø§
+                                رسالتنا
                             </label>
                             <textarea
                                 id="company-mission"
@@ -339,13 +339,13 @@ const CompanyInfoManagementPage: React.FC = () => {
                                 className="w-full bg-[#1a1c23] border border-white/10 rounded-2xl py-4 px-6 text-white leading-relaxed resize-none"
                                 value={editedInfo.mission}
                                 onChange={e => setEditedInfo({ ...editedInfo, mission: e.target.value })}
-                                placeholder="ØªÙˆÙÙŠØ± Ø²ÙˆØ§Ø­Ù ØµØ­ÙŠØ©..."
+                                placeholder="توفير زواحف صحية..."
                             />
                         </div>
 
                         <div>
                             <label htmlFor="company-vision" className="text-xs font-black text-gray-400 uppercase mb-2 block">
-                                Ø±Ø¤ÙŠØªÙ†Ø§
+                                رؤيتنا
                             </label>
                             <textarea
                                 id="company-vision"
@@ -353,13 +353,13 @@ const CompanyInfoManagementPage: React.FC = () => {
                                 className="w-full bg-[#1a1c23] border border-white/10 rounded-2xl py-4 px-6 text-white leading-relaxed resize-none"
                                 value={editedInfo.vision}
                                 onChange={e => setEditedInfo({ ...editedInfo, vision: e.target.value })}
-                                placeholder="Ø£Ù† Ù†ÙƒÙˆÙ† Ø§Ù„Ù…Ø±ÙƒØ² Ø§Ù„Ø¥Ù‚Ù„ÙŠÙ…ÙŠ Ø§Ù„Ø£ÙˆÙ„..."
+                                placeholder="أن نكون المركز الإقليمي الأول..."
                             />
                         </div>
 
                         <div>
                             <label htmlFor="company-story" className="text-xs font-black text-gray-400 uppercase mb-2 block">
-                                Ù‚ØµØªÙ†Ø§
+                                قصتنا
                             </label>
                             <textarea
                                 id="company-story"
@@ -367,7 +367,7 @@ const CompanyInfoManagementPage: React.FC = () => {
                                 className="w-full bg-[#1a1c23] border border-white/10 rounded-2xl py-4 px-6 text-white leading-relaxed resize-none"
                                 value={editedInfo.story}
                                 onChange={e => setEditedInfo({ ...editedInfo, story: e.target.value })}
-                                placeholder="ØªØ£Ø³Ø³ Reptile House Ø¹Ø§Ù…..."
+                                placeholder="تأسس Reptile House عام..."
                             />
                         </div>
                     </div>
@@ -381,14 +381,14 @@ const CompanyInfoManagementPage: React.FC = () => {
                     disabled={isSaving}
                     className="flex-1 bg-amber-500 text-gray-900 font-black py-5 rounded-[1.5rem] hover:bg-amber-400 shadow-2xl text-lg disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                    {isSaving ? 'Ø¬Ø§Ø±ÙŠ Ø§Ù„Ø­ÙØ¸...' : 'Ø­ÙØ¸ Ø§Ù„ØªØºÙŠÙŠØ±Ø§Øª'}
+                    {isSaving ? 'جاري الحفظ...' : 'حفظ التغييرات'}
                 </button>
                 <button
                     onClick={handleCancel}
                     disabled={isSaving}
                     className="px-10 bg-white/5 text-gray-400 font-black rounded-[1.5rem] border border-white/5 hover:bg-white/10 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                    Ø¥Ù„ØºØ§Ø¡
+                    إلغاء
                 </button>
             </div>
 

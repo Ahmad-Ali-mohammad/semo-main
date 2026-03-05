@@ -54,12 +54,27 @@ const allowedOrigins = (process.env.ALLOWED_ORIGINS || '')
   .map((origin) => origin.trim())
   .filter(Boolean);
 
+const isDevViteOrigin = (origin) => {
+  if (!origin) return false;
+  try {
+    const url = new URL(origin);
+    if (!['http:', 'https:'].includes(url.protocol)) return false;
+    if (url.port !== '5173') return false;
+    if (url.hostname === 'localhost' || url.hostname === '127.0.0.1') return true;
+    // Allow private/local network hosts in dev for Vite access from LAN/WSL.
+    if (/^(10\.|192\.168\.|172\.(1[6-9]|2\d|3[0-1])\.)/.test(url.hostname)) return true;
+    return false;
+  } catch {
+    return false;
+  }
+};
+
 app.use(cors({
   origin(origin, callback) {
     if (!origin) return callback(null, true);
 
     if (allowedOrigins.length === 0) {
-      if (!isProduction && origin === 'http://localhost:5173') {
+      if (!isProduction && isDevViteOrigin(origin)) {
         return callback(null, true);
       }
       return callback(new Error('CORS blocked: origin is not allowed'));
@@ -103,9 +118,10 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(PORT, () => {
+  const publicServerUrl = (process.env.PUBLIC_SERVER_URL || `http://127.0.0.1:${PORT}`).replace(/\/+$/, '');
   console.log(`[server] Running on port ${PORT}`);
-  console.log(`[server] API available at http://localhost:${PORT}/api`);
-  console.log(`[server] Health check at http://localhost:${PORT}/health`);
+  console.log(`[server] API available at ${publicServerUrl}/api`);
+  console.log(`[server] Health check at ${publicServerUrl}/health`);
   if (isProduction && fs.existsSync(frontendDistPath)) {
     console.log(`[server] Serving frontend build from ${frontendDistPath}`);
   }

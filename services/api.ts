@@ -8,6 +8,9 @@ const configuredBase =
     ? String(import.meta.env.VITE_API_URL).trim()
     : '') || '';
 const BASE = configuredBase ? configuredBase.replace(/\/+$/, '') : '';
+const AUTH_TOKEN_STORAGE_KEY = 'semo_auth_token';
+
+type AuthResponse = { user: User; token: string };
 
 export class ApiError extends Error {
   status?: number;
@@ -23,9 +26,19 @@ export class ApiError extends Error {
 
 function request<T>(path: string, options: RequestInit = {}): Promise<T> {
   const url = `${BASE}${path}`;
+  const headers: Record<string, string> = {
+    'Content-Type': 'application/json',
+    ...(options.headers as Record<string, string>),
+  };
+  try {
+    const token = globalThis.localStorage?.getItem(AUTH_TOKEN_STORAGE_KEY);
+    if (token) headers.Authorization = `Bearer ${token}`;
+  } catch {
+    // ignore storage access errors
+  }
   return fetch(url, {
     ...options,
-    headers: { 'Content-Type': 'application/json', ...options.headers as Record<string, string> },
+    headers,
   })
     .catch((error) => {
       throw new ApiError(error?.message || 'Failed to fetch', undefined, true);
@@ -129,10 +142,12 @@ export const api = {
       : request<PageContent>('/api/page-contents', { method: 'POST', body: JSON.stringify(pageContent) }),
   deletePageContent: (id: string): Promise<void> => request(`/api/page-contents/${id}`, { method: 'DELETE' }),
 
-  login: (email: string, password: string): Promise<{ user: User }> =>
-    request<{ user: User }>('/api/auth/login', { method: 'POST', body: JSON.stringify({ email, password }) }),
-  register: (name: string, email: string, password: string): Promise<{ user: User }> =>
-    request<{ user: User }>('/api/auth/register', { method: 'POST', body: JSON.stringify({ name, email, password }) }),
+  login: (email: string, password: string): Promise<AuthResponse> =>
+    request<AuthResponse>('/api/auth/login', { method: 'POST', body: JSON.stringify({ email, password }) }),
+  register: (name: string, email: string, password: string): Promise<AuthResponse> =>
+    request<AuthResponse>('/api/auth/register', { method: 'POST', body: JSON.stringify({ name, email, password }) }),
+  bootstrapAdmin: (name: string, email: string, password: string, secret: string): Promise<AuthResponse> =>
+    request<AuthResponse>('/api/auth/bootstrap-admin', { method: 'POST', body: JSON.stringify({ name, email, password, secret }) }),
 
   // Media Library
   getMedia: (folderId?: string, category?: string): Promise<MediaItem[]> => {

@@ -1,24 +1,10 @@
 ﻿import React, { useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import { Page } from '../App';
-import { DashboardIcon, UserIcon } from '../components/icons';
 
 interface LoginPageProps {
   setPage: (page: Page) => void;
 }
-
-const quickAccounts = {
-  admin: {
-    email: 'admin@reptilehouse.sy',
-    pass: 'admin123',
-    label: 'دخول سريع كمسؤول',
-  },
-  user: {
-    email: 'user@reptilehouse.sy',
-    pass: 'user123',
-    label: 'دخول سريع كمستخدم',
-  },
-} as const;
 
 const LoginPage: React.FC<LoginPageProps> = ({ setPage }) => {
   const [email, setEmail] = useState('');
@@ -37,10 +23,16 @@ const LoginPage: React.FC<LoginPageProps> = ({ setPage }) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const normalizedEmail = email.trim().toLowerCase();
     setError('');
-    setIsSubmitting(true);
 
-    const authenticatedUser = await login(email, password);
+    if (!normalizedEmail || !password) {
+      setError('يرجى إدخال البريد الإلكتروني وكلمة المرور');
+      return;
+    }
+
+    setIsSubmitting(true);
+    const authenticatedUser = await login(normalizedEmail, password);
     setIsSubmitting(false);
 
     if (!authenticatedUser) {
@@ -50,25 +42,6 @@ const LoginPage: React.FC<LoginPageProps> = ({ setPage }) => {
 
     routeAfterLogin(authenticatedUser.role);
   };
-
-  const handleQuickLogin = async (role: 'admin' | 'user') => {
-    const credentials = quickAccounts[role];
-    setEmail(credentials.email);
-    setPassword(credentials.pass);
-    setError('');
-    setIsSubmitting(true);
-
-    const authenticatedUser = await login(credentials.email, credentials.pass);
-    setIsSubmitting(false);
-
-    if (!authenticatedUser) {
-      setError('تعذر تسجيل الدخول السريع. تأكد من تشغيل الباك اند وتنفيذ seeding للحسابات.');
-      return;
-    }
-
-    routeAfterLogin(authenticatedUser.role);
-  };
-
   return (
     <div className="flex items-center justify-center py-12">
       <div className="w-full max-w-md p-8 space-y-6 bg-white/10 backdrop-filter backdrop-blur-lg border border-white/20 rounded-2xl shadow-lg animate-scale-in">
@@ -90,6 +63,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ setPage }) => {
               id="email"
               name="email"
               type="email"
+              autoComplete="email"
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -107,6 +81,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ setPage }) => {
               id="password"
               name="password"
               type="password"
+              autoComplete="current-password"
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -123,32 +98,6 @@ const LoginPage: React.FC<LoginPageProps> = ({ setPage }) => {
             {isSubmitting ? 'جاري تسجيل الدخول...' : 'دخول للموقع'}
           </button>
         </form>
-
-        <div className="pt-4 border-t border-white/10 space-y-3 text-right">
-          <p className="text-xs text-gray-400 font-bold">تسجيل سريع للتجربة:</p>
-          <div className="flex gap-2">
-            <button
-              onClick={() => handleQuickLogin('admin')}
-              disabled={isSubmitting}
-              className="flex-1 flex items-center justify-center gap-2 bg-indigo-500/20 border border-indigo-500/40 text-indigo-300 font-black py-3 rounded-xl hover:bg-indigo-500/30 transition-all group text-xs disabled:opacity-70 disabled:cursor-not-allowed"
-            >
-              <DashboardIcon className="w-4 h-4" />
-              <span>{quickAccounts.admin.label}</span>
-            </button>
-            <button
-              onClick={() => handleQuickLogin('user')}
-              disabled={isSubmitting}
-              className="flex-1 flex items-center justify-center gap-2 bg-green-500/20 border border-green-500/40 text-green-300 font-black py-3 rounded-xl hover:bg-green-500/30 transition-all group text-xs disabled:opacity-70 disabled:cursor-not-allowed"
-            >
-              <UserIcon className="w-4 h-4" />
-              <span>{quickAccounts.user.label}</span>
-            </button>
-          </div>
-          <p className="text-[11px] text-gray-500 leading-relaxed">
-            المسؤول: <span className="text-gray-300">admin@reptilehouse.sy / admin123</span><br />
-            المستخدم: <span className="text-gray-300">user@reptilehouse.sy / user123</span>
-          </p>
-        </div>
 
         <p className="text-center text-gray-400 text-sm">
           ليس لديك حساب؟{' '}

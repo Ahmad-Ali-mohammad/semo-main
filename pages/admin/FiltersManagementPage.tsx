@@ -73,7 +73,7 @@ const FiltersManagementPage: React.FC = () => {
         e.preventDefault();
         if (editingGroup) {
             if (!editingGroup.name || !editingGroup.options || editingGroup.options.length === 0) {
-                globalThis.alert('ÙŠØ±Ø¬Ù‰ Ù…Ù„Ø¡ Ø¬Ù…ÙŠØ¹ Ø§Ù„Ø­Ù‚ÙˆÙ„ Ø§Ù„Ù…Ø·Ù„ÙˆØ¨Ø© ÙˆØ¥Ø¶Ø§ÙØ© Ø®ÙŠØ§Ø± ÙˆØ§Ø­Ø¯ Ø¹Ù„Ù‰ Ø§Ù„Ø£Ù‚Ù„');
+                globalThis.alert('يرجى ملء جميع الحقول المطلوبة وإضافة خيار واحد على الأقل');
                 return;
             }
 
@@ -116,24 +116,24 @@ const FiltersManagementPage: React.FC = () => {
     const activeGroups = filterGroups.filter(g => g.isActive);
 
     const getFilterTypeLabel = (type: string): string => {
-        if (type === 'category') return 'ÙØ¦Ø©';
-        if (type === 'price') return 'Ø³Ø¹Ø±';
-        if (type === 'availability') return 'ØªÙˆÙØ±';
-        return 'Ù…Ø®ØµØµ';
+        if (type === 'category') return 'فئة';
+        if (type === 'price') return 'سعر';
+        if (type === 'availability') return 'توفر';
+        return 'مخصص';
     };
 
     const getAppliesToLabel = (appliesTo: string): string => {
-        if (appliesTo === 'products') return 'Ø§Ù„Ù…Ù†ØªØ¬Ø§Øª';
-        if (appliesTo === 'supplies') return 'Ø§Ù„Ù…Ø³ØªÙ„Ø²Ù…Ø§Øª';
-        return 'ÙƒÙ„Ø§Ù‡Ù…Ø§';
+        if (appliesTo === 'products') return 'المنتجات';
+        if (appliesTo === 'supplies') return 'المستلزمات';
+        return 'كلاهما';
     };
 
     return (
         <div className="animate-fade-in relative space-y-8 text-right">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                 <div>
-                    <h1 className="text-4xl font-black mb-2">Ø¥Ø¯Ø§Ø±Ø© Ø§Ù„ÙÙ„Ø§ØªØ± Ø§Ù„Ø¯ÙŠÙ†Ø§Ù…ÙŠÙƒÙŠØ©</h1>
-                    <p className="text-gray-400">ØªØ­ÙƒÙ… ÙÙŠ Ø®ÙŠØ§Ø±Ø§Øª Ø§Ù„ÙÙ„ØªØ±Ø© ÙÙŠ Ø§Ù„Ù…ØªØ¬Ø±</p>
+                    <h1 className="text-4xl font-black mb-2">إدارة الفلاتر الديناميكية</h1>
+                    <p className="text-gray-400">تحكم في خيارات الفلترة في المتجر</p>
                 </div>
                 <div className="flex gap-3">
                     <button
@@ -143,14 +143,14 @@ const FiltersManagementPage: React.FC = () => {
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
-                        <span>ØªØ¹Ù„ÙŠÙ…Ø§Øª Ø§Ù„Ø§Ø³ØªØ®Ø¯Ø§Ù…</span>
+                        <span>تعليمات الاستخدام</span>
                     </button>
                     <button
                         onClick={() => handleOpenModal()}
                         className="flex items-center gap-3 bg-amber-500 text-gray-900 font-black py-3.5 px-8 rounded-2xl hover:bg-amber-400 transition-all shadow-xl shadow-amber-500/20 active:scale-95"
                     >
                         <PlusIcon className="w-5 h-5" />
-                        <span>Ø¥Ø¶Ø§ÙØ© Ù…Ø¬Ù…ÙˆØ¹Ø© ÙÙ„Ø§ØªØ±</span>
+                        <span>إضافة مجموعة فلاتر</span>
                     </button>
                 </div>
             </div>
@@ -160,7 +160,7 @@ const FiltersManagementPage: React.FC = () => {
                 <div className="glass-medium p-6 rounded-[2rem] border border-white/10">
                     <div className="flex items-center justify-between">
                         <div>
-                            <p className="text-gray-400 text-sm font-bold mb-1">Ø¥Ø¬Ù…Ø§Ù„ÙŠ Ø§Ù„Ù…Ø¬Ù…ÙˆØ¹Ø§Øª</p>
+                            <p className="text-gray-400 text-sm font-bold mb-1">إجمالي المجموعات</p>
                             <p className="text-3xl font-black text-amber-400 font-poppins">{filterGroups.length}</p>
                         </div>
                         <div className="p-4 bg-amber-500/10 text-amber-400 rounded-2xl">
@@ -171,7 +171,7 @@ const FiltersManagementPage: React.FC = () => {
                 <div className="glass-medium p-6 rounded-[2rem] border border-white/10">
                     <div className="flex items-center justify-between">
                         <div>
-                            <p className="text-gray-400 text-sm font-bold mb-1">Ø§Ù„Ù…Ø¬Ù…ÙˆØ¹Ø§Øª Ø§Ù„Ù†Ø´Ø·Ø©</p>
+                            <p className="text-gray-400 text-sm font-bold mb-1">المجموعات النشطة</p>
                             <p className="text-3xl font-black text-green-400 font-poppins">{activeGroups.length}</p>
                         </div>
                         <div className="p-4 bg-green-500/10 text-green-400 rounded-2xl">
@@ -182,7 +182,7 @@ const FiltersManagementPage: React.FC = () => {
                 <div className="glass-medium p-6 rounded-[2rem] border border-white/10">
                     <div className="flex items-center justify-between">
                         <div>
-                            <p className="text-gray-400 text-sm font-bold mb-1">Ø¥Ø¬Ù…Ø§Ù„ÙŠ Ø§Ù„Ø®ÙŠØ§Ø±Ø§Øª</p>
+                            <p className="text-gray-400 text-sm font-bold mb-1">إجمالي الخيارات</p>
                             <p className="text-3xl font-black text-blue-400 font-poppins">
                                 {filterGroups.reduce((sum, g) => sum + g.options.length, 0)}
                             </p>
@@ -212,10 +212,10 @@ const FiltersManagementPage: React.FC = () => {
                                     </h3>
                                     <div className="flex gap-2 flex-wrap">
                                         <span className="px-3 py-1 bg-white/5 text-gray-300 border border-white/5 rounded-lg text-xs font-bold">
-                                            Ø§Ù„Ù†ÙˆØ¹: {getFilterTypeLabel(group.type)}
+                                            النوع: {getFilterTypeLabel(group.type)}
                                         </span>
                                         <span className="px-3 py-1 bg-blue-500/10 text-blue-300 border border-blue-500/20 rounded-lg text-xs font-bold">
-                                            ÙŠØ¸Ù‡Ø± ÙÙŠ: {getAppliesToLabel(group.appliesTo)}
+                                            يظهر في: {getAppliesToLabel(group.appliesTo)}
                                         </span>
                                     </div>
                                 </div>
@@ -223,14 +223,14 @@ const FiltersManagementPage: React.FC = () => {
                                     <button
                                         onClick={() => handleOpenModal(group)}
                                         className="p-2 bg-white/5 text-gray-400 hover:text-amber-400 hover:bg-amber-400/10 rounded-lg transition-all border border-white/5"
-                                        aria-label={`ØªØ¹Ø¯ÙŠÙ„ ${group.name}`}
+                                        aria-label={`تعديل ${group.name}`}
                                     >
                                         <EditIcon className="w-4 h-4" />
                                     </button>
                                     <button
                                         onClick={() => handleDeleteClick(group.id)}
                                         className="p-2 bg-red-500/5 text-red-400 hover:text-white hover:bg-red-500 rounded-lg transition-all border border-red-500/10"
-                                        aria-label={`Ø­Ø°Ù ${group.name}`}
+                                        aria-label={`حذف ${group.name}`}
                                     >
                                         <TrashIcon className="w-4 h-4" />
                                     </button>
@@ -239,7 +239,7 @@ const FiltersManagementPage: React.FC = () => {
 
                             {/* Options */}
                             <div className="bg-black/20 rounded-xl p-4 border border-white/5">
-                                <p className="text-sm text-gray-400 mb-3 font-bold">Ø§Ù„Ø®ÙŠØ§Ø±Ø§Øª ({group.options.length}):</p>
+                                <p className="text-sm text-gray-400 mb-3 font-bold">الخيارات ({group.options.length}):</p>
                                 <div className="flex flex-wrap gap-2">
                                     {group.options.map(option => (
                                         <span
@@ -266,7 +266,7 @@ const FiltersManagementPage: React.FC = () => {
                                             : 'bg-gray-500/10 text-gray-400 border border-gray-500/20 hover:bg-gray-500/20'
                                     }`}
                                 >
-                                    {group.isActive ? 'âœ“ Ù†Ø´Ø·' : 'âœ— Ù…Ø¹Ø·Ù„'}
+                                    {group.isActive ? '✓ نشط' : '✗ معطل'}
                                 </button>
                             </div>
                         </div>
@@ -277,15 +277,15 @@ const FiltersManagementPage: React.FC = () => {
             {filterGroups.length === 0 && (
                 <div className="text-center py-20 text-gray-600 font-bold border-2 border-dashed border-white/5 rounded-[2rem] glass-medium">
                     <FilterIcon className="w-16 h-16 mx-auto mb-4 text-gray-700" />
-                    <p>Ù„Ø§ ØªÙˆØ¬Ø¯ Ù…Ø¬Ù…ÙˆØ¹Ø§Øª ÙÙ„Ø§ØªØ±. Ø§Ø¨Ø¯Ø£ Ø¨Ø¥Ø¶Ø§ÙØ© Ù…Ø¬Ù…ÙˆØ¹Ø© Ø¬Ø¯ÙŠØ¯Ø©!</p>
+                    <p>لا توجد مجموعات فلاتر. ابدأ بإضافة مجموعة جديدة!</p>
                 </div>
             )}
 
             {/* Confirmation Modal */}
             <ConfirmationModal
                 isOpen={confirmDelete.isOpen}
-                title="ØªØ£ÙƒÙŠØ¯ Ø§Ù„Ø­Ø°Ù"
-                message="Ù‡Ù„ Ø£Ù†Øª Ù…ØªØ£ÙƒØ¯ Ù…Ù† Ø­Ø°Ù Ù‡Ø°Ù‡ Ø§Ù„Ù…Ø¬Ù…ÙˆØ¹Ø©ØŸ Ù„Ø§ ÙŠÙ…ÙƒÙ† Ø§Ù„ØªØ±Ø§Ø¬Ø¹ Ø¹Ù† Ù‡Ø°Ù‡ Ø§Ù„Ø¹Ù…Ù„ÙŠØ©."
+                title="تأكيد الحذف"
+                message="هل أنت متأكد من حذف هذه المجموعة؟ لا يمكن التراجع عن هذه العملية."
                 onConfirm={handleConfirmDelete}
                 onCancel={() => setConfirmDelete({ isOpen: false, id: null })}
             />
@@ -305,29 +305,29 @@ const FiltersManagementPage: React.FC = () => {
                     >
                         <h2 className="text-4xl font-black mb-10 text-white tracking-tighter">
                             {editingGroup?.id && filterGroups.find(g => g.id === editingGroup.id)
-                                ? 'ØªØ­Ø¯ÙŠØ« Ø§Ù„Ù…Ø¬Ù…ÙˆØ¹Ø©'
-                                : 'Ø¥Ø¶Ø§ÙØ© Ù…Ø¬Ù…ÙˆØ¹Ø© ÙÙ„Ø§ØªØ±'}
+                                ? 'تحديث المجموعة'
+                                : 'إضافة مجموعة فلاتر'}
                         </h2>
 
                         <div className="space-y-6 text-right">
                             {/* Name */}
                             <div>
                                 <label className="text-xs font-black text-amber-500 uppercase mb-2 block">
-                                    Ø§Ø³Ù… Ø§Ù„Ù…Ø¬Ù…ÙˆØ¹Ø© <span className="text-red-500">*</span>
+                                    اسم المجموعة <span className="text-red-500">*</span>
                                 </label>
                                 <input
                                     required
                                     className="w-full bg-[#1a1c23] border border-white/10 rounded-2xl py-4 px-6 text-white font-bold"
                                     value={editingGroup?.name || ''}
                                     onChange={e => setEditingGroup({ ...editingGroup, name: e.target.value })}
-                                    placeholder="Ù…Ø«Ù„Ø§Ù‹: Ø§Ù„Ù†ÙˆØ¹ØŒ Ø§Ù„Ø­Ø¬Ù…ØŒ Ø§Ù„Ù„ÙˆÙ†"
+                                    placeholder="مثلاً: النوع، الحجم، اللون"
                                 />
                             </div>
 
                             {/* Type */}
                             <div>
                                 <label htmlFor="filter-group-type" className="text-xs font-black text-amber-500 uppercase mb-2 block">
-                                    Ù†ÙˆØ¹ Ø§Ù„ÙÙ„ØªØ±
+                                    نوع الفلتر
                                 </label>
                                 <select
                                     id="filter-group-type"
@@ -335,17 +335,17 @@ const FiltersManagementPage: React.FC = () => {
                                     value={editingGroup?.type || 'custom'}
                                     onChange={e => setEditingGroup({ ...editingGroup, type: e.target.value as any })}
                                 >
-                                    <option value="custom">Ù…Ø®ØµØµ</option>
-                                    <option value="category">ÙØ¦Ø©</option>
-                                    <option value="price">Ø³Ø¹Ø±</option>
-                                    <option value="availability">ØªÙˆÙØ±</option>
+                                    <option value="custom">مخصص</option>
+                                    <option value="category">فئة</option>
+                                    <option value="price">سعر</option>
+                                    <option value="availability">توفر</option>
                                 </select>
                             </div>
 
                             {/* Applies To */}
                             <div>
                                 <label htmlFor="filter-group-applies-to" className="text-xs font-black text-amber-500 uppercase mb-2 block">
-                                    ÙŠØ¸Ù‡Ø± ÙÙŠ
+                                    يظهر في
                                 </label>
                                 <select
                                     id="filter-group-applies-to"
@@ -353,9 +353,9 @@ const FiltersManagementPage: React.FC = () => {
                                     value={editingGroup?.appliesTo || 'both'}
                                     onChange={e => setEditingGroup({ ...editingGroup, appliesTo: e.target.value as any })}
                                 >
-                                    <option value="both">Ø§Ù„Ù…Ù†ØªØ¬Ø§Øª ÙˆØ§Ù„Ù…Ø³ØªÙ„Ø²Ù…Ø§Øª</option>
-                                    <option value="products">Ø§Ù„Ù…Ù†ØªØ¬Ø§Øª ÙÙ‚Ø·</option>
-                                    <option value="supplies">Ø§Ù„Ù…Ø³ØªÙ„Ø²Ù…Ø§Øª ÙÙ‚Ø·</option>
+                                    <option value="both">المنتجات والمستلزمات</option>
+                                    <option value="products">المنتجات فقط</option>
+                                    <option value="supplies">المستلزمات فقط</option>
                                 </select>
                             </div>
 
@@ -363,7 +363,7 @@ const FiltersManagementPage: React.FC = () => {
                             <div>
                                 <div className="flex justify-between items-center mb-4">
                                     <label className="text-xs font-black text-amber-500 uppercase">
-                                        Ø§Ù„Ø®ÙŠØ§Ø±Ø§Øª <span className="text-red-500">*</span>
+                                        الخيارات <span className="text-red-500">*</span>
                                     </label>
                                     <button
                                         type="button"
@@ -371,7 +371,7 @@ const FiltersManagementPage: React.FC = () => {
                                         className="flex items-center gap-2 bg-white/5 text-white px-4 py-2 rounded-xl hover:bg-white/10 transition-all text-sm font-bold"
                                     >
                                         <PlusIcon className="w-4 h-4" />
-                                        Ø¥Ø¶Ø§ÙØ© Ø®ÙŠØ§Ø±
+                                        إضافة خيار
                                     </button>
                                 </div>
                                 <div className="space-y-3">
@@ -380,14 +380,14 @@ const FiltersManagementPage: React.FC = () => {
                                             <div className="flex-1 space-y-3">
                                                 <input
                                                     type="text"
-                                                    placeholder="Ø§Ø³Ù… Ø§Ù„Ø®ÙŠØ§Ø±"
+                                                    placeholder="اسم الخيار"
                                                     className="w-full bg-white/5 border border-white/10 rounded-lg py-2 px-4 text-white text-sm"
                                                     value={option.name}
                                                     onChange={e => handleUpdateOption(index, 'name', e.target.value)}
                                                 />
                                                 <input
                                                     type="text"
-                                                    placeholder="Ø§Ù„Ù‚ÙŠÙ…Ø© (value)"
+                                                    placeholder="القيمة (value)"
                                                     className="w-full bg-white/5 border border-white/10 rounded-lg py-2 px-4 text-white text-sm"
                                                     value={option.value}
                                                     onChange={e => handleUpdateOption(index, 'value', e.target.value)}
@@ -399,14 +399,14 @@ const FiltersManagementPage: React.FC = () => {
                                                         onChange={e => handleUpdateOption(index, 'isActive', e.target.checked)}
                                                         className="w-4 h-4 rounded border-white/20 bg-transparent text-amber-500"
                                                     />
-                                                    <span className="text-gray-400 text-sm">Ù†Ø´Ø·</span>
+                                                    <span className="text-gray-400 text-sm">نشط</span>
                                                 </label>
                                             </div>
                                             <button
                                                 type="button"
                                                 onClick={() => handleDeleteOption(index)}
                                                 className="p-2 bg-red-500/10 text-red-400 hover:bg-red-500 hover:text-white rounded-lg transition-all"
-                                                aria-label={`Ø­Ø°Ù Ø§Ù„Ø®ÙŠØ§Ø± ${option.name || index + 1}`}
+                                                aria-label={`حذف الخيار ${option.name || index + 1}`}
                                             >
                                                 <TrashIcon className="w-4 h-4" />
                                             </button>
@@ -424,7 +424,7 @@ const FiltersManagementPage: React.FC = () => {
                                         onChange={e => setEditingGroup({ ...editingGroup, isActive: e.target.checked })}
                                         className="w-5 h-5 rounded border-white/20 bg-transparent text-amber-500 focus:ring-amber-500"
                                     />
-                                    <span className="text-white font-bold">ØªÙØ¹ÙŠÙ„ Ø§Ù„Ù…Ø¬Ù…ÙˆØ¹Ø©</span>
+                                    <span className="text-white font-bold">تفعيل المجموعة</span>
                                 </label>
                             </div>
                         </div>
@@ -434,14 +434,14 @@ const FiltersManagementPage: React.FC = () => {
                                 type="submit"
                                 className="flex-1 bg-amber-500 text-gray-900 font-black py-5 rounded-[1.5rem] hover:bg-amber-400 shadow-2xl text-lg"
                             >
-                                Ø­ÙØ¸ Ø§Ù„Ù…Ø¬Ù…ÙˆØ¹Ø©
+                                حفظ المجموعة
                             </button>
                             <button
                                 type="button"
                                 onClick={() => setIsModalOpen(false)}
                                 className="px-10 bg-white/5 text-gray-400 font-black rounded-[1.5rem] border border-white/5"
                             >
-                                Ø¥Ù„ØºØ§Ø¡
+                                إلغاء
                             </button>
                         </div>
                     </form>

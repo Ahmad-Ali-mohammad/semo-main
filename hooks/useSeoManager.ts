@@ -2,13 +2,20 @@ import { useEffect, useMemo, useState } from 'react';
 import { SeoSettings } from '../types';
 import { api } from '../services/api';
 
+const canonicalFromEnv =
+  (typeof import.meta !== 'undefined' && import.meta.env?.VITE_CANONICAL_BASE_URL
+    ? String(import.meta.env.VITE_CANONICAL_BASE_URL).trim()
+    : '') || '';
+const canonicalFromWindow = typeof window !== 'undefined' ? window.location.origin : '';
+const defaultCanonicalBaseUrl = (canonicalFromEnv || canonicalFromWindow || '').replace(/\/+$/, '');
+
 const defaultSeoSettings: SeoSettings = {
   siteName: 'Reptile House',
   defaultTitle: 'بيت الزواحف | متجر الزواحف والمستلزمات',
   titleSeparator: '|',
   defaultDescription: 'متجر متخصص بالزواحف والمستلزمات مع محتوى تعليمي ودعم احترافي.',
   defaultKeywords: 'زواحف, متجر زواحف, مستلزمات زواحف, ثعابين, سحالي, بيت الزواحف',
-  canonicalBaseUrl: 'http://localhost:5173',
+  canonicalBaseUrl: defaultCanonicalBaseUrl,
   defaultOgImage: '/assets/photo_2026-02-04_07-13-35.jpg',
   twitterHandle: '',
   robotsIndex: true,

@@ -1,6 +1,7 @@
 import React, { createContext, useState, useContext, useEffect, useCallback, ReactNode } from 'react';
 import { Reptile, Order, Address, User, Article, HeroSlide, Supply } from '../types';
 import { api } from '../services/api';
+import { useAuth } from '../hooks/useAuth';
 
 interface DatabaseContextType {
   products: Reptile[];
@@ -35,6 +36,7 @@ interface DatabaseContextType {
 const DatabaseContext = createContext<DatabaseContextType | undefined>(undefined);
 
 export const DatabaseProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+  const { user } = useAuth();
   const [products, setProducts] = useState<Reptile[]>([]);
   const [orders, setOrders] = useState<Order[]>([]);
   const [addresses, setAddresses] = useState<Address[]>([]);
@@ -44,26 +46,29 @@ export const DatabaseProvider: React.FC<{ children: ReactNode }> = ({ children }
   const [supplies, setSupplies] = useState<Supply[]>([]);
   const [loading, setLoading] = useState(false);
   const [backendAvailable, setBackendAvailable] = useState(true);
+  const isManager = user?.role === 'admin' || user?.role === 'manager';
 
   const refreshData = useCallback(() => {
     setLoading(true);
-    Promise.all([
+    const baseRequests = [
       api.getProducts(),
-      api.getOrders(),
-      api.getAddresses(),
-      api.getUsers(),
       api.getArticles(),
       api.getHeroSlides(),
       api.getSupplies(),
-    ])
-      .then(([p, o, a, u, ar, h, s]) => {
+    ];
+    const protectedRequests = isManager
+      ? [api.getOrders(), api.getAddresses(), api.getUsers()]
+      : [Promise.resolve([] as Order[]), Promise.resolve([] as Address[]), Promise.resolve([] as User[])];
+
+    Promise.all([...baseRequests, ...protectedRequests])
+      .then(([p, ar, h, s, o, a, u]) => {
         setProducts(Array.isArray(p) ? p : []);
-        setOrders(Array.isArray(o) ? o : []);
-        setAddresses(Array.isArray(a) ? a : []);
-        setUsers(Array.isArray(u) ? u : []);
         setArticles(Array.isArray(ar) ? ar : []);
         setHeroSlides(Array.isArray(h) ? h : []);
         setSupplies(Array.isArray(s) ? s : []);
+        setOrders(Array.isArray(o) ? o : []);
+        setAddresses(Array.isArray(a) ? a : []);
+        setUsers(Array.isArray(u) ? u : []);
         setBackendAvailable(true);
       })
       .catch((error) => {
@@ -71,11 +76,11 @@ export const DatabaseProvider: React.FC<{ children: ReactNode }> = ({ children }
         setBackendAvailable(false);
       })
       .finally(() => setLoading(false));
-  }, []);
+  }, [isManager]);
 
   useEffect(() => {
     refreshData();
-  }, [refreshData]);
+  }, [refreshData, user?.id, user?.role]);
 
   const addProduct = (product: Reptile) => {
     api.saveProduct(product).then(() => refreshData()).catch(console.error);
