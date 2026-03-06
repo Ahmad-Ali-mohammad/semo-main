@@ -25,6 +25,7 @@ const ProductDetailsPage: React.FC<ProductDetailsPageProps> = ({ productId, setP
     const [activeTab, setActiveTab] = useState('details');
     const [selectedImageIndex, setSelectedImageIndex] = useState(0);
     const [quantity, setQuantity] = useState(1);
+    const ratingValue = Number(reptile?.rating ?? 0);
 
     // Helper function to get status badge colors
     const getStatusColor = (status: Reptile['status']) => {
@@ -313,7 +314,7 @@ const ProductDetailsPage: React.FC<ProductDetailsPageProps> = ({ productId, setP
                         </span>
                         <div className="flex items-center gap-1.5 bg-amber-500/10 px-4 py-2 rounded-full border border-amber-500/20">
                             <StarIcon className="w-4 h-4 text-amber-500" />
-                            <span className="font-black font-poppins text-xs text-amber-500">{reptile.rating.toFixed(1)}</span>
+                            <span className="font-black font-poppins text-xs text-amber-500">{ratingValue.toFixed(1)}</span>
                         </div>
                     </div>
                     <h1 className="text-6xl md:text-9xl font-black mb-6 leading-none tracking-tighter text-white drop-shadow-2xl">

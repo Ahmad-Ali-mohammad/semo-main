@@ -14,6 +14,26 @@ const BOOLEAN_KEYS = new Set([
   'robots_index',
   'robots_follow',
   'sitemap_enabled',
+  'enable_notifications',
+  'enable_email_notifications',
+  'enable_sms_notifications',
+  'maintenance_mode',
+  'allow_guest_checkout',
+  'require_email_verification',
+  'dark_mode',
+]);
+
+const NUMERIC_KEYS = new Set([
+  'price',
+  'rating',
+  'total',
+  'discount_percentage',
+  'founded_year',
+  'tax_rate',
+  'shipping_fee',
+  'free_shipping_threshold',
+  'sort_order',
+  'quantity',
 ]);
 
 export function rowToCamel(row) {
@@ -21,7 +41,18 @@ export function rowToCamel(row) {
   const out = {};
   for (const [k, v] of Object.entries(row)) {
     const key = toCamel(k);
-    out[key] = BOOLEAN_KEYS.has(k) ? !!v : v;
+    if (BOOLEAN_KEYS.has(k)) {
+      out[key] = !!v;
+      continue;
+    }
+
+    if (NUMERIC_KEYS.has(k) && v !== null && v !== '') {
+      const nextValue = Number(v);
+      out[key] = Number.isNaN(nextValue) ? v : nextValue;
+      continue;
+    }
+
+    out[key] = v;
   }
   return out;
 }

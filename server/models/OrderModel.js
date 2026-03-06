@@ -2,6 +2,40 @@ import pool from '../config/db.js';
 import { rowToCamel, rowsToCamel, objToSnake } from '../utils/rowMapper.js';
 
 let hasCustomerIdColumnCache = null;
+let hasExtendedColumnsCache = null;
+
+const ORDER_STATUS_MAP = {
+  'قيد المعالجة': 'قيد المعالجة',
+  'تم التأكيد': 'تم التأكيد',
+  'تم الشحن': 'تم الشحن',
+  'تم التوصيل': 'تم التوصيل',
+  pending: 'قيد المعالجة',
+  processing: 'قيد المعالجة',
+  review: 'قيد المعالجة',
+  confirmed: 'تم التأكيد',
+  shipped: 'تم الشحن',
+  delivered: 'تم التوصيل',
+  completed: 'تم التوصيل',
+};
+
+const PAYMENT_STATUS_MAP = {
+  'قيد المراجعة': 'قيد المراجعة',
+  'مقبول': 'مقبول',
+  'مرفوض': 'مرفوض',
+  review: 'قيد المراجعة',
+  pending: 'قيد المراجعة',
+  approved: 'مقبول',
+  accepted: 'مقبول',
+  rejected: 'مرفوض',
+};
+
+function normalizeOrderStatus(value) {
+  return ORDER_STATUS_MAP[String(value || '').trim()] || 'قيد المعالجة';
+}
+
+function normalizePaymentStatus(value) {
+  return PAYMENT_STATUS_MAP[String(value || '').trim()] || 'قيد المراجعة';
+}
 
 async function hasCustomerIdColumn() {
   if (hasCustomerIdColumnCache !== null) return hasCustomerIdColumnCache;
@@ -31,6 +65,28 @@ async function hasCustomerIdColumn() {
   return hasCustomerIdColumnCache;
 }
 
+async function ensureExtendedColumns() {
+  if (hasExtendedColumnsCache) return;
+  const statements = [
+    "ALTER TABLE orders ADD COLUMN customer_name VARCHAR(255) DEFAULT NULL",
+    "ALTER TABLE orders ADD COLUMN customer_email VARCHAR(255) DEFAULT NULL",
+    "ALTER TABLE orders ADD COLUMN customer_phone VARCHAR(64) DEFAULT NULL",
+    "ALTER TABLE orders ADD COLUMN shipping_address VARCHAR(512) DEFAULT NULL",
+    "ALTER TABLE orders ADD COLUMN shipping_city VARCHAR(128) DEFAULT NULL",
+    "ALTER TABLE orders ADD COLUMN shipping_country VARCHAR(128) DEFAULT NULL",
+  ];
+
+  for (const statement of statements) {
+    try {
+      await pool.query(statement);
+    } catch {
+      // Ignore if the column already exists or the alter cannot be applied now.
+    }
+  }
+
+  hasExtendedColumnsCache = true;
+}
+
 async function attachItems(orders) {
   if (!orders?.length) return orders;
   const ids = orders.map((o) => o.id);
@@ -51,10 +107,16 @@ async function attachItems(orders) {
       imageUrl: row.imageUrl || '',
     });
   }
-  return orders.map((o) => ({ ...o, items: byOrder[o.id] || [] }));
+  return orders.map((o) => ({
+    ...o,
+    status: normalizeOrderStatus(o.status),
+    paymentVerificationStatus: normalizePaymentStatus(o.paymentVerificationStatus),
+    items: byOrder[o.id] || [],
+  }));
 }
 
 export async function findAll() {
+  await ensureExtendedColumns();
   const [rows] = await pool.query('SELECT * FROM orders ORDER BY created_at DESC');
   const list = rowsToCamel(rows);
   return attachItems(list);
@@ -62,6 +124,7 @@ export async function findAll() {
 
 export async function findByCustomerId(customerId) {
   if (!customerId) return [];
+  await ensureExtendedColumns();
   const canFilterByCustomer = await hasCustomerIdColumn();
   if (!canFilterByCustomer) return [];
 
@@ -74,47 +137,71 @@ export async function findByCustomerId(customerId) {
 }
 
 export async function findById(id) {
+  await ensureExtendedColumns();
   const [rows] = await pool.query('SELECT * FROM orders WHERE id = ?', [id]);
   const order = rows[0] ? rowToCamel(rows[0]) : null;
   if (!order) return null;
-  const [list] = await attachItems([order]);
-  return list[0];
+  const [withItems] = await attachItems([order]);
+  return withItems || null;
 }
 
 export async function create(data) {
+  await ensureExtendedColumns();
   const d = objToSnake(data);
   const canUseCustomerId = await hasCustomerIdColumn();
-  const fallbackStatus = 'pending';
-  const fallbackPaymentStatus = 'review';
+  const fallbackStatus = 'قيد المعالجة';
+  const fallbackPaymentStatus = 'قيد المراجعة';
+  const normalizedStatus = normalizeOrderStatus(d.status ?? fallbackStatus);
+  const normalizedPaymentStatus = normalizePaymentStatus(d.payment_verification_status ?? fallbackPaymentStatus);
 
   if (canUseCustomerId) {
     await pool.query(
-      `INSERT INTO orders (id, customer_id, date, status, total, payment_confirmation_image, payment_method, payment_verification_status, rejection_reason)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      `INSERT INTO orders (
+        id, customer_id, customer_name, customer_email, customer_phone,
+        shipping_address, shipping_city, shipping_country,
+        date, status, total, payment_confirmation_image, payment_method, payment_verification_status, rejection_reason
+      )
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
         d.id,
         d.customer_id ?? null,
+        d.customer_name ?? null,
+        d.customer_email ?? null,
+        d.customer_phone ?? null,
+        d.shipping_address ?? null,
+        d.shipping_city ?? null,
+        d.shipping_country ?? null,
         d.date,
-        d.status ?? fallbackStatus,
+        normalizedStatus,
         d.total ?? 0,
         d.payment_confirmation_image ?? null,
         d.payment_method ?? null,
-        d.payment_verification_status ?? fallbackPaymentStatus,
+        normalizedPaymentStatus,
         d.rejection_reason ?? null,
       ]
     );
   } else {
     await pool.query(
-      `INSERT INTO orders (id, date, status, total, payment_confirmation_image, payment_method, payment_verification_status, rejection_reason)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+      `INSERT INTO orders (
+        id, customer_name, customer_email, customer_phone,
+        shipping_address, shipping_city, shipping_country,
+        date, status, total, payment_confirmation_image, payment_method, payment_verification_status, rejection_reason
+      )
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
         d.id,
+        d.customer_name ?? null,
+        d.customer_email ?? null,
+        d.customer_phone ?? null,
+        d.shipping_address ?? null,
+        d.shipping_city ?? null,
+        d.shipping_country ?? null,
         d.date,
-        d.status ?? fallbackStatus,
+        normalizedStatus,
         d.total ?? 0,
         d.payment_confirmation_image ?? null,
         d.payment_method ?? null,
-        d.payment_verification_status ?? fallbackPaymentStatus,
+        normalizedPaymentStatus,
         d.rejection_reason ?? null,
       ]
     );
@@ -132,11 +219,18 @@ export async function create(data) {
 }
 
 export async function update(id, data) {
+  await ensureExtendedColumns();
   const existing = await findById(id);
   if (!existing) return null;
 
   const d = objToSnake(data);
   const fields = [
+    'customer_name',
+    'customer_email',
+    'customer_phone',
+    'shipping_address',
+    'shipping_city',
+    'shipping_country',
     'date',
     'status',
     'total',
@@ -150,7 +244,9 @@ export async function update(id, data) {
   for (const f of fields) {
     if (d[f] !== undefined) {
       set.push(`${f} = ?`);
-      vals.push(d[f]);
+      if (f === 'status') vals.push(normalizeOrderStatus(d[f]));
+      else if (f === 'payment_verification_status') vals.push(normalizePaymentStatus(d[f]));
+      else vals.push(d[f]);
     }
   }
 
@@ -173,12 +269,13 @@ export async function update(id, data) {
 }
 
 export async function updateStatus(id, payload) {
+  await ensureExtendedColumns();
   const existing = await findById(id);
   if (!existing) return null;
 
   const updates = {};
-  if (payload.status !== undefined) updates.status = payload.status;
-  if (payload.paymentVerificationStatus !== undefined) updates.paymentVerificationStatus = payload.paymentVerificationStatus;
+  if (payload.status !== undefined) updates.status = normalizeOrderStatus(payload.status);
+  if (payload.paymentVerificationStatus !== undefined) updates.paymentVerificationStatus = normalizePaymentStatus(payload.paymentVerificationStatus);
   if (payload.rejectionReason !== undefined) updates.rejectionReason = payload.rejectionReason;
   if (Object.keys(updates).length === 0) return existing;
 
