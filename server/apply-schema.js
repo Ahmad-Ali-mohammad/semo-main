@@ -9,6 +9,7 @@ import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const MYSQL_COLLATION = 'utf8mb4_unicode_ci';
 
 async function applySchema() {
   let conn;
@@ -22,7 +23,7 @@ async function applySchema() {
       password: process.env.DB_PASSWORD || '',
       database: process.env.DB_NAME || 'semo_reptile_house',
       multipleStatements: true, // Important for executing multiple SQL statements
-      charset: 'utf8mb4'
+      charset: MYSQL_COLLATION
     };
 
     console.log('Connecting to database...');

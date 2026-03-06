@@ -23,6 +23,7 @@ try {
 
 const dbName = process.env.DB_NAME || 'semo_reptile_house';
 const outputPath = path.join(__dirname, 'current-data.sql');
+const MYSQL_COLLATION = 'utf8mb4_unicode_ci';
 
 function escapeIdentifier(identifier) {
   return `\`${String(identifier).replace(/`/g, '``')}\``;
@@ -43,7 +44,7 @@ async function run() {
     user: process.env.DB_USER || 'root',
     password: process.env.DB_PASSWORD || '',
     database: dbName,
-    charset: 'utf8mb4',
+    charset: MYSQL_COLLATION,
   });
 
   const [tables] = await conn.query(

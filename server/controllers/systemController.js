@@ -35,7 +35,7 @@ export async function getDatabaseStatus(req, res) {
       waitForConnections: true,
       connectionLimit: 10,
       queueLimit: 0,
-      charset: 'utf8mb4',
+      charset: 'utf8mb4_unicode_ci',
     },
     runtime: {
       nodeVersion: process.version,

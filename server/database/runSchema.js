@@ -27,6 +27,7 @@ const config = {
   user: process.env.DB_USER || 'root',
   password: process.env.DB_PASSWORD || '',
   multipleStatements: true,
+  charset: 'utf8mb4_unicode_ci',
 };
 
 async function run() {

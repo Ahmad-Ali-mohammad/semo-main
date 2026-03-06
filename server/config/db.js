@@ -1,5 +1,7 @@
 import mysql from 'mysql2/promise';
 
+const MYSQL_COLLATION = 'utf8mb4_unicode_ci';
+
 const pool = mysql.createPool({
   host: process.env.DB_HOST || 'localhost',
   port: parseInt(process.env.DB_PORT || '3306', 10),
@@ -9,7 +11,7 @@ const pool = mysql.createPool({
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0,
-  charset: 'utf8mb4',
+  charset: MYSQL_COLLATION,
 });
 
 export function isDbConfigured() {

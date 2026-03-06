@@ -1,4 +1,4 @@
-﻿
+
 import React, { useState, useMemo, useRef } from 'react';
 import { useDatabase } from '../../contexts/DatabaseContext';
 import { EditIcon, TrashIcon, PlusIcon, SearchIcon, StarIcon } from '../../components/icons';
@@ -39,9 +39,9 @@ const ProductsManagementPage: React.FC = () => {
     }, [products]);
 
     const productTabs: TabItem[] = [
-      { id: 'all_products', label: 'Ø¬Ù…ÙŠØ¹ Ø§Ù„Ù…Ù†ØªØ¬Ø§Øª', icon: 'ðŸ“¦' },
-      { id: 'featured', label: 'Ø§Ù„Ù…Ù…ÙŠØ²Ø©', icon: 'âœ¨' },
-      { id: 'out_of_stock', label: 'Ù†ÙØ°Øª Ù…Ù† Ø§Ù„Ù…Ø®Ø²ÙˆÙ†', icon: 'âŒ', badge: products.filter(r => !r.isAvailable).length }
+      { id: 'all_products', label: 'جميع المنتجات', icon: '📦' },
+      { id: 'featured', label: 'المميزة', icon: '✨' },
+      { id: 'out_of_stock', label: 'نفذت من المخزون', icon: '❌', badge: products.filter(r => !r.isAvailable).length }
     ];
 
     const filteredReptiles = useMemo(() => {
@@ -69,7 +69,7 @@ const ProductsManagementPage: React.FC = () => {
                 price: 0,
                 imageUrl: '',
                 category: 'snake',
-                status: 'Ù…ØªÙˆÙØ±',
+                status: 'متوفر',
                 isAvailable: true,
                 rating: 5.0,
                 description: ''
@@ -88,7 +88,7 @@ const ProductsManagementPage: React.FC = () => {
             const imageUrl = await mediaService.uploadProjectImage(file, 'products');
             setEditingProduct(prev => ({ ...prev, imageUrl }));
         } catch (error) {
-            alert(error instanceof Error ? error.message : 'ØªØ¹Ø°Ø± Ø±ÙØ¹ ØµÙˆØ±Ø© Ø§Ù„Ù…Ù†ØªØ¬');
+            alert(error instanceof Error ? error.message : 'تعذر رفع صورة المنتج');
         } finally {
             setIsImageUploading(false);
             e.target.value = '';
@@ -99,11 +99,11 @@ const ProductsManagementPage: React.FC = () => {
         e.preventDefault();
         if (editingProduct) {
             if (isImageUploading) {
-                alert('Ø§Ù†ØªØ¸Ø± Ø­ØªÙ‰ ÙŠÙƒØªÙ…Ù„ Ø±ÙØ¹ Ø§Ù„ØµÙˆØ±Ø© Ø£ÙˆÙ„Ø§Ù‹');
+                alert('انتظر حتى يكتمل رفع الصورة أولاً');
                 return;
             }
             if (!editingProduct.category || !editingProduct.species || !editingProduct.imageUrl) {
-                alert('ÙŠØ±Ø¬Ù‰ Ù…Ù„Ø¡ Ø¬Ù…ÙŠØ¹ Ø§Ù„Ø­Ù‚ÙˆÙ„ Ø§Ù„Ù…Ø·Ù„ÙˆØ¨Ø© ÙˆØ±ÙØ¹ ØµÙˆØ±Ø©');
+                alert('يرجى ملء جميع الحقول المطلوبة ورفع صورة');
                 return;
             }
 
@@ -136,8 +136,8 @@ const ProductsManagementPage: React.FC = () => {
         <div className="animate-fade-in relative space-y-8 text-right">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-6">
                 <div>
-                    <h1 className="text-4xl font-black mb-2">Ø¥Ø¯Ø§Ø±Ø© Ø§Ù„Ù…Ù†ØªØ¬Ø§Øª</h1>
-                    <p className="text-gray-400">Ø¥Ø¯Ø§Ø±Ø© Ø§Ù„Ø²ÙˆØ§Ø­Ù Ø§Ù„Ù…ØªÙˆÙØ±Ø© ÙÙŠ Ø§Ù„Ù…ØªØ¬Ø±</p>
+                    <h1 className="text-4xl font-black mb-2">إدارة المنتجات</h1>
+                    <p className="text-gray-400">إدارة الزواحف المتوفرة في المتجر</p>
                 </div>
                 <HelpButton onClick={() => setIsHelpOpen(true)} />
             </div>
@@ -146,7 +146,7 @@ const ProductsManagementPage: React.FC = () => {
                 <div className="relative flex-1 w-full max-w-md">
                     <input
                         type="text"
-                        placeholder="Ø§Ø¨Ø­Ø« ÙÙŠ Ø§Ù„Ù…ØªØ¬Ø±..."
+                        placeholder="ابحث في المتجر..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                         className="w-full bg-[#1a1c23] border border-white/10 rounded-2xl py-3.5 px-6 ps-14 outline-none focus:ring-2 focus:ring-amber-500/50 text-white transition-all shadow-inner"
@@ -158,7 +158,7 @@ const ProductsManagementPage: React.FC = () => {
                     className="flex items-center gap-3 bg-amber-500 text-gray-900 font-black py-3.5 px-8 rounded-2xl hover:bg-amber-400 transition-all shadow-xl shadow-amber-500/20 active:scale-95"
                 >
                     <PlusIcon className="w-5 h-5" />
-                    <span>Ø¥Ø¶Ø§ÙØ© Ù…Ù†ØªØ¬ Ø¬Ø¯ÙŠØ¯</span>
+                    <span>إضافة منتج جديد</span>
                 </button>
             </div>
 
@@ -169,11 +169,11 @@ const ProductsManagementPage: React.FC = () => {
                     <table className="w-full text-right">
                         <thead>
                             <tr className="border-b border-white/10 text-gray-500 text-[10px] font-black uppercase tracking-widest bg-black/20">
-                                <th className="p-6">Ø§Ù„Ù…Ø®Ù„ÙˆÙ‚</th>
-                                <th className="p-6 text-center">Ø§Ù„ÙØ¦Ø©</th>
-                                <th className="p-6">Ø§Ù„Ø³Ø¹Ø±</th>
-                                <th className="p-6 text-center">Ø§Ù„Ø­Ø§Ù„Ø©</th>
-                                <th className="p-6 text-left">Ø¥Ø¬Ø±Ø§Ø¡Ø§Øª</th>
+                                <th className="p-6">المخلوق</th>
+                                <th className="p-6 text-center">الفئة</th>
+                                <th className="p-6">السعر</th>
+                                <th className="p-6 text-center">الحالة</th>
+                                <th className="p-6 text-left">إجراءات</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-white/5">
@@ -210,14 +210,14 @@ const ProductsManagementPage: React.FC = () => {
                                             <button
                                                 onClick={() => handleOpenModal(reptile)}
                                                 className="p-3 bg-white/5 text-gray-400 hover:text-amber-400 hover:bg-amber-400/10 rounded-xl transition-all border border-white/5"
-                                                aria-label={`ØªØ¹Ø¯ÙŠÙ„ ${reptile.name}`}
+                                                aria-label={`تعديل ${reptile.name}`}
                                             >
                                                 <EditIcon className="w-5 h-5"/>
                                             </button>
                                             <button
                                                 onClick={() => handleDeleteClick(reptile.id)}
                                                 className="p-3 bg-red-500/5 text-red-400 hover:text-white hover:bg-red-500 rounded-xl transition-all border border-red-500/10"
-                                                aria-label={`Ø­Ø°Ù ${reptile.name}`}
+                                                aria-label={`حذف ${reptile.name}`}
                                             >
                                                 <TrashIcon className="w-5 h-5"/>
                                             </button>
@@ -233,8 +233,8 @@ const ProductsManagementPage: React.FC = () => {
             {/* Custom Confirmation Modal */}
             <ConfirmationModal 
                 isOpen={confirmDelete.isOpen}
-                title="ØªØ£ÙƒÙŠØ¯ Ø§Ù„Ø­Ø°Ù Ø§Ù„Ù†Ù‡Ø§Ø¦ÙŠ"
-                message="Ù‡Ù„ Ø£Ù†Øª Ù…ØªØ£ÙƒØ¯ ØªÙ…Ø§Ù…Ø§Ù‹ Ù…Ù† Ø±ØºØ¨ØªÙƒ ÙÙŠ Ø­Ø°Ù Ù‡Ø°Ø§ Ø§Ù„Ù…Ø®Ù„ÙˆÙ‚ Ù…Ù† Ø§Ù„Ù…ØªØ¬Ø±ØŸ Ù‡Ø°Ù‡ Ø§Ù„Ø¹Ù…Ù„ÙŠØ© Ù†Ù‡Ø§Ø¦ÙŠØ© ÙˆÙ„Ø§ ÙŠÙ…ÙƒÙ† Ø§Ù„ØªØ±Ø§Ø¬Ø¹ Ø¹Ù†Ù‡Ø§."
+                title="تأكيد الحذف النهائي"
+                message="هل أنت متأكد تماماً من رغبتك في حذف هذا المخلوق من المتجر؟ هذه العملية نهائية ولا يمكن التراجع عنها."
                 onConfirm={handleConfirmDelete}
                 onCancel={() => setConfirmDelete({ isOpen: false, id: null })}
             />
@@ -246,19 +246,19 @@ const ProductsManagementPage: React.FC = () => {
                         type="button"
                         className="absolute inset-0 bg-black/90 backdrop-blur-md cursor-default"
                         onClick={() => setIsModalOpen(false)}
-                        aria-label="Ø¥ØºÙ„Ø§Ù‚ Ø§Ù„Ù†Ø§ÙØ°Ø©"
+                        aria-label="إغلاق النافذة"
                     />
                     <form 
                         onSubmit={handleSave}
                         className="relative w-full max-w-4xl glass-dark border border-white/10 rounded-[3rem] p-8 md:p-14 shadow-2xl animate-scale-in max-h-[90vh] overflow-y-auto custom-scrollbar bg-[#0f1117]"
                     >
                         <h2 className="text-4xl font-black mb-10 text-white tracking-tighter">
-                            {editingProduct?.id ? 'ØªØ­Ø¯ÙŠØ« Ø¨ÙŠØ§Ù†Ø§Øª Ø§Ù„Ù…Ø®Ù„ÙˆÙ‚' : 'Ø¥Ø¶Ø§ÙØ© Ù…Ø®Ù„ÙˆÙ‚ Ø¬Ø¯ÙŠØ¯'}
+                            {editingProduct?.id ? 'تحديث بيانات المخلوق' : 'إضافة مخلوق جديد'}
                         </h2>
                         
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 text-right">
                             <div className="md:col-span-1 space-y-6">
-                                <label htmlFor="product-image-upload" className="block text-xs font-black text-amber-500 uppercase tracking-widest">Ø§Ù„ØµÙˆØ±Ø© Ø§Ù„ØªØ¹Ø±ÙŠÙÙŠØ©</label>
+                                <label htmlFor="product-image-upload" className="block text-xs font-black text-amber-500 uppercase tracking-widest">الصورة التعريفية</label>
                                 <div
                                     onClick={() => fileInputRef.current?.click()}
                                     onKeyDown={(e) => {
@@ -269,30 +269,30 @@ const ProductsManagementPage: React.FC = () => {
                                     }}
                                     role="button"
                                     tabIndex={0}
-                                    aria-label="Ø±ÙØ¹ ØµÙˆØ±Ø© Ø§Ù„Ù…Ù†ØªØ¬"
+                                    aria-label="رفع صورة المنتج"
                                     className="relative aspect-square w-full rounded-[2.5rem] border-2 border-dashed border-white/10 bg-white/5 flex flex-col items-center justify-center cursor-pointer hover:border-amber-500 transition-all overflow-hidden group"
                                 >
                                     {editingProduct?.imageUrl ? (
-                                        <img src={editingProduct.imageUrl} alt={editingProduct.name || 'ØµÙˆØ±Ø© Ø§Ù„Ù…Ù†ØªØ¬'} className="w-full h-full object-cover" />
+                                        <img src={editingProduct.imageUrl} alt={editingProduct.name || 'صورة المنتج'} className="w-full h-full object-cover" />
                                     ) : (
                                         <PlusIcon className="w-12 h-12 text-gray-600" />
                                     )}
                                     {isImageUploading ? (
                                         <div className="absolute inset-0 bg-black/70 flex items-center justify-center text-sm font-black text-amber-400">
-                                            Ø¬Ø§Ø±ÙŠ Ø±ÙØ¹ Ø§Ù„ØµÙˆØ±Ø©...
+                                            جاري رفع الصورة...
                                         </div>
                                     ) : null}
                                 </div>
-                                <input id="product-image-upload" type="file" ref={fileInputRef} className="hidden" accept={IMAGE_FILE_ACCEPT} onChange={handleImageChange} aria-label="Ø§Ø®ØªÙŠØ§Ø± ØµÙˆØ±Ø© Ø§Ù„Ù…Ù†ØªØ¬" />
+                                <input id="product-image-upload" type="file" ref={fileInputRef} className="hidden" accept={IMAGE_FILE_ACCEPT} onChange={handleImageChange} aria-label="اختيار صورة المنتج" />
                             </div>
 
                             <div className="md:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-6">
                                 <div className="col-span-2">
-                                    <label htmlFor="product-name" className="text-xs font-black text-amber-500 uppercase mb-2 block">Ø§Ù„Ø§Ø³Ù…</label>
+                                    <label htmlFor="product-name" className="text-xs font-black text-amber-500 uppercase mb-2 block">الاسم</label>
                                     <input id="product-name" required className="w-full bg-[#1a1c23] border border-white/10 rounded-2xl py-4 px-6 text-white font-bold" value={editingProduct?.name || ''} onChange={e => setEditingProduct({...editingProduct, name: e.target.value})} />
                                 </div>
                                 <div>
-                                    <label htmlFor="product-species" className="text-xs font-black text-amber-500 uppercase mb-2 block">Ø§Ù„ÙØµÙŠÙ„Ø©</label>
+                                    <label htmlFor="product-species" className="text-xs font-black text-amber-500 uppercase mb-2 block">الفصيلة</label>
                                     <input
                                         id="product-species"
                                         required
@@ -300,11 +300,11 @@ const ProductsManagementPage: React.FC = () => {
                                         className="w-full bg-[#1a1c23] border border-white/10 rounded-2xl py-4 px-6 text-white font-bold"
                                         value={editingProduct?.species || ''}
                                         onChange={e => setEditingProduct({...editingProduct, species: e.target.value})}
-                                        placeholder="Ù…Ø«Ù„Ø§Ù‹: Ball python"
+                                        placeholder="مثلاً: Ball python"
                                     />
                                 </div>
                                 <div>
-                                    <label htmlFor="product-category" className="text-xs font-black text-amber-500 uppercase mb-2 block">Ø§Ù„ÙØ¦Ø©</label>
+                                    <label htmlFor="product-category" className="text-xs font-black text-amber-500 uppercase mb-2 block">الفئة</label>
                                     <input
                                         id="product-category"
                                         required
@@ -312,15 +312,15 @@ const ProductsManagementPage: React.FC = () => {
                                         className="w-full bg-[#1a1c23] border border-white/10 rounded-2xl py-4 px-6 text-white font-bold"
                                         value={editingProduct?.category || ''}
                                         onChange={e => setEditingProduct({...editingProduct, category: e.target.value as Reptile['category']})}
-                                        placeholder="Ù…Ø«Ù„Ø§Ù‹: snake, lizard, turtle"
+                                        placeholder="مثلاً: snake, lizard, turtle"
                                     />
                                 </div>
                                 <div>
-                                    <label htmlFor="product-price" className="text-xs font-black text-amber-500 uppercase mb-2 block">Ø§Ù„Ø³Ø¹Ø±</label>
+                                    <label htmlFor="product-price" className="text-xs font-black text-amber-500 uppercase mb-2 block">السعر</label>
                                     <input id="product-price" type="number" className="w-full bg-[#1a1c23] border border-white/10 rounded-2xl py-4 px-6 text-white font-bold font-poppins" value={editingProduct?.price || 0} onChange={e => setEditingProduct({...editingProduct, price: Number(e.target.value)})} />
                                 </div>
                                 <div>
-                                    <label htmlFor="product-status" className="text-xs font-black text-amber-500 uppercase mb-2 block">Ø­Ø§Ù„Ø© Ø§Ù„ØªÙˆÙØ±</label>
+                                    <label htmlFor="product-status" className="text-xs font-black text-amber-500 uppercase mb-2 block">حالة التوفر</label>
                                     <input
                                         id="product-status"
                                         required
@@ -330,13 +330,13 @@ const ProductsManagementPage: React.FC = () => {
                                         onChange={e => setEditingProduct({
                                             ...editingProduct,
                                             status: e.target.value as any,
-                                            isAvailable: e.target.value === 'Ù…ØªÙˆÙØ±'
+                                            isAvailable: e.target.value === 'متوفر'
                                         })}
-                                        placeholder="Ù…Ø«Ù„Ø§Ù‹: Ù…ØªÙˆÙØ±ØŒ Ù‚ÙŠØ¯ Ø§Ù„Ø­Ø¬Ø²ØŒ ØºÙŠØ± Ù…ØªÙˆÙØ±"
+                                        placeholder="مثلاً: متوفر، قيد الحجز، غير متوفر"
                                     />
                                 </div>
                                 <div>
-                                    <label htmlFor="product-rating" className="text-xs font-black text-amber-500 uppercase mb-2 block">Ø§Ù„ØªÙ‚ÙŠÙŠÙ…</label>
+                                    <label htmlFor="product-rating" className="text-xs font-black text-amber-500 uppercase mb-2 block">التقييم</label>
                                     <input
                                         id="product-rating"
                                         type="number"
@@ -349,15 +349,15 @@ const ProductsManagementPage: React.FC = () => {
                                     />
                                 </div>
                                 <div className="col-span-2">
-                                    <label htmlFor="product-description" className="text-xs font-black text-amber-500 uppercase mb-2 block">Ø§Ù„ÙˆØµÙ</label>
+                                    <label htmlFor="product-description" className="text-xs font-black text-amber-500 uppercase mb-2 block">الوصف</label>
                                     <textarea id="product-description" rows={4} className="w-full bg-[#1a1c23] border border-white/10 rounded-2xl py-4 px-6 text-white resize-none" value={editingProduct?.description || ''} onChange={e => setEditingProduct({...editingProduct, description: e.target.value})} />
                                 </div>
                             </div>
                         </div>
 
                         <div className="flex gap-6 mt-12">
-                            <button type="submit" disabled={isImageUploading} className="flex-1 bg-amber-500 text-gray-900 font-black py-5 rounded-[1.5rem] hover:bg-amber-400 shadow-2xl text-lg disabled:opacity-60 disabled:cursor-not-allowed">Ø­ÙØ¸ Ø§Ù„ØªØºÙŠÙŠØ±Ø§Øª</button>
-                            <button type="button" onClick={() => setIsModalOpen(false)} className="px-10 bg-white/5 text-gray-400 font-black rounded-[1.5rem] border border-white/5">Ø¥Ù„ØºØ§Ø¡</button>
+                            <button type="submit" disabled={isImageUploading} className="flex-1 bg-amber-500 text-gray-900 font-black py-5 rounded-[1.5rem] hover:bg-amber-400 shadow-2xl text-lg disabled:opacity-60 disabled:cursor-not-allowed">حفظ التغييرات</button>
+                            <button type="button" onClick={() => setIsModalOpen(false)} className="px-10 bg-white/5 text-gray-400 font-black rounded-[1.5rem] border border-white/5">إلغاء</button>
                         </div>
                     </form>
                 </div>
