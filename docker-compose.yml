@@ -47,6 +47,8 @@ services:
       STARTUP_DB_RETRY_MS: ${STARTUP_DB_RETRY_MS:-2000}
     expose:
       - "3001"
+    ports:
+      - "127.0.0.1:3001:3001"
     volumes:
       - uploads_data:/app/server/uploads
     healthcheck:
