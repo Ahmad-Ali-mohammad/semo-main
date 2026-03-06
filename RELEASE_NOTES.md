@@ -40,6 +40,15 @@ copy .env.docker.example .env
 docker compose up -d --build
 ```
 
+## VPS Deployment Behind Existing Nginx/Hestia
+
+If the target VPS already serves `reptile-house.com` through `nginx` or Hestia, use the VPS override so Docker only runs `app` and `db`, while `nginx` keeps SSL termination and proxies `/api` and `/health` to `127.0.0.1:3001`.
+
+```bash
+copy .env.docker.example .env
+docker compose -f docker-compose.yml -f docker-compose.vps.yml up -d --build app db
+```
+
 ## Tag
 
 - `v2026.03.06-production`
