@@ -41,6 +41,13 @@ CREATE TABLE IF NOT EXISTS products (
 -- الطلبات
 CREATE TABLE IF NOT EXISTS orders (
   id VARCHAR(64) PRIMARY KEY,
+  customer_id VARCHAR(64) DEFAULT NULL,
+  customer_name VARCHAR(255) DEFAULT NULL,
+  customer_email VARCHAR(255) DEFAULT NULL,
+  customer_phone VARCHAR(64) DEFAULT NULL,
+  shipping_address VARCHAR(512) DEFAULT NULL,
+  shipping_city VARCHAR(128) DEFAULT NULL,
+  shipping_country VARCHAR(128) DEFAULT NULL,
   date VARCHAR(32) NOT NULL,
   status VARCHAR(32) NOT NULL DEFAULT 'قيد المعالجة',
   total DECIMAL(12,2) NOT NULL DEFAULT 0,
@@ -48,7 +55,8 @@ CREATE TABLE IF NOT EXISTS orders (
   payment_method VARCHAR(32) DEFAULT NULL,
   payment_verification_status VARCHAR(32) NOT NULL DEFAULT 'قيد المراجعة',
   rejection_reason TEXT DEFAULT NULL,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  INDEX idx_orders_customer_id (customer_id)
 );
 
 -- عناصر الطلب
@@ -177,6 +185,27 @@ CREATE TABLE IF NOT EXISTS seo_settings (
   sitemap_enabled TINYINT(1) NOT NULL DEFAULT 1,
   excluded_paths TEXT,
   custom_robots_txt TEXT,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- Store settings (single row)
+CREATE TABLE IF NOT EXISTS store_settings (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  store_currency VARCHAR(8) NOT NULL DEFAULT 'USD',
+  store_language VARCHAR(8) NOT NULL DEFAULT 'ar',
+  enable_notifications TINYINT(1) NOT NULL DEFAULT 1,
+  enable_email_notifications TINYINT(1) NOT NULL DEFAULT 1,
+  enable_sms_notifications TINYINT(1) NOT NULL DEFAULT 0,
+  maintenance_mode TINYINT(1) NOT NULL DEFAULT 0,
+  allow_guest_checkout TINYINT(1) NOT NULL DEFAULT 0,
+  require_email_verification TINYINT(1) NOT NULL DEFAULT 1,
+  default_user_role VARCHAR(16) NOT NULL DEFAULT 'user',
+  tax_rate DECIMAL(5,2) NOT NULL DEFAULT 10.00,
+  shipping_fee DECIMAL(10,2) NOT NULL DEFAULT 15.00,
+  free_shipping_threshold DECIMAL(10,2) NOT NULL DEFAULT 100.00,
+  primary_color VARCHAR(16) NOT NULL DEFAULT '#f59e0b',
+  secondary_color VARCHAR(16) NOT NULL DEFAULT '#6366f1',
+  dark_mode TINYINT(1) NOT NULL DEFAULT 1,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
@@ -335,6 +364,7 @@ INSERT IGNORE INTO company_info (id, name, name_english) VALUES (1, 'Reptile Hou
 INSERT IGNORE INTO contact_info (id, phone, email, address, city, country, working_hours) VALUES (1, '+963 XXX XXX XXX', 'info@reptilehouse.sy', 'دمشق، سوريا', 'دمشق', 'سوريا', 'السبت - الخميس: 9:00 - 20:00');
 INSERT IGNORE INTO shamcash_config (id, account_code, payment_instructions) VALUES (1, '000000000000', 'قم بمسح الباركود أو إدخال رقم الحساب يدوياً.');
 INSERT IGNORE INTO seo_settings (id) VALUES (1);
+INSERT IGNORE INTO store_settings (id) VALUES (1);
 INSERT IGNORE INTO user_preferences (id, user_id, theme, language, notifications_enabled) VALUES (1, 'default', 'dark', 'ar', 1);
 
 SET FOREIGN_KEY_CHECKS = 1;

@@ -22,22 +22,37 @@ export const PreferencesProvider: React.FC<{ children: ReactNode }> = ({ childre
   const [prefs, setPrefs] = useState<UserPreferences>(defaultPrefs);
   const [isLoading, setIsLoading] = useState(true);
 
+  const loadStoreDefaults = async (): Promise<UserPreferences> => {
+    try {
+      const storeSettings = await api.getStoreSettings();
+      return {
+        theme: storeSettings.theme?.darkMode === false ? 'light' : 'dark',
+        language: storeSettings.storeLanguage || 'ar',
+        notificationsEnabled: storeSettings.enableNotifications ?? true,
+      };
+    } catch {
+      return defaultPrefs;
+    }
+  };
+
   // Load preferences from API on mount
   useEffect(() => {
     const loadPrefs = async () => {
+      const storeDefaults = await loadStoreDefaults();
       if (!user) {
-        setPrefs(defaultPrefs);
-        applyTheme(defaultPrefs.theme);
+        setPrefs(storeDefaults);
+        applyTheme(storeDefaults.theme);
         setIsLoading(false);
         return;
       }
       try {
         const savedPrefs = await api.getUserPreferences();
-        setPrefs(savedPrefs);
-        applyTheme(savedPrefs.theme);
-      } catch (error) {
-        setPrefs(defaultPrefs);
-        applyTheme(defaultPrefs.theme);
+        const mergedPrefs = { ...storeDefaults, ...savedPrefs };
+        setPrefs(mergedPrefs);
+        applyTheme(mergedPrefs.theme);
+      } catch {
+        setPrefs(storeDefaults);
+        applyTheme(storeDefaults.theme);
       } finally {
         setIsLoading(false);
       }

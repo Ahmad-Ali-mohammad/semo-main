@@ -1,4 +1,4 @@
-import { companyInfo, contactInfo, shamcashConfig, seoSettings } from '../models/SettingsModel.js';
+import { companyInfo, contactInfo, shamcashConfig, seoSettings, storeSettings } from '../models/SettingsModel.js';
 
 export async function getCompany(req, res) {
   try {
@@ -66,6 +66,24 @@ export async function getSeo(req, res) {
 export async function setSeo(req, res) {
   try {
     const row = await seoSettings.set(req.body);
+    res.json(row || {});
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+}
+
+export async function getStore(req, res) {
+  try {
+    const row = await storeSettings.get();
+    res.json(row || {});
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+}
+
+export async function setStore(req, res) {
+  try {
+    const row = await storeSettings.set(req.body);
     res.json(row || {});
   } catch (err) {
     res.status(500).json({ error: err.message });

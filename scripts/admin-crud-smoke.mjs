@@ -65,6 +65,11 @@ async function run() {
     pageId: null,
     mediaId: null,
   };
+  const originalSettings = {
+    contact: null,
+    seo: null,
+    company: null,
+  };
 
   const pass = (name) => results.push({ name, status: 'PASS' });
   const fail = (name, error) => results.push({ name, status: 'FAIL', error: error.message });
@@ -101,6 +106,20 @@ async function run() {
     printSummary(results);
     process.exitCode = 1;
     return;
+  }
+
+  try {
+    const [contact, seo, company] = await Promise.all([
+      request('/settings/contact', { expected: [200] }),
+      request('/settings/seo', { expected: [200] }),
+      request('/settings/company', { expected: [200] }),
+    ]);
+
+    originalSettings.contact = contact.data;
+    originalSettings.seo = seo.data;
+    originalSettings.company = company.data;
+  } catch {
+    // Keep smoke coverage running even if the environment lacks one of the singleton settings rows.
   }
 
   // MEDIA multipart upload + managed cleanup
@@ -503,12 +522,12 @@ async function run() {
   }
 
   // Cleanup safety
-  await safeCleanup(token, created);
+  await safeCleanup(token, created, originalSettings);
   printSummary(results);
   if (results.some((r) => r.status === 'FAIL')) process.exitCode = 1;
 }
 
-async function safeCleanup(token, created) {
+async function safeCleanup(token, created, originalSettings) {
   const cleanupOps = [];
   if (created.productId) cleanupOps.push(request(`/products/${created.productId}`, { method: 'DELETE', token, expected: [204, 404] }));
   if (created.articleId) cleanupOps.push(request(`/articles/${created.articleId}`, { method: 'DELETE', token, expected: [204, 404] }));
@@ -518,6 +537,9 @@ async function safeCleanup(token, created) {
   if (created.serviceId) cleanupOps.push(request(`/services/${created.serviceId}`, { method: 'DELETE', token, expected: [204, 404] }));
   if (created.pageId) cleanupOps.push(request(`/page-contents/${created.pageId}`, { method: 'DELETE', token, expected: [204, 404] }));
   if (created.mediaId) cleanupOps.push(request(`/media/${created.mediaId}`, { method: 'DELETE', token, expected: [204, 404] }));
+  if (originalSettings?.contact) cleanupOps.push(request('/settings/contact', { method: 'PUT', token, expected: [200], body: originalSettings.contact }));
+  if (originalSettings?.seo) cleanupOps.push(request('/settings/seo', { method: 'PUT', token, expected: [200], body: originalSettings.seo }));
+  if (originalSettings?.company) cleanupOps.push(request('/settings/company', { method: 'PUT', token, expected: [200], body: originalSettings.company }));
   await Promise.allSettled(cleanupOps);
 }
 

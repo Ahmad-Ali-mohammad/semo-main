@@ -94,6 +94,8 @@ router.get('/settings/shamcash', settingsController.getShamcash);
 router.put('/settings/shamcash', requireRoles(...manageRoles), settingsController.setShamcash);
 router.get('/settings/seo', settingsController.getSeo);
 router.put('/settings/seo', requireRoles(...manageRoles), settingsController.setSeo);
+router.get('/settings/store', settingsController.getStore);
+router.put('/settings/store', requireRoles(...manageRoles), settingsController.setStore);
 
 // Team
 router.get('/team', teamController.list);

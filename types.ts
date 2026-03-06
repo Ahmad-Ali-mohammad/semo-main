@@ -148,6 +148,13 @@ export interface Order {
   date: string;
   status: 'قيد المعالجة' | 'تم الشحن' | 'تم التوصيل' | 'تم التأكيد';
   total: number;
+  customerId?: string;
+  customerName?: string;
+  customerEmail?: string;
+  customerPhone?: string;
+  shippingAddress?: string;
+  shippingCity?: string;
+  shippingCountry?: string;
   items: OrderItem[];
   paymentConfirmationImage?: string;
   paymentMethod?: 'card' | 'shamcash';
@@ -286,6 +293,27 @@ export interface ContactInfo {
     whatsapp?: string;
     telegram?: string;
   };
+}
+
+export interface StoreSettings {
+  storeCurrency: 'USD' | 'EUR' | 'SYP';
+  storeLanguage: 'ar' | 'en';
+  enableNotifications: boolean;
+  enableEmailNotifications: boolean;
+  enableSmsNotifications: boolean;
+  maintenanceMode: boolean;
+  allowGuestCheckout: boolean;
+  requireEmailVerification: boolean;
+  defaultUserRole: UserRole;
+  taxRate: number;
+  shippingFee: number;
+  freeShippingThreshold: number;
+  theme: {
+    primaryColor: string;
+    secondaryColor: string;
+    darkMode: boolean;
+  };
+  updatedAt?: string;
 }
 
 export interface TeamMember {

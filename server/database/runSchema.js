@@ -53,6 +53,13 @@ async function applyUtf8Migrations(conn) {
       SET status = 'غير متوفر'
       WHERE is_available = 0
         AND (status IS NULL OR TRIM(status) = '' OR status = 'Unavailable' OR status REGEXP '^[?]+$')`,
+    `UPDATE orders SET status = 'قيد المعالجة' WHERE status IN ('pending', 'processing', 'review') OR status REGEXP '^[?]+$'`,
+    `UPDATE orders SET status = 'تم التأكيد' WHERE status = 'confirmed'`,
+    `UPDATE orders SET status = 'تم الشحن' WHERE status = 'shipped'`,
+    `UPDATE orders SET status = 'تم التوصيل' WHERE status IN ('delivered', 'completed')`,
+    `UPDATE orders SET payment_verification_status = 'قيد المراجعة' WHERE payment_verification_status IN ('review', 'pending') OR payment_verification_status REGEXP '^[?]+$'`,
+    `UPDATE orders SET payment_verification_status = 'مقبول' WHERE payment_verification_status IN ('accepted', 'approved')`,
+    `UPDATE orders SET payment_verification_status = 'مرفوض' WHERE payment_verification_status = 'rejected'`,
   ];
 
   for (const statement of statements) {
@@ -76,6 +83,18 @@ async function run() {
   try {
     await conn.query('CREATE INDEX idx_orders_customer_id ON orders(customer_id)');
   } catch {}
+  for (const statement of [
+    'ALTER TABLE orders ADD COLUMN customer_name VARCHAR(255) DEFAULT NULL',
+    'ALTER TABLE orders ADD COLUMN customer_email VARCHAR(255) DEFAULT NULL',
+    'ALTER TABLE orders ADD COLUMN customer_phone VARCHAR(64) DEFAULT NULL',
+    'ALTER TABLE orders ADD COLUMN shipping_address VARCHAR(512) DEFAULT NULL',
+    'ALTER TABLE orders ADD COLUMN shipping_city VARCHAR(128) DEFAULT NULL',
+    'ALTER TABLE orders ADD COLUMN shipping_country VARCHAR(128) DEFAULT NULL',
+  ]) {
+    try {
+      await conn.query(statement);
+    } catch {}
+  }
   await conn.end();
   console.log('Database semo_reptile_house created and schema applied.');
 }

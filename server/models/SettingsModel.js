@@ -55,6 +55,23 @@ const SINGLE_ROW_ALLOWLISTS = {
     'excluded_paths',
     'custom_robots_txt',
   ]),
+  store_settings: new Set([
+    'store_currency',
+    'store_language',
+    'enable_notifications',
+    'enable_email_notifications',
+    'enable_sms_notifications',
+    'maintenance_mode',
+    'allow_guest_checkout',
+    'require_email_verification',
+    'default_user_role',
+    'tax_rate',
+    'shipping_fee',
+    'free_shipping_threshold',
+    'primary_color',
+    'secondary_color',
+    'dark_mode',
+  ]),
 };
 
 async function getSingle(table, id = 1) {
@@ -110,4 +127,9 @@ export const shamcashConfig = {
 export const seoSettings = {
   get: () => getSingle('seo_settings'),
   set: (data) => setSingle('seo_settings', 1, data),
+};
+
+export const storeSettings = {
+  get: () => getSingle('store_settings'),
+  set: (data) => setSingle('store_settings', 1, data),
 };

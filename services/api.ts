@@ -1,7 +1,7 @@
 /**
  * API client for backend (MySQL mode only).
  */
-import type { Reptile, Order, Address, User, Article, HeroSlide, Supply, ShamCashConfig, CompanyInfo, ContactInfo, TeamMember, FilterGroup, PageContent, SeoSettings, MediaItem, MediaFolder, UserPreferences, ServiceItem, DatabaseStatus, MediaUploadResult } from '../types';
+import type { Reptile, Order, Address, User, Article, HeroSlide, Supply, ShamCashConfig, CompanyInfo, ContactInfo, TeamMember, FilterGroup, PageContent, SeoSettings, MediaItem, MediaFolder, UserPreferences, ServiceItem, DatabaseStatus, MediaUploadResult, StoreSettings } from '../types';
 
 const configuredBase =
   (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_API_URL
@@ -94,8 +94,11 @@ export const api = {
   saveOrder: (order: Order): Promise<Order> => request<Order>('/api/orders', { method: 'POST', body: JSON.stringify(order) }),
   updateOrderStatus: (id: string, status: Order['status']): Promise<Order> =>
     request<Order>(`/api/orders/${id}/status`, { method: 'PATCH', body: JSON.stringify({ status }) }),
-  updateOrderPaymentStatus: (id: string, paymentStatus: Order['paymentVerificationStatus'], rejectionReason?: string): Promise<Order> =>
-    request<Order>(`/api/orders/${id}/status`, { method: 'PATCH', body: JSON.stringify({ paymentVerificationStatus: paymentStatus, rejectionReason }) }),
+  updateOrderPaymentStatus: (id: string, paymentStatus: Order['paymentVerificationStatus'], rejectionReason?: string, status?: Order['status']): Promise<Order> =>
+    request<Order>(`/api/orders/${id}/status`, {
+      method: 'PATCH',
+      body: JSON.stringify({ paymentVerificationStatus: paymentStatus, rejectionReason, status })
+    }),
   deleteOrder: (id: string): Promise<void> => request(`/api/orders/${id}`, { method: 'DELETE' }),
 
   getArticles: (): Promise<Article[]> => request<Article[]>('/api/articles'),
@@ -138,6 +141,10 @@ export const api = {
 
   getSeoSettings: (): Promise<SeoSettings> => request<SeoSettings>('/api/settings/seo'),
   saveSeoSettings: (settings: SeoSettings): Promise<SeoSettings> => request<SeoSettings>('/api/settings/seo', { method: 'PUT', body: JSON.stringify(settings) }),
+
+  getStoreSettings: (): Promise<StoreSettings> => request<StoreSettings>('/api/settings/store'),
+  saveStoreSettings: (settings: Partial<StoreSettings>): Promise<StoreSettings> =>
+    request<StoreSettings>('/api/settings/store', { method: 'PUT', body: JSON.stringify(settings) }),
 
   getCompanyInfo: (): Promise<CompanyInfo> => request<CompanyInfo>('/api/settings/company'),
   saveCompanyInfo: (info: CompanyInfo): Promise<CompanyInfo> => request<CompanyInfo>('/api/settings/company', { method: 'PUT', body: JSON.stringify(info) }),

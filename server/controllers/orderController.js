@@ -31,10 +31,13 @@ export async function get(req, res) {
 
 export async function create(req, res) {
   try {
+    const authUser = req.authUser || {};
     const body = {
       ...req.body,
       id: req.body.id || 'RH-' + Date.now(),
-      customerId: req.authUser?.id || null,
+      customerId: authUser.id || null,
+      customerName: req.body.customerName || authUser.name || null,
+      customerEmail: req.body.customerEmail || authUser.email || null,
     };
     const row = await OrderModel.create(body);
     res.status(201).json(row);

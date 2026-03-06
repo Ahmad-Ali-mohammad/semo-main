@@ -32,6 +32,8 @@ export async function findById(id) {
 export async function create(data) {
   const d = objToSnake(data);
   const id = d.id || `service-${Date.now()}`;
+  const [sortRows] = await pool.query('SELECT COALESCE(MAX(sort_order), 0) AS max_sort_order FROM services');
+  const nextSortOrder = d.sort_order != null ? d.sort_order : Number(sortRows?.[0]?.max_sort_order || 0) + 1;
 
   await pool.query(
     `INSERT INTO services
@@ -39,12 +41,12 @@ export async function create(data) {
      VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
     [
       id,
-      d.title,
+      d.title?.trim(),
       d.description || '',
       d.image_url || '',
       d.icon || null,
-      d.price || null,
-      d.sort_order || 0,
+      d.price ?? null,
+      nextSortOrder,
       d.is_published !== false ? 1 : 0
     ]
   );
@@ -56,7 +58,19 @@ export async function create(data) {
  * Update existing service
  */
 export async function update(id, data) {
+  const existing = await findById(id);
+  if (!existing) return null;
+
   const d = objToSnake(data);
+  const merged = {
+    title: d.title?.trim() ?? existing.title,
+    description: d.description ?? existing.description ?? '',
+    image_url: d.image_url ?? existing.imageUrl ?? '',
+    icon: d.icon ?? existing.icon ?? null,
+    price: d.price !== undefined ? d.price : (existing.price ?? null),
+    sort_order: d.sort_order ?? existing.sortOrder ?? 0,
+    is_published: d.is_published !== undefined ? d.is_published : existing.isPublished,
+  };
 
   await pool.query(
     `UPDATE services
@@ -64,13 +78,13 @@ export async function update(id, data) {
          price = ?, sort_order = ?, is_published = ?
      WHERE id = ?`,
     [
-      d.title,
-      d.description,
-      d.image_url,
-      d.icon,
-      d.price,
-      d.sort_order,
-      d.is_published ? 1 : 0,
+      merged.title,
+      merged.description,
+      merged.image_url,
+      merged.icon,
+      merged.price,
+      merged.sort_order,
+      merged.is_published ? 1 : 0,
       id
     ]
   );
@@ -90,10 +104,21 @@ export async function remove(id) {
  * Update sort order for multiple services
  */
 export async function updateSortOrders(items) {
-  // items: [{ id: 'service-1', sortOrder: 1 }, ...]
-  const promises = items.map(item =>
-    pool.query('UPDATE services SET sort_order = ? WHERE id = ?', [item.sortOrder, item.id])
-  );
-  await Promise.all(promises);
-  return true;
+  const connection = await pool.getConnection();
+
+  try {
+    await connection.beginTransaction();
+
+    for (const item of items) {
+      await connection.query('UPDATE services SET sort_order = ? WHERE id = ?', [item.sortOrder, item.id]);
+    }
+
+    await connection.commit();
+    return true;
+  } catch (error) {
+    await connection.rollback();
+    throw error;
+  } finally {
+    connection.release();
+  }
 }
