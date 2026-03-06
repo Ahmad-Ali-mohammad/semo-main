@@ -4,22 +4,52 @@ USE `semo_reptile_house`;
 SET FOREIGN_KEY_CHECKS = 0;
 
 INSERT INTO `company_info` (`id`, `name`, `name_english`, `description`, `founded_year`, `mission`, `vision`, `story`, `logo_url`, `mascot_url`, `updated_at`) VALUES
-(1, 'Reptile House', 'Reptile House', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2026-03-06 13:09:32');
+(1, 'Reptile House', 'Reptile House', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2026-03-06 13:09:32')
+ON DUPLICATE KEY UPDATE `id` = VALUES(`id`), `name` = VALUES(`name`), `name_english` = VALUES(`name_english`), `description` = VALUES(`description`), `founded_year` = VALUES(`founded_year`), `mission` = VALUES(`mission`), `vision` = VALUES(`vision`), `story` = VALUES(`story`), `logo_url` = VALUES(`logo_url`), `mascot_url` = VALUES(`mascot_url`), `updated_at` = VALUES(`updated_at`);
 
 INSERT INTO `contact_info` (`id`, `phone`, `email`, `address`, `city`, `country`, `working_hours`, `social_media`, `updated_at`) VALUES
-(1, '', '', '', '', '', '', '{}', '2026-03-06 13:09:32');
+(1, '', '', '', '', '', '', '{}', '2026-03-06 13:09:32')
+ON DUPLICATE KEY UPDATE `id` = VALUES(`id`), `phone` = VALUES(`phone`), `email` = VALUES(`email`), `address` = VALUES(`address`), `city` = VALUES(`city`), `country` = VALUES(`country`), `working_hours` = VALUES(`working_hours`), `social_media` = VALUES(`social_media`), `updated_at` = VALUES(`updated_at`);
+
+INSERT INTO `page_contents` (`id`, `slug`, `title`, `excerpt`, `content`, `seo_title`, `seo_description`, `is_active`, `updated_at`, `created_at`) VALUES
+('page-about', 'about', 'من نحن', 'محتوى صفحة من نحن ورسالة المتجر.', 'حرر قصة المتجر والرؤية والقيم.', 'من نحن - بيت الزواحف', 'تعرف على فريق بيت الزواحف.', 1, '2026-03-06 11:09:35', '2026-03-06 14:09:35'),
+('page-blog', 'blog', 'المدونة', 'محتوى صفحة المدونة.', '', 'المدونة - بيت الزواحف', 'مقالات ونصائح حول رعاية الزواحف.', 1, '2026-03-06 11:09:35', '2026-03-06 14:09:35'),
+('page-contact', 'contact', 'اتصل بنا', 'محتوى صفحة التواصل والتعليمات.', 'حرر نصوص التواصل ونماذج الطلب.', 'اتصل بنا - بيت الزواحف', 'تواصل معنا لأي استفسار أو طلب.', 1, '2026-03-06 11:09:35', '2026-03-06 14:09:35'),
+('page-home', 'home', 'الصفحة الرئيسية', 'محتوى الواجهة الرئيسية والعناوين التسويقية.', 'حرر نصوص الصفحة الرئيسية من هنا.', 'بيت الزواحف - الصفحة الرئيسية', 'أفضل متجر للزواحف والمستلزمات.', 1, '2026-03-06 11:09:35', '2026-03-06 14:09:35'),
+('page-offers', 'offers', 'العروض', 'محتوى صفحة العروض الترويجية.', '', 'العروض - بيت الزواحف', 'العروض الحالية في بيت الزواحف.', 1, '2026-03-06 11:09:35', '2026-03-06 14:09:35'),
+('page-privacy', 'privacy', 'سياسة الخصوصية', 'سياسة خصوصية بيانات المستخدمين.', '<h2>سياسة الخصوصية</h2><p>يمكنك تعديل محتوى هذه الصفحة من لوحة إدارة المحتوى.</p>', 'سياسة الخصوصية - بيت الزواحف', 'سياسة الخصوصية في متجر بيت الزواحف.', 1, '2026-03-06 11:09:35', '2026-03-06 14:09:35'),
+('page-returns', 'returns', 'سياسة الإرجاع', 'الشروط المعتمدة للإرجاع والاستبدال.', '<h2>سياسة الإرجاع</h2><p>يمكنك تعديل محتوى هذه الصفحة من لوحة إدارة المحتوى.</p>', 'سياسة الإرجاع - بيت الزواحف', 'سياسة الإرجاع والاستبدال.', 1, '2026-03-06 11:09:35', '2026-03-06 14:09:35'),
+('page-services', 'services', 'الخدمات', 'محتوى صفحة الخدمات.', '', 'الخدمات - بيت الزواحف', 'خدمات بيت الزواحف المتاحة للعملاء.', 1, '2026-03-06 11:09:35', '2026-03-06 14:09:35'),
+('page-shipping', 'shipping', 'سياسة الشحن', 'مواعيد الشحن وخيارات التوصيل.', '<h2>سياسة الشحن</h2><p>يمكنك تعديل محتوى هذه الصفحة من لوحة إدارة المحتوى.</p>', 'سياسة الشحن - بيت الزواحف', 'سياسة الشحن والتوصيل.', 1, '2026-03-06 11:09:35', '2026-03-06 14:09:35'),
+('page-showcase', 'showcase', 'المعرض', 'محتوى صفحة المعرض.', '', 'المعرض - بيت الزواحف', 'استعرض جميع الزواحف المتاحة.', 1, '2026-03-06 11:09:35', '2026-03-06 14:09:35'),
+('page-supplies', 'supplies', 'المستلزمات', 'محتوى صفحة المستلزمات.', '', 'المستلزمات - بيت الزواحف', 'كل مستلزمات الزواحف في مكان واحد.', 1, '2026-03-06 11:09:35', '2026-03-06 14:09:35'),
+('page-terms', 'terms', 'الشروط والأحكام', 'الشروط العامة لاستخدام الموقع.', '<h2>الشروط والأحكام</h2><p>يمكنك تعديل محتوى هذه الصفحة من لوحة إدارة المحتوى.</p>', 'الشروط والأحكام - بيت الزواحف', 'شروط وأحكام الاستخدام.', 1, '2026-03-06 11:09:35', '2026-03-06 14:09:35'),
+('page-warranty', 'warranty', 'الضمان والصحة', 'تفاصيل الضمان الصحي للزواحف.', '<h2>الضمان والصحة</h2><p>يمكنك تعديل محتوى هذه الصفحة من لوحة إدارة المحتوى.</p>', 'الضمان والصحة - بيت الزواحف', 'سياسة الضمان الصحي.', 1, '2026-03-06 11:09:35', '2026-03-06 14:09:35')
+ON DUPLICATE KEY UPDATE `id` = VALUES(`id`), `slug` = VALUES(`slug`), `title` = VALUES(`title`), `excerpt` = VALUES(`excerpt`), `content` = VALUES(`content`), `seo_title` = VALUES(`seo_title`), `seo_description` = VALUES(`seo_description`), `is_active` = VALUES(`is_active`), `updated_at` = VALUES(`updated_at`), `created_at` = VALUES(`created_at`);
+
+INSERT INTO `policies` (`id`, `type`, `title`, `content`, `last_updated`, `is_active`, `icon`, `created_at`) VALUES
+('privacy', 'privacy', 'سياسة الخصوصية', 'نحن في Reptile House نحترم خصوصيتك ونلتزم بحماية معلوماتك الشخصية.', '2026-03-06', 1, '🔒', '2026-03-06 14:09:35'),
+('returns', 'returns', 'سياسة الاسترجاع والاستبدال', 'يمكنك إرجاع أو استبدال المنتجات وفق الشروط المعتمدة من إدارة المتجر.', '2026-03-06', 1, '🔄', '2026-03-06 14:09:35'),
+('shipping', 'shipping', 'سياسة الشحن والتوصيل', 'تُراجع مواعيد الشحن وخيارات التوصيل من لوحة الإدارة ويمكن تعديلها في أي وقت.', '2026-03-06', 1, '🚚', '2026-03-06 14:09:35'),
+('terms', 'terms', 'شروط الاستخدام', 'باستخدامك لهذا الموقع، فإنك توافق على الشروط والأحكام المعتمدة من المتجر.', '2026-03-06', 1, '📋', '2026-03-06 14:09:35'),
+('warranty', 'warranty', 'سياسة الضمان', 'نلتزم بضمان صحة الزواحف والمعلومات المرتبطة بها وفق السياسة المعلنة.', '2026-03-06', 1, '✅', '2026-03-06 14:09:35')
+ON DUPLICATE KEY UPDATE `id` = VALUES(`id`), `type` = VALUES(`type`), `title` = VALUES(`title`), `content` = VALUES(`content`), `last_updated` = VALUES(`last_updated`), `is_active` = VALUES(`is_active`), `icon` = VALUES(`icon`), `created_at` = VALUES(`created_at`);
 
 INSERT INTO `seo_settings` (`id`, `site_name`, `default_title`, `title_separator`, `default_description`, `default_keywords`, `canonical_base_url`, `default_og_image`, `twitter_handle`, `robots_index`, `robots_follow`, `google_verification`, `bing_verification`, `yandex_verification`, `locale`, `theme_color`, `organization_name`, `organization_logo`, `organization_description`, `sitemap_enabled`, `excluded_paths`, `custom_robots_txt`, `updated_at`) VALUES
-(1, 'Reptile House', 'Reptile House', '|', '', NULL, 'https://reptile-house.com', '', '', 1, 1, '', '', '', 'ar_SY', '#0f172a', 'Reptile House', '', '', 1, NULL, NULL, '2026-03-06 13:09:32');
+(1, 'Reptile House', 'Reptile House', '|', '', NULL, 'https://reptile-house.com', '', '', 1, 1, '', '', '', 'ar_SY', '#0f172a', 'Reptile House', '', '', 1, NULL, NULL, '2026-03-06 13:09:32')
+ON DUPLICATE KEY UPDATE `id` = VALUES(`id`), `site_name` = VALUES(`site_name`), `default_title` = VALUES(`default_title`), `title_separator` = VALUES(`title_separator`), `default_description` = VALUES(`default_description`), `default_keywords` = VALUES(`default_keywords`), `canonical_base_url` = VALUES(`canonical_base_url`), `default_og_image` = VALUES(`default_og_image`), `twitter_handle` = VALUES(`twitter_handle`), `robots_index` = VALUES(`robots_index`), `robots_follow` = VALUES(`robots_follow`), `google_verification` = VALUES(`google_verification`), `bing_verification` = VALUES(`bing_verification`), `yandex_verification` = VALUES(`yandex_verification`), `locale` = VALUES(`locale`), `theme_color` = VALUES(`theme_color`), `organization_name` = VALUES(`organization_name`), `organization_logo` = VALUES(`organization_logo`), `organization_description` = VALUES(`organization_description`), `sitemap_enabled` = VALUES(`sitemap_enabled`), `excluded_paths` = VALUES(`excluded_paths`), `custom_robots_txt` = VALUES(`custom_robots_txt`), `updated_at` = VALUES(`updated_at`);
 
 INSERT INTO `shamcash_config` (`id`, `barcode_image_url`, `account_code`, `is_active`, `account_holder_name`, `phone_number`, `payment_instructions`, `updated_at`) VALUES
-(1, '', '', 1, '', '', '', '2026-03-06 13:09:32');
+(1, '', '', 1, '', '', '', '2026-03-06 13:09:32')
+ON DUPLICATE KEY UPDATE `id` = VALUES(`id`), `barcode_image_url` = VALUES(`barcode_image_url`), `account_code` = VALUES(`account_code`), `is_active` = VALUES(`is_active`), `account_holder_name` = VALUES(`account_holder_name`), `phone_number` = VALUES(`phone_number`), `payment_instructions` = VALUES(`payment_instructions`), `updated_at` = VALUES(`updated_at`);
 
 INSERT INTO `users` (`id`, `name`, `email`, `role`, `avatar_url`, `password_hash`, `password_salt`, `created_at`) VALUES
-('admin-1772773847651', 'Owner', 'owner@reptilehouse.sy', 'admin', NULL, '288ba173dc2442b1013167e5184ffb6edcad9a3db25fc4215e56b25948943082', '7f6eccc36f831a22a4fae7ee5d84a4bb', '2026-03-06 05:10:47');
+('admin-1772773847651', 'Owner', 'owner@reptilehouse.sy', 'admin', NULL, '288ba173dc2442b1013167e5184ffb6edcad9a3db25fc4215e56b25948943082', '7f6eccc36f831a22a4fae7ee5d84a4bb', '2026-03-06 05:10:47')
+ON DUPLICATE KEY UPDATE `id` = VALUES(`id`), `name` = VALUES(`name`), `email` = VALUES(`email`), `role` = VALUES(`role`), `avatar_url` = VALUES(`avatar_url`), `password_hash` = VALUES(`password_hash`), `password_salt` = VALUES(`password_salt`), `created_at` = VALUES(`created_at`);
 
 INSERT INTO `user_preferences` (`id`, `user_id`, `theme`, `language`, `notifications_enabled`, `updated_at`) VALUES
 (1, 'default', 'dark', 'ar', 1, '2026-02-17 06:35:53'),
-(2, 'admin-1772773847651', 'dark', 'ar', 1, '2026-03-06 11:17:48');
+(2, 'admin-1772773847651', 'dark', 'ar', 1, '2026-03-06 11:17:48')
+ON DUPLICATE KEY UPDATE `id` = VALUES(`id`), `user_id` = VALUES(`user_id`), `theme` = VALUES(`theme`), `language` = VALUES(`language`), `notifications_enabled` = VALUES(`notifications_enabled`), `updated_at` = VALUES(`updated_at`);
 
 SET FOREIGN_KEY_CHECKS = 1;

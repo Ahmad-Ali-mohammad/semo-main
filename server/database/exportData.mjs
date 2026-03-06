@@ -68,12 +68,16 @@ async function run() {
 
     const columns = Object.keys(rows[0]);
     const columnList = columns.map(escapeIdentifier).join(', ');
+    const updateList = columns
+      .map((column) => `${escapeIdentifier(column)} = VALUES(${escapeIdentifier(column)})`)
+      .join(', ');
     const valuesList = rows
       .map((row) => `(${columns.map((column) => formatValue(row[column])).join(', ')})`)
       .join(',\n');
 
     chunks.push(`INSERT INTO ${escapeIdentifier(tableName)} (${columnList}) VALUES`);
-    chunks.push(`${valuesList};`);
+    chunks.push(`${valuesList}`);
+    chunks.push(`ON DUPLICATE KEY UPDATE ${updateList};`);
     chunks.push('');
   }
 

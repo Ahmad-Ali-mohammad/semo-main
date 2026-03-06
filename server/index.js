@@ -105,7 +105,7 @@ app.get('/health', (req, res) => {
 
 if (isProduction && fs.existsSync(frontendDistPath)) {
   app.use(express.static(frontendDistPath));
-  app.get(/^(?!\/api|\/health).*/, (req, res) => {
+  app.get(/^(?!\/api|\/health|\/uploads(?:\/|$)).*/, (req, res) => {
     res.sendFile(path.join(frontendDistPath, 'index.html'));
   });
 }
