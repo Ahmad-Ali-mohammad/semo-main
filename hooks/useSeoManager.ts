@@ -76,6 +76,24 @@ function normalizeLoadedSettings(loaded: Partial<SeoSettings> | null | undefined
   };
 }
 
+function joinKeywords(...sources: string[]): string {
+  const seen = new Set<string>();
+  const ordered: string[] = [];
+
+  for (const source of sources) {
+    for (const token of String(source || '').split(/[,\u060C]/)) {
+      const cleaned = token.trim();
+      if (!cleaned) continue;
+      const key = cleaned.toLowerCase();
+      if (seen.has(key)) continue;
+      seen.add(key);
+      ordered.push(cleaned);
+    }
+  }
+
+  return ordered.join(', ');
+}
+
 function resolveAbsoluteUrl(baseUrl: string, value: string): string {
   if (!value) return baseUrl;
   try {
@@ -211,31 +229,124 @@ function isNonIndexablePage(appMode: 'user' | 'dashboard', currentPage: string):
   return false;
 }
 
+type PageMeta = {
+  title: string;
+  description: string;
+  keywords: string;
+};
+
 function buildPageMeta(currentPage: string, settings: SeoSettings) {
-  const mapping: Record<string, { title: string; description: string }> = {
-    home: { title: 'الصفحة الرئيسية', description: settings.defaultDescription },
-    showcase: { title: 'معرض الزواحف', description: 'تصفح جميع الزواحف المتاحة في المتجر.' },
-    supplies: { title: 'المستلزمات', description: 'كل مستلزمات الزواحف من تغذية وسكن وتدفئة.' },
-    services: { title: 'الخدمات', description: 'خدمات الرعاية والدعم والإرشاد لمربي الزواحف.' },
-    offers: { title: 'العروض', description: 'أحدث العروض والباقات الخاصة بمتجر بيت الزواحف.' },
-    blog: { title: 'المدونة', description: 'مقالات تعليمية ونصائح عملية حول تربية الزواحف.' },
-    about: { title: 'من نحن', description: 'تعرف على فريق وخبرة بيت الزواحف.' },
-    contact: { title: 'اتصل بنا', description: 'تواصل معنا للاستفسارات والطلبات.' },
-    privacy: { title: 'سياسة الخصوصية', description: 'سياسة الخصوصية الخاصة بموقع بيت الزواحف.' },
-    terms: { title: 'الشروط والأحكام', description: 'الشروط والأحكام المنظمة لاستخدام الموقع.' },
-    returnPolicy: { title: 'سياسة الإرجاع', description: 'سياسة الإرجاع والاستبدال في المتجر.' },
-    shippingPolicy: { title: 'سياسة الشحن', description: 'تفاصيل الشحن والتوصيل ومواعيد التسليم.' },
-    warranty: { title: 'الضمان والصحة', description: 'سياسة الضمان الصحي وتعليمات السلامة.' },
+  const baseKeywords = settings.defaultKeywords || defaultSeoSettings.defaultKeywords;
+  const mapping: Record<string, PageMeta> = {
+    home: {
+      title: 'الصفحة الرئيسية',
+      description: settings.defaultDescription,
+      keywords: joinKeywords(
+        baseKeywords,
+        'بيت الزواحف',
+        'متجر زواحف',
+        'زواحف دمشق',
+        'شراء زواحف',
+        'تربية الزواحف',
+      ),
+    },
+    showcase: {
+      title: 'معرض الزواحف',
+      description: 'تصفح جميع الزواحف المتاحة في المتجر.',
+      keywords: joinKeywords(baseKeywords, 'معرض زواحف', 'زواحف للبيع', 'ثعابين للبيع', 'سحالي للبيع'),
+    },
+    supplies: {
+      title: 'المستلزمات',
+      description: 'كل مستلزمات الزواحف من تغذية وسكن وتدفئة.',
+      keywords: joinKeywords(
+        baseKeywords,
+        'مستلزمات الزواحف',
+        'معدات تربية الزواحف',
+        'تدفئة الزواحف',
+        'إضاءة الزواحف',
+        'تيراريوم',
+      ),
+    },
+    services: {
+      title: 'الخدمات',
+      description: 'خدمات الرعاية والدعم والإرشاد لمربي الزواحف.',
+      keywords: joinKeywords(baseKeywords, 'خدمات الزواحف', 'استشارات تربية الزواحف', 'رعاية الزواحف'),
+    },
+    offers: {
+      title: 'العروض',
+      description: 'أحدث العروض والباقات الخاصة بمتجر بيت الزواحف.',
+      keywords: joinKeywords(baseKeywords, 'عروض الزواحف', 'خصومات الزواحف', 'باقات الزواحف'),
+    },
+    blog: {
+      title: 'المدونة',
+      description: 'مقالات تعليمية ونصائح عملية حول تربية الزواحف.',
+      keywords: joinKeywords(
+        baseKeywords,
+        'مدونة الزواحف',
+        'نصائح تربية الزواحف',
+        'تعليم تربية الثعابين',
+        'العناية بالسحالي',
+      ),
+    },
+    about: {
+      title: 'من نحن',
+      description: 'تعرف على فريق وخبرة بيت الزواحف.',
+      keywords: joinKeywords(baseKeywords, 'من نحن بيت الزواحف', 'خبراء الزواحف'),
+    },
+    contact: {
+      title: 'اتصل بنا',
+      description: 'تواصل معنا للاستفسارات والطلبات.',
+      keywords: joinKeywords(baseKeywords, 'التواصل مع متجر الزواحف', 'رقم متجر الزواحف', 'طلب زواحف'),
+    },
+    privacy: {
+      title: 'سياسة الخصوصية',
+      description: 'سياسة الخصوصية الخاصة بموقع بيت الزواحف.',
+      keywords: joinKeywords(baseKeywords, 'سياسة الخصوصية', 'خصوصية متجر الزواحف'),
+    },
+    terms: {
+      title: 'الشروط والأحكام',
+      description: 'الشروط والأحكام المنظمة لاستخدام الموقع.',
+      keywords: joinKeywords(baseKeywords, 'شروط الاستخدام', 'أحكام متجر الزواحف'),
+    },
+    returnPolicy: {
+      title: 'سياسة الإرجاع',
+      description: 'سياسة الإرجاع والاستبدال في المتجر.',
+      keywords: joinKeywords(baseKeywords, 'إرجاع الزواحف', 'استبدال المنتجات', 'سياسة الاسترجاع'),
+    },
+    shippingPolicy: {
+      title: 'سياسة الشحن',
+      description: 'تفاصيل الشحن والتوصيل ومواعيد التسليم.',
+      keywords: joinKeywords(baseKeywords, 'شحن الزواحف', 'توصيل الزواحف', 'سياسة الشحن'),
+    },
+    warranty: {
+      title: 'الضمان والصحة',
+      description: 'سياسة الضمان الصحي وتعليمات السلامة.',
+      keywords: joinKeywords(baseKeywords, 'ضمان الزواحف', 'صحة الزواحف', 'سلامة تربية الزواحف'),
+    },
   };
 
   if (currentPage.startsWith('product/')) {
-    return { title: 'تفاصيل المنتج', description: 'تفاصيل منتج الزواحف والمواصفات والعناية.' };
+    return {
+      title: 'تفاصيل المنتج',
+      description: 'تفاصيل منتج الزواحف والمواصفات والعناية.',
+      keywords: joinKeywords(baseKeywords, 'تفاصيل منتج', 'سعر الزواحف', 'مواصفات الزواحف', 'شراء زواحف'),
+    };
   }
   if (currentPage.startsWith('article/')) {
-    return { title: 'تفاصيل المقال', description: 'اقرأ المقال التعليمي من مدونة بيت الزواحف.' };
+    return {
+      title: 'تفاصيل المقال',
+      description: 'اقرأ المقال التعليمي من مدونة بيت الزواحف.',
+      keywords: joinKeywords(baseKeywords, 'مقال زواحف', 'معلومات عن الزواحف', 'تعليم تربية الزواحف'),
+    };
   }
 
-  return mapping[currentPage] || { title: settings.defaultTitle, description: settings.defaultDescription };
+  return (
+    mapping[currentPage] || {
+      title: settings.defaultTitle,
+      description: settings.defaultDescription,
+      keywords: baseKeywords,
+    }
+  );
 }
 
 export function useSeoManager(currentPage: string, appMode: 'user' | 'dashboard') {
@@ -274,6 +385,10 @@ export function useSeoManager(currentPage: string, appMode: 'user' | 'dashboard'
     const description = isNoIndex
       ? 'لوحة إدارة متجر بيت الزواحف.'
       : pageMeta.description || settings.defaultDescription;
+    const keywordsBase = settings.defaultKeywords || defaultSeoSettings.defaultKeywords;
+    const keywords = isNoIndex
+      ? keywordsBase
+      : pageMeta.keywords || keywordsBase;
     const robots = isNoIndex
       ? 'noindex, nofollow'
       : `${settings.robotsIndex ? 'index' : 'noindex'}, ${settings.robotsFollow ? 'follow' : 'nofollow'}, max-image-preview:large`;
@@ -283,7 +398,8 @@ export function useSeoManager(currentPage: string, appMode: 'user' | 'dashboard'
     document.documentElement.lang = 'ar';
 
     setMetaByName('description', description);
-    setMetaByName('keywords', settings.defaultKeywords || defaultSeoSettings.defaultKeywords);
+    setMetaByName('keywords', keywords);
+    setMetaByName('news_keywords', keywords);
     setMetaByName('robots', robots);
     setMetaByName('googlebot', robots);
     setMetaByName('theme-color', settings.themeColor || defaultSeoSettings.themeColor);
