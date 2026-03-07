@@ -13,7 +13,10 @@
     "start:prod": "npm run build && cd server && npm run start",
     "deploy": "node deploy.js",
     "deploy:github": "node auto-deploy.js",
-    "deploy:full": "node full-deploy.js"
+    "deploy:full": "node full-deploy.js",
+    "deploy:vps": "python scripts/vps_deploy.py",
+    "deploy:vps:dry": "python scripts/vps_deploy.py --dry-run",
+    "deploy:vps:reseed": "python scripts/vps_deploy.py --mode reseed --confirm-reseed"
   },
   "dependencies": {
     "react": "^19.2.4",

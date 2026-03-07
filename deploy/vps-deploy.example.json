@@ -1,0 +1,21 @@
+{
+  "host": "example-vps-ip-or-hostname",
+  "user": "root",
+  "password": "",
+  "sshKeyPath": "",
+  "port": 22,
+  "baseDir": "/opt/reptile-house-docker",
+  "composeEnvFile": ".env",
+  "composeFiles": ["docker-compose.yml", "docker-compose.vps.yml"],
+  "legacyServiceName": "reptile-api.service",
+  "appContainerName": "reptilehouse-app-1",
+  "dbContainerName": "reptilehouse-db-1",
+  "pushRemotes": ["node", "origin"],
+  "adminEmail": "",
+  "adminPassword": "",
+  "endpointChecks": [
+    "/api/settings/store",
+    "/api/backup-settings",
+    "/api/api-keys"
+  ]
+}

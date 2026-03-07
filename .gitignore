@@ -17,6 +17,7 @@ dist-ssr
 .env.*
 !.env.example
 !.env.*.example
+.vps-deploy.json
 
 # Editor directories and files
 .vscode/*
