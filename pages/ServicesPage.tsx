@@ -3,6 +3,7 @@ import PageNotAvailable from '../components/PageNotAvailable';
 import { usePageContent } from '../hooks/usePageContent';
 import { api } from '../services/api';
 import { PageContent, ServiceItem } from '../types';
+import { toSafeHtml } from '../utils/safeHtml';
 
 const servicesFallback: PageContent = {
   id: 'fallback-services',
@@ -80,7 +81,7 @@ const ServicesPage: React.FC = () => {
         {pageContent.content?.trim() && (
           <div
             className="mt-6 rounded-2xl border border-white/10 bg-white/5 p-6 text-right leading-loose text-gray-300"
-            dangerouslySetInnerHTML={{ __html: pageContent.content }}
+            dangerouslySetInnerHTML={toSafeHtml(pageContent.content)}
           />
         )}
       </section>

@@ -1,23 +1,9 @@
 import nodemailer from 'nodemailer';
+import { normalizeRecipientList, sanitizeEmailAddress } from './emailAddress.js';
 
 function parseBoolean(value, fallback = false) {
   if (value === undefined || value === null || value === '') return fallback;
   return ['1', 'true', 'yes', 'on'].includes(String(value).trim().toLowerCase());
-}
-
-function normalizeRecipients(input) {
-  if (Array.isArray(input)) {
-    return Array.from(new Set(input.map((value) => String(value || '').trim()).filter(Boolean)));
-  }
-
-  return Array.from(
-    new Set(
-      String(input || '')
-        .split(/[,\n;]/)
-        .map((value) => value.trim())
-        .filter(Boolean),
-    ),
-  );
 }
 
 function getMailAuth() {
@@ -27,7 +13,7 @@ function getMailAuth() {
 }
 
 function getMailFrom() {
-  const address = String(process.env.MAIL_FROM || process.env.SMTP_USER || '').trim();
+  const address = sanitizeEmailAddress(process.env.MAIL_FROM || process.env.SMTP_USER || '');
   const name = String(process.env.MAIL_FROM_NAME || 'Reptile House').trim();
   if (!address) return '';
   return name ? `${name} <${address}>` : address;
@@ -57,7 +43,7 @@ export function isMailConfigured() {
 }
 
 export async function sendMail({ to, subject, text, html }) {
-  const recipients = normalizeRecipients(to);
+  const recipients = normalizeRecipientList(to);
   if (!recipients.length || !isMailConfigured()) {
     return { skipped: true, recipients };
   }
@@ -73,7 +59,7 @@ export async function sendMail({ to, subject, text, html }) {
   return transporter.sendMail({
     from: getMailFrom(),
     to: recipients.join(', '),
-    replyTo: String(process.env.MAIL_REPLY_TO || '').trim() || undefined,
+    replyTo: sanitizeEmailAddress(process.env.MAIL_REPLY_TO || '') || undefined,
     subject,
     text,
     html,

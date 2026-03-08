@@ -9,6 +9,7 @@ import { Page } from '../App';
 import { usePageContent } from '../hooks/usePageContent';
 import { PageContent } from '../types';
 import { pickMeaningfulText } from '../utils/contentText';
+import { toSafeHtml } from '../utils/safeHtml';
 
 export type Filters = {
     categories: string[];
@@ -118,7 +119,7 @@ const SuppliesPage: React.FC<SuppliesPageProps> = ({ setPage }) => {
                     {safePageContent.content?.trim() && (
                         <div
                             className="mt-6 bg-white/5 border border-white/10 rounded-2xl p-5 text-gray-300 leading-loose text-right"
-                            dangerouslySetInnerHTML={{ __html: safePageContent.content }}
+                            dangerouslySetInnerHTML={toSafeHtml(safePageContent.content)}
                         />
                     )}
                 </div>

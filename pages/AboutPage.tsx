@@ -4,6 +4,7 @@ import { api } from '../services/api';
 import { usePageContent } from '../hooks/usePageContent';
 import PageNotAvailable from '../components/PageNotAvailable';
 import { pickMeaningfulText, looksCorruptedText } from '../utils/contentText';
+import { toSafeHtml } from '../utils/safeHtml';
 
 const aboutFallback: PageContent = {
   id: 'fallback-about',
@@ -143,7 +144,7 @@ const AboutPage: React.FC = () => {
 
       {safeAboutContent.content?.trim() && (
         <section className="rounded-[2rem] border border-white/10 p-8 text-right leading-loose text-gray-300 glass-medium">
-          <div dangerouslySetInnerHTML={{ __html: safeAboutContent.content }} />
+          <div dangerouslySetInnerHTML={toSafeHtml(safeAboutContent.content)} />
         </section>
       )}
 

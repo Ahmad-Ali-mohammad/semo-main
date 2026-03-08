@@ -45,3 +45,8 @@ tmpclaude-*
 server-dev.log
 web-dev.log
 _nul
+backups/
+zap-baseline*.html
+zap-baseline*.json
+zap-baseline*.md
+zap-baseline*.xml

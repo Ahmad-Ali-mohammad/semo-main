@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo } from 'react';
 import { useDatabase } from '../contexts/DatabaseContext';
 import { ChevronRightIcon, UserIcon } from '../components/icons';
+import { toSafeHtml } from '../utils/safeHtml';
 
 interface ArticleDetailsPageProps {
   articleId: number;
@@ -17,7 +18,7 @@ const renderArticleBody = (content?: string) => {
   }
 
   if (hasHtmlMarkup(normalizedContent)) {
-    return <div dangerouslySetInnerHTML={{ __html: normalizedContent }} />;
+    return <div dangerouslySetInnerHTML={toSafeHtml(normalizedContent)} />;
   }
 
   return normalizedContent.split(/\n{2,}/).map((paragraph, index) => (

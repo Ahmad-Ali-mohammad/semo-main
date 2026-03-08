@@ -1,21 +1,7 @@
 import { companyInfo, contactInfo, storeSettings } from '../models/SettingsModel.js';
 import { normalizeOrderStatus, normalizePaymentStatus } from '../models/OrderModel.js';
 import { isMailConfigured, sendMail } from './mailer.js';
-
-function normalizeRecipients(input) {
-  if (Array.isArray(input)) {
-    return Array.from(new Set(input.map((value) => String(value || '').trim()).filter(Boolean)));
-  }
-
-  return Array.from(
-    new Set(
-      String(input || '')
-        .split(/[,\n;]/)
-        .map((value) => value.trim())
-        .filter(Boolean),
-    ),
-  );
-}
+import { normalizeRecipientList } from './emailAddress.js';
 
 function escapeHtml(value) {
   return String(value || '')
@@ -92,7 +78,7 @@ async function loadNotificationContext() {
 }
 
 function getAdminRecipients(context) {
-  return normalizeRecipients(
+  return normalizeRecipientList(
     process.env.ORDER_ADMIN_EMAILS || context.contactEmail || process.env.MAIL_FROM || process.env.SMTP_USER,
   );
 }
@@ -268,7 +254,7 @@ export async function sendOrderNotifications(order, event) {
   }
 
   const adminRecipients = getAdminRecipients(context);
-  const customerRecipients = normalizeRecipients(order.customerEmail);
+  const customerRecipients = normalizeRecipientList(order.customerEmail, 3);
   const tasks = [];
 
   if (adminRecipients.length > 0) {

@@ -1,4 +1,5 @@
 import React from 'react';
+import { toSafeHtml } from '../utils/safeHtml';
 
 interface PolicyPageProps {
     title: string;
@@ -13,7 +14,7 @@ const PolicyPage: React.FC<PolicyPageProps> = ({ title, children, contentHtml })
             <div className="overflow-hidden rounded-2xl border border-white/20 bg-white/5 p-4 text-gray-300 backdrop-blur-lg sm:p-8">
                 <div className="prose prose-invert max-w-none overflow-x-auto break-words leading-loose prose-headings:text-amber-400 prose-img:max-w-full prose-img:rounded-xl prose-p:text-gray-300">
                     {contentHtml ? (
-                        <div dangerouslySetInnerHTML={{ __html: contentHtml }} />
+                        <div dangerouslySetInnerHTML={toSafeHtml(contentHtml)} />
                     ) : (
                         children || <p className="text-gray-500">لا يوجد محتوى منشور بعد.</p>
                     )}

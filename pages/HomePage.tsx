@@ -8,6 +8,7 @@ import PageNotAvailable from '../components/PageNotAvailable';
 import { useDatabase } from '../contexts/DatabaseContext';
 import { usePageContent } from '../hooks/usePageContent';
 import { PageContent } from '../types';
+import { toSafeHtml } from '../utils/safeHtml';
 
 interface HomePageProps {
   setPage: (page: string) => void;
@@ -54,7 +55,7 @@ const HomePage: React.FC<HomePageProps> = ({ setPage }) => {
         {hasCustomHomeContent && (
           <div
             className="mt-6 text-right bg-white/5 border border-white/10 rounded-2xl p-6 text-gray-300 leading-loose"
-            dangerouslySetInnerHTML={{ __html: homeContent.content }}
+            dangerouslySetInnerHTML={toSafeHtml(homeContent.content)}
           />
         )}
       </section>

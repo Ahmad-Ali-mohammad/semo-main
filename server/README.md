@@ -27,6 +27,8 @@ Key variables:
 - `ALLOWED_ORIGINS` comma-separated list for CORS
 - `RATE_LIMIT_MAX` global API limit
 - `AUTH_RATE_LIMIT_MAX` auth endpoints limit
+- `NON_API_WRITE_RATE_LIMIT_MAX` limit for write attempts outside `/api` (e.g., repeated `POST /`)
+- `PASSWORD_PBKDF2_ITERATIONS` password hashing cost factor
 - `USE_MYSQL=1` to enable MySQL mode
 
 ## Production behavior
@@ -38,5 +40,7 @@ If root `dist` exists, server also serves frontend build (SPA fallback enabled).
 - Helmet
 - API rate limiting
 - Auth route rate limiting
+- Non-API write throttling + method restrictions
+- Strict SPA fallback (unknown probe paths return 404)
 - Optional strict CORS allow-list
 - Compression

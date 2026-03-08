@@ -4,6 +4,7 @@ import { api } from '../services/api';
 import { PageContent, PromotionalCard } from '../types';
 import { usePageContent } from '../hooks/usePageContent';
 import PageNotAvailable from '../components/PageNotAvailable';
+import { toSafeHtml } from '../utils/safeHtml';
 
 interface OffersPageProps {
   setPage?: (page: Page | string) => void;
@@ -95,7 +96,7 @@ const OffersPage: React.FC<OffersPageProps> = ({ setPage }) => {
         {pageContent.content?.trim() && (
           <div
             className="mt-6 bg-white/5 border border-white/10 rounded-2xl p-6 text-gray-300 leading-loose text-right"
-            dangerouslySetInnerHTML={{ __html: pageContent.content }}
+            dangerouslySetInnerHTML={toSafeHtml(pageContent.content)}
           />
         )}
       </section>

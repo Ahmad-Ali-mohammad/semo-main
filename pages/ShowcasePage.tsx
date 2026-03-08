@@ -8,6 +8,7 @@ import PageNotAvailable from '../components/PageNotAvailable';
 import { Page } from '../App';
 import { usePageContent } from '../hooks/usePageContent';
 import { PageContent } from '../types';
+import { toSafeHtml } from '../utils/safeHtml';
 
 export type Filters = {
     categories: string[];
@@ -111,7 +112,7 @@ const ShowcasePage: React.FC<ShowcasePageProps> = ({ setPage }) => {
                     {pageContent.content?.trim() && (
                         <div
                             className="mt-6 bg-white/5 border border-white/10 rounded-2xl p-5 text-gray-300 leading-loose text-right"
-                            dangerouslySetInnerHTML={{ __html: pageContent.content }}
+                            dangerouslySetInnerHTML={toSafeHtml(pageContent.content)}
                         />
                     )}
                 </div>

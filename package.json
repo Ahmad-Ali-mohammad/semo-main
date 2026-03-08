@@ -19,6 +19,7 @@
     "deploy:vps:reseed": "python scripts/vps_deploy.py --mode reseed --confirm-reseed"
   },
   "dependencies": {
+    "dompurify": "^3.3.2",
     "react": "^19.2.4",
     "react-dom": "^19.2.4"
   },

@@ -4,6 +4,7 @@ import { ContactInfo, PageContent } from '../types';
 import { api } from '../services/api';
 import { usePageContent } from '../hooks/usePageContent';
 import PageNotAvailable from '../components/PageNotAvailable';
+import { toSafeHtml } from '../utils/safeHtml';
 
 const contactFallback: PageContent = {
   id: 'fallback-contact',
@@ -59,7 +60,7 @@ const ContactPage: React.FC = () => {
 
       {contactContent.content?.trim() && (
         <section className="mb-8 bg-white/5 backdrop-filter backdrop-blur-lg border border-white/20 rounded-2xl p-6 text-gray-300 leading-loose text-right">
-          <div dangerouslySetInnerHTML={{ __html: contactContent.content }} />
+          <div dangerouslySetInnerHTML={toSafeHtml(contactContent.content)} />
         </section>
       )}
 
